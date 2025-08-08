@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kayıt Ol</title>
+    <title>Kayıt Ol - Red Lock</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #0f172a, #1e293b);
+            background: linear-gradient(to right, #1a1a1a, #333);
             color: white;
             display: flex;
             justify-content: center;
@@ -15,8 +15,8 @@
             height: 100vh;
             margin: 0;
         }
-        .form-container {
-            background: rgba(0, 0, 0, 0.6);
+        .container {
+            background: rgba(0,0,0,0.8);
             padding: 30px;
             border-radius: 10px;
             width: 300px;
@@ -32,13 +32,12 @@
         button {
             width: 100%;
             padding: 10px;
-            margin-top: 10px;
             background: #38bdf8;
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
+            font-size: 16px;
         }
         button:hover {
             background: #0ea5e9;
@@ -46,21 +45,34 @@
     </style>
 </head>
 <body>
-    <div class="form-container">
+
+    <div class="container">
         <h2>Kayıt Ol</h2>
-        <form onsubmit="return kayitOl()">
-            <input type="text" id="kullanici" placeholder="Kullanıcı Adı" required>
-            <input type="password" id="sifre" placeholder="Şifre" required>
-            <button type="submit">Kayıt Ol</button>
-        </form>
+        <input type="text" id="name" placeholder="Adınız" required>
+        <input type="email" id="email" placeholder="E-posta" required>
+        <input type="password" id="password" placeholder="Şifre" required>
+        <button onclick="register()">Kayıt Ol</button>
     </div>
 
     <script>
-        function kayitOl() {
-            alert("Kayıt başarılı! Ana sayfaya yönlendiriliyorsunuz.");
-            window.location.href = "index.html";
-            return false;
+        function register() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!name || !email || !password) {
+                alert("Lütfen tüm alanları doldurun.");
+                return;
+            }
+
+            localStorage.setItem('name', name);
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+
+            alert("Kayıt başarılı! Giriş yapabilirsiniz.");
+            window.location.href = "giris.html";
         }
     </script>
+
 </body>
 </html>
