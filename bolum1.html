@@ -1,111 +1,466 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bölüm 1 - Red Lock</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Red Lock — Bölüm 1</title>
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: black;
-        color: white;
-        overflow-x: hidden;
-    }
+  :root{
+    --accent1:#ff4b2b; --accent2:#ff416c;
+    --glass: rgba(0,0,0,0.45);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:#0b0b0d;color:#fff}
+  a{color:inherit;text-decoration:none}
 
-    .scene {
-        position: relative;
-        height: 100vh;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        animation: fadeIn 1.5s ease-in-out;
-    }
+  /* scene layout: içerik kadar yükseklik (boşluk yok) */
+  .scene {
+    position: relative;
+    padding: 60px 6vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    align-items: center;
+  }
 
-    @keyframes fadeIn {
-        from {opacity: 0;}
-        to {opacity: 1;}
-    }
+  /* arka plan / karakter image */
+  .bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: -4;
+    filter: grayscale(40%) contrast(1.02) brightness(0.82);
+    transform-origin: center;
+    transition: transform .3s linear;
+  }
+  .vignette {
+    position:absolute;inset:0;z-index:-3;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.65));
+    pointer-events:none;
+  }
 
-    .speech-bubble {
-        position: relative;
-        background: rgba(255,255,255,0.85);
-        color: black;
-        padding: 15px;
-        border-radius: 15px;
-        max-width: 70%;
-        font-size: 1.1em;
-        box-shadow: 0 0 15px rgba(0,0,0,0.5);
-        animation: fadeIn 1.5s ease-in-out;
-    }
+  /* content card */
+  .card {
+    position: relative;
+    z-index: 2;
+    max-width: 980px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+    border-radius: 12px;
+    padding: 18px;
+    border:1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    animation: fadeUp .9s ease both;
+  }
 
-    .speech-bubble::after {
-        content: '';
-        position: absolute;
-        bottom: -20px;
-        left: 40px;
-        border-width: 10px;
-        border-style: solid;
-        border-color: rgba(255,255,255,0.85) transparent transparent transparent;
-    }
+  .metaChar {
+    display:flex;gap:12px;align-items:center;margin-bottom:10px;
+  }
+  .charThumb {
+    width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.06);
+    flex:0 0 64px;
+  }
+  .charThumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .charName{font-weight:800;color:#fff;font-size:1rem}
 
-    .buttons {
-        text-align: center;
-        margin: 30px;
-    }
+  /* speech bubble (konuşma balonu) */
+  .bubble {
+    position: relative;
+    display:inline-block;
+    background: #fff;
+    color: #07101a;
+    padding: 12px 16px;
+    border-radius: 18px;
+    max-width: 78%;
+    font-size: 1rem;
+    line-height:1.5;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+  /* tail - alt üçgen */
+  .bubble::after{
+    content: "";
+    position: absolute;
+    bottom: -18px;
+    left: 36px;
+    border-width: 18px 16px 0 0;
+    border-style: solid;
+    border-color: #fff transparent transparent transparent;
+    transform: rotate(18deg);
+  }
 
-    .buttons a {
-        display: inline-block;
-        background: crimson;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 8px;
-        margin: 10px;
-        text-decoration: none;
-        font-weight: bold;
-        transition: 0.3s;
-    }
+  /* iç ses stili */
+  .thought { font-style: italic; color:#233044; }
 
-    .buttons a:hover {
-        background: darkred;
-    }
+  /* butonlar alanı */
+  .nav {
+    margin:28px 6vw;
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .btn {
+    display:inline-block;
+    padding:12px 20px;
+    border-radius:999px;
+    background: linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:#061018;font-weight:800;text-decoration:none;
+  }
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#dbeeff}
+
+  /* anim */
+  @keyframes fadeUp { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+
+  /* responsive */
+  @media (max-width:720px){
+    .bubble{max-width:92%;font-size:0.98rem}
+    .charThumb{width:52px;height:52px}
+    .scene{padding:30px 4vw}
+  }
+
+  /* - küçük parallax hareket on scroll - */
 </style>
 </head>
 <body>
 
-<!-- SAHNE 1 -->
-<div class="scene" style="background-image: url('img/karakter1.jpg');">
-    <div class="speech-bubble">Isagi: "Burası... Red Lock tesisi mi? Hayal ettiğimden çok daha büyük..."</div>
-</div>
+<!-- ----------------------
+     Her "scene" bloğu:
+     - .bg arka plan: karakterin fotoğrafı
+     - .card içinde karakter kartı ve konuşma balonu
+   ---------------------- -->
 
-<!-- SAHNE 2 -->
-<div class="scene" style="background-image: url('img/karakter2.jpg');">
-    <div class="speech-bubble">Rei: "Hoş geldin, Isagi. Artık geri dönüş yok. Burada sadece en iyiler hayatta kalır."</div>
-</div>
+<!-- SCENE 1 -->
+<section class="scene" data-char="Rei">
+  <div class="bg" style="background-image:url('img/karakter1.jpg')"></div>
+  <div class="vignette"></div>
 
-<!-- SAHNE 3 -->
-<div class="scene" style="background-image: url('img/karakter3.jpg');">
-    <div class="speech-bubble">Isagi: "Ben hazırım. Ne olursa olsun, buradan şampiyon olarak çıkacağım."</div>
-</div>
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter1-thumb.jpg" alt="Rei"></div>
+      <div>
+        <div class="charName">Rei</div>
+        <div style="font-size:0.85rem;color:#9fb0d0">Saldırgan, özgüveni yüksek</div>
+      </div>
+    </div>
 
-<!-- SAHNE 4 -->
-<div class="scene" style="background-image: url('img/karakter4.jpg');">
-    <div class="speech-bubble">Antrenör: "O zaman başlayalım. İlk test: hız, teknik ve kararlılık!"</div>
-</div>
+    <div class="bubble">
+      “Bugün buraya gelmek için binlerce sebep vardı — ama tek bir neden yeterli: kendimi kanıtlamak. 
+      Eğer zafer istiyorsam, her şeyi riske atmalıyım.” 
+    </div>
+  </div>
+</section>
 
-<!-- SAHNE 5 -->
-<div class="scene" style="background-image: url('img/karakter5.jpg');">
-    <div class="speech-bubble">Isagi: "Kalbim deli gibi atıyor... Ama bu, hayatımın fırsatı!"</div>
-</div>
+<!-- SCENE 2 -->
+<section class="scene" data-char="Isagi">
+  <div class="bg" style="background-image:url('img/karakter2.jpg')"></div>
+  <div class="vignette"></div>
 
-<!-- Butonlar -->
-<div class="buttons">
-    <a href="index.html">Ana Sayfaya Dön</a>
-    <a href="bolum2.html">Diğer Bölüme Geç</a>
-</div>
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter2-thumb.jpg" alt="Isagi"></div>
+      <div>
+        <div class="charName">Isagi</div>
+        <div style="font-size:0.85rem;color:#9fb0d0">Düşünen, stratejik</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Isagi:</strong> “Benim yolum farklı — acele yok. Önce alanı yaratırsın, sonra boşluğu değerlendirirsin. 
+      Her adım bir plan; hata affetmez.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 3 -->
+<section class="scene" data-char="Bachira">
+  <div class="bg" style="background-image:url('img/karakter3.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter3-thumb.jpg" alt="Bachira"></div>
+      <div>
+        <div class="charName">Bachira</div>
+        <div style="font-size:0.85rem;color:#9fb0d0">Cesur, çılgın driblingleriyle tanınır</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Bachira (kıkırdayarak):</strong> “Hadi bakalım! Sahada yalnızca korkaklar kaybeder. 
+      Göster bakalım hangi tarafın gerçek cesareti taşıdığını.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 4 -->
+<section class="scene" data-char="Nagi">
+  <div class="bg" style="background-image:url('img/karakter4.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter4-thumb.jpg" alt="Nagi"></div>
+      <div>
+        <div class="charName">Nagi</div>
+        <div style="font-size:0.85rem;color:#9fb0d0">Soğukkanlı, keskin vuruşlu</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      “Taktik? Gerektiğinde taktik kullanırım ama çoğu zaman doğru vuruş her şeyi halleder. 
+      Eğer fırsat bulursam, bitiririm.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 5 -->
+<section class="scene" data-char="Antrenor">
+  <div class="bg" style="background-image:url('img/karakter5.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter5-thumb.jpg" alt="Antrenör"></div>
+      <div>
+        <div class="charName">Antrenör</div>
+        <div style="font-size:0.85rem;color:#9fb0d0">Disiplinli, sert</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Antrenör:</strong> “Sizden beklediğim: risk alırken akıl—akıl varken risk. 
+      Hepiniz yeteneğiniz kadar sorumluluk taşıyacaksınız.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 6 -->
+<section class="scene" data-char="Rei">
+  <div class="bg" style="background-image:url('img/karakter1-2.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter1-thumb.jpg" alt="Rei"></div>
+      <div>
+        <div class="charName">Rei</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Rei:</strong> “Ben antrenmanda hep sınırımın ötesini gördüm. Bugün o sınırı kıracağım. 
+      İzleyin.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 7 -->
+<section class="scene" data-char="Isagi">
+  <div class="bg" style="background-image:url('img/karakter2-2.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter2-thumb.jpg" alt="Isagi"></div>
+      <div>
+        <div class="charName">Isagi</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Isagi:</strong> “Sabrın da bir gücü var. Koşu, pas, pozisyon; hepsi birer satranç hamlesi.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 8 -->
+<section class="scene" data-char="Bachira">
+  <div class="bg" style="background-image:url('img/karakter3-2.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter3-thumb.jpg" alt="Bachira"></div>
+      <div>
+        <div class="charName">Bachira</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Bachira:</strong> “Siz strateji konuşurken, ben boşluklar yaratırım. Sonra o boşluğu bitiririm.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 9 -->
+<section class="scene" data-char="Nagi">
+  <div class="bg" style="background-image:url('img/karakter4-2.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter4-thumb.jpg" alt="Nagi"></div>
+      <div>
+        <div class="charName">Nagi</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Nagi:</strong> “Bir saniyelik zaaf, bir maçı kaybettirir. Gözlerin açık olsun.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 10 -->
+<section class="scene" data-char="Antrenor">
+  <div class="bg" style="background-image:url('img/karakter5-2.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter5-thumb.jpg" alt="Antrenör"></div>
+      <div>
+        <div class="charName">Antrenör</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      “Sahada ne yaptığınız değil, sahada ne yaptırdığınız önemlidir. Rakibin kararını değiştir, oyunu sen şekillendir.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 11 -->
+<section class="scene" data-char="Rei">
+  <div class="bg" style="background-image:url('img/karakter1-3.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter1-thumb.jpg" alt="Rei"></div>
+      <div>
+        <div class="charName">Rei</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Rei (iç ses):</strong> <span class="thought">“Bu an için çalıştım. Kimse beni durduramaz.”</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 12 -->
+<section class="scene" data-char="Isagi">
+  <div class="bg" style="background-image:url('img/karakter2-3.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter2-thumb.jpg" alt="Isagi"></div>
+      <div>
+        <div class="charName">Isagi</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Isagi:</strong> “Yine de korkmamalıyım. Hata yapsam da yeniden kurarım. Bu bir yarış değil, öğrenme süreci.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 13 -->
+<section class="scene" data-char="Bachira">
+  <div class="bg" style="background-image:url('img/karakter3-3.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter3-thumb.jpg" alt="Bachira"></div>
+      <div>
+        <div class="charName">Bachira</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Bachira:</strong> “Güç, sadece çalım atmak değil; sürpriz yaratmaktır. Sürprizleri seviyorum.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 14 -->
+<section class="scene" data-char="Nagi">
+  <div class="bg" style="background-image:url('img/karakter4-3.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter4-thumb.jpg" alt="Nagi"></div>
+      <div>
+        <div class="charName">Nagi</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      <strong>Nagi:</strong> “Bitirici vuruşun soğukkanlılığı bambaşkadır. O anda her şey durur.” 
+    </div>
+  </div>
+</section>
+
+<!-- SCENE 15 (Kapanış) -->
+<section class="scene" data-char="Rei">
+  <div class="bg" style="background-image:url('img/karakter1-4.jpg')"></div>
+  <div class="vignette"></div>
+
+  <div class="card">
+    <div class="metaChar">
+      <div class="charThumb"><img src="img/karakter1-thumb.jpg" alt="Rei"></div>
+      <div>
+        <div class="charName">Rei</div>
+        <div style="font-size:0.85rem;color:#9fb0d0">Bugünün akşamında, yeni bir hedef belirdi.</div>
+      </div>
+    </div>
+
+    <div class="bubble">
+      “Bu gece sadece bir prova değildi—başlangıçtı. Daha büyük sınavlar bizi bekliyor. Hazır olmamız gerek.” 
+    </div>
+
+    <div style="margin-top:16px" class="actions">
+      <a class="btn" href="bolum2.html">Diğer Bölüme Geç</a>
+      <a class="btn ghost" href="index.html">Ana Sayfaya Dön</a>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Parallax küçük hareket + fade-in on scroll */
+(function(){
+  const scenes = Array.from(document.querySelectorAll('.scene'));
+  const bgs = scenes.map(s => s.querySelector('.bg'));
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting) en.target.classList.add('inview');
+    });
+  }, {threshold:0.18});
+  scenes.forEach(s=> io.observe(s));
+
+  function onScroll(){
+    const winH = window.innerHeight || document.documentElement.clientHeight;
+    bgs.forEach((bg)=>{
+      if(!bg) return;
+      const rect = bg.parentElement.getBoundingClientRect();
+      const mid = rect.top + rect.height/2 - winH/2;
+      const max = winH + rect.height;
+      const v = Math.max(-1, Math.min(1, -mid / (max/2)));
+      const ty = v * 24;
+      bg.style.transform = `translateY(${ty}px) scale(1.02)`;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  setTimeout(onScroll,120);
+})();
+</script>
 
 </body>
 </html> 
