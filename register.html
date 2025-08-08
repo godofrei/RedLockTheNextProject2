@@ -61,7 +61,7 @@
             const password = document.getElementById('password').value.trim();
 
             if (!name || !email || !password) {
-                alert("Lütfen tüm alanları doldurun.");
+                alert("Lütfen tüm alanları doldurun!");
                 return;
             }
 
@@ -69,7 +69,7 @@
             localStorage.setItem('email', email);
             localStorage.setItem('password', password);
 
-            alert("Kayıt başarılı! Giriş yapabilirsiniz.");
+            alert("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...");
             window.location.href = "giris.html";
         }
     </script>
