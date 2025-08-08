@@ -1,125 +1,538 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini Oyun - Frikik</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Red Lock — 1v1 Mini Oyun</title>
 <style>
-    body {
-        margin: 0;
-        background: #1a1a1a;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        color: white;
-        font-family: Arial, sans-serif;
-        overflow: hidden;
-    }
-    canvas {
-        background: url('saha.jpg') no-repeat center center/cover;
-        border: 2px solid white;
-        border-radius: 10px;
-    }
+  :root{
+    --bg1:#07101a; --panel:#0f1724; --accent1:#ff4b2b; --accent2:#ff416c; --muted:#9fb0d0;
+  }
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg1),#03101a);font-family:Inter,Arial,Helvetica,sans-serif;color:#e6f0ff}
+  .wrap{max-width:900px;margin:0 auto;padding:12px;box-sizing:border-box;min-height:100vh;display:flex;flex-direction:column;gap:12px}
+  header{display:flex;justify-content:space-between;align-items:center}
+  h1{font-size:1.1rem;margin:0}
+  .hud{display:flex;gap:8px;align-items:center}
+  .pill{background:rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;font-weight:700}
+  .game-area{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));border-radius:12px;padding:10px;box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+  canvas{width:100%;height:62vh;border-radius:8px;background:#071827;touch-action:none;display:block}
+  .controls{display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap}
+  .btn{padding:10px 14px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;font-weight:800;cursor:pointer}
+  .ghost{background:transparent;border:1px solid rgba(255,255,255,0.08)}
+  .small{color:var(--muted);font-size:13px}
+  /* overlays */
+  .overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(2,6,23,0.6),rgba(2,6,23,0.85));z-index:60;padding:20px}
+  .card{background:linear-gradient(180deg,#0f1724,#06070a);padding:18px;border-radius:12px;max-width:520px;width:100%;text-align:center;border:1px solid rgba(255,255,255,0.04)}
+  .chars{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+  .char{width:92px;padding:8px;border-radius:10px;background:linear-gradient(180deg,#0b1116,#071018);cursor:pointer;border:2px solid transparent}
+  .char.selected{transform:translateY(-6px);border-color:rgba(255,65,108,0.9);box-shadow:0 12px 30px rgba(0,0,0,0.5)}
+  .avatar{height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800}
+  .meta{font-size:13px;color:var(--muted);margin-top:8px}
+  /* result */
+  .result-title{font-size:20px;margin:6px 0}
+  .flex{display:flex;gap:8px;justify-content:center}
+  @media (max-width:640px){
+    canvas{height:58vh}
+    .char{width:74px}
+  }
 </style>
 </head>
 <body>
+  <div class="wrap">
+    <header>
+      <h1>Red Lock — 1v1 Mini Oyun</h1>
+      <div class="hud">
+        <div class="pill small" id="goalInfo">Hedef: 10 Gol</div>
+        <div class="pill small" id="timer">01:30</div>
+        <div class="pill small" id="score">Skor: 0</div>
+      </div>
+    </header>
 
-<canvas id="gameCanvas" width="360" height="600"></canvas>
+    <div class="game-area" role="main" aria-label="Oyun Alanı">
+      <canvas id="c" width="1280" height="720" aria-label="Oyun"></canvas>
+      <div class="controls">
+        <button class="btn" id="startBtn">Karakter Seç & Başla</button>
+        <button class="btn ghost" id="resetBtn">Sıfırla</button>
+        <div class="small" id="hint">Kontrol: Topa dokun/sürük -> bırak = şut</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay: karakter seçimi / start -->
+  <div class="overlay" id="startOverlay" style="display:flex">
+    <div class="card" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+      <h2 id="startTitle">Karakter Seç</h2>
+      <div class="meta">Her karakterin şut gücü farklıdır. Birini seç ve başla.</div>
+      <div class="chars" id="chars">
+        <div class="char" data-id="rei" data-power="1.00" title="Denge (orta)">
+          <div class="avatar" style="background:linear-gradient(135deg,#2b5fff,#7db8ff)">REI</div>
+          <div class="small">Denge</div>
+        </div>
+        <div class="char" data-id="nagi" data-power="1.15" title="Güçlü şut">
+          <div class="avatar" style="background:linear-gradient(135deg,#ff8a00,#ffd27a)">NAGI</div>
+          <div class="small">Güç</div>
+        </div>
+        <div class="char" data-id="bachira" data-power="0.95" title="Çeviklik">
+          <div class="avatar" style="background:linear-gradient(135deg,#7cffb2,#00c17a)">BCH</div>
+          <div class="small">Çeviklik</div>
+        </div>
+        <div class="char" data-id="rin" data-power="1.05" title="Teknik">
+          <div class="avatar" style="background:linear-gradient(135deg,#ff5ea3,#ffb0d1)">RIN</div>
+          <div class="small">Teknik</div>
+        </div>
+      </div>
+
+      <div class="meta">Rakip: <strong>Isagi</strong></div>
+      <div style="margin-top:12px" class="flex">
+        <button class="btn" id="overlayStart">Başla</button>
+        <button class="btn ghost" id="overlayCancel">İptal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay: result -->
+  <div class="overlay" id="resultOverlay" style="display:none">
+    <div class="card" role="dialog" aria-modal="true" id="resultCard">
+      <div id="resultTitle" class="result-title">Sonuç</div>
+      <div id="resultText" class="meta">Sonuç...</div>
+      <div style="margin-top:12px" class="flex">
+        <button class="btn" id="retryBtn">Tekrar Oyna</button>
+        <button class="btn ghost" id="menuBtn">Ana Sayfa</button>
+      </div>
+    </div>
+  </div>
 
 <script>
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+/* 1v1 mini oyun - çalışır, mobil uyumlu */
 
-// Top verileri
-let ball = { x: 180, y: 500, radius: 15, color: "white", vx: 0, vy: 0 };
-let isDragging = false;
-let dragStart = { x: 0, y: 0 };
+/* Ayarlar */
+const GAME_TIME = 90; // seconds
+const GOAL_TARGET = 10;
 
-// Kale verileri
-const goal = { x: 110, y: 50, width: 140, height: 20 };
+/* Canvas setup */
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+function resize() {
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.round(rect.width * dpr);
+  canvas.height = Math.round(rect.height * dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener('resize', resize);
+resize();
 
-// Fizik
-function update() {
-    ball.x += ball.vx;
-    ball.y += ball.vy;
+/* UI refs */
+const timerEl = document.getElementById('timer');
+const scoreEl = document.getElementById('score');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+const hint = document.getElementById('hint');
+const startOverlay = document.getElementById('startOverlay');
+const charsWrap = document.getElementById('chars');
+const overlayStart = document.getElementById('overlayStart');
+const overlayCancel = document.getElementById('overlayCancel');
+const resultOverlay = document.getElementById('resultOverlay');
+const resultTitle = document.getElementById('resultTitle');
+const resultText = document.getElementById('resultText');
+const retryBtn = document.getElementById('retryBtn');
+const menuBtn = document.getElementById('menuBtn');
+const goalInfo = document.getElementById('goalInfo');
 
-    // Sürtünme
-    ball.vx *= 0.98;
-    ball.vy *= 0.98;
+let selectedCharEl = null;
+let selectedCharId = 'rei';
+let selectedPower = 1.0;
 
-    // Duvar çarpması
-    if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) ball.vx *= -0.8;
-    if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) ball.vy *= -0.8;
+/* game state */
+let running = false;
+let startTime = 0;
+let elapsed = 0;
+let score = 0;
 
-    // Gol kontrol
-    if (ball.y - ball.radius < goal.y + goal.height &&
-        ball.x > goal.x &&
-        ball.x < goal.x + goal.width) {
-        ctx.fillStyle = "yellow";
-        ctx.font = "30px Arial";
-        ctx.fillText("GOOOL!", 120, 300);
-        ball.vx = 0;
-        ball.vy = 0;
-    }
+/* Entities */
+let ball, player, keeper;
+function createEntities(){
+  const w = canvas.width / (window.devicePixelRatio||1);
+  const h = canvas.height / (window.devicePixelRatio||1);
+
+  ball = {
+    x: w*0.5, y: h*0.78, r: Math.max(10, Math.min(24, w*0.02)),
+    vx:0, vy:0, moving:false
+  };
+
+  player = {
+    x: w*0.5, y: h*0.82, r: Math.max(12, w*0.03)
+  };
+
+  keeper = {
+    x: w*0.5, y: h*0.12, w: Math.min(160, w*0.24), h: Math.min(80, h*0.12),
+    vx:0, state:'idle', lastDive:0
+  };
+}
+createEntities();
+
+/* Goal area */
+function goalArea(){
+  const w = canvas.width / (window.devicePixelRatio||1);
+  const h = canvas.height / (window.devicePixelRatio||1);
+  const gw = w*0.5;
+  const gx = (w-gw)/2;
+  const gy = h*0.04;
+  return {x:gx, y:gy, w:gw, h:h*0.06};
 }
 
-// Çizim
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+/* rendering */
+function draw(){
+  const w = canvas.width / (window.devicePixelRatio||1);
+  const h = canvas.height / (window.devicePixelRatio||1);
+  // background
+  ctx.fillStyle = '#041219';
+  ctx.fillRect(0,0,w,h);
 
-    // Kale
-    ctx.fillStyle = "red";
-    ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
+  // field
+  ctx.fillStyle = '#0d2a18';
+  ctx.fillRect(12, h*0.12, w-24, h*0.72);
 
-    // Top
+  // goal
+  const g = goalArea();
+  ctx.fillStyle = '#e6f0ff';
+  ctx.fillRect(g.x, g.y, g.w, 6);
+  // posts
+  ctx.fillStyle = '#dce8f5';
+  ctx.fillRect(g.x-6, g.y, 6, g.h);
+  ctx.fillRect(g.x+g.w, g.y, 6, g.h);
+
+  // keeper
+  ctx.save();
+  ctx.translate(keeper.x, keeper.y);
+  // body
+  ctx.fillStyle = '#101827';
+  ctx.fillRect(-keeper.w/2, -keeper.h/2, keeper.w, keeper.h);
+  // head
+  ctx.fillStyle = '#f1c27d';
+  ctx.beginPath();
+  ctx.ellipse(0, -keeper.h/2 - 12, 16,16,0,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // player (static)
+  ctx.save();
+  ctx.fillStyle = '#2b57ff';
+  ctx.beginPath();
+  ctx.ellipse(player.x, player.y, player.r, player.r*1.2,0,0,Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+
+  // ball
+  ctx.beginPath();
+  ctx.fillStyle = '#fff';
+  ctx.arc(ball.x, ball.y, ball.r,0,Math.PI*2);
+  ctx.fill();
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // if dragging draw aim line
+  if(dragging && dragStart && dragPos){
+    ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+    ctx.lineWidth = 3;
     ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-    ctx.fillStyle = ball.color;
-    ctx.fill();
-    ctx.closePath();
+    ctx.moveTo(dragStart.x, dragStart.y);
+    ctx.lineTo(dragPos.x, dragPos.y);
+    ctx.stroke();
+  }
 }
 
-function gameLoop() {
-    update();
-    draw();
-    requestAnimationFrame(gameLoop);
-}
+/* physics & game step */
+function step(dt){
+  const w = canvas.width / (window.devicePixelRatio||1);
+  const h = canvas.height / (window.devicePixelRatio||1);
 
-function startDrag(x, y) {
-    if (Math.hypot(x - ball.x, y - ball.y) <= ball.radius) {
-        isDragging = true;
-        dragStart.x = x;
-        dragStart.y = y;
+  // update ball
+  if(ball.moving){
+    // gravity like arc
+    ball.vy += 900 * dt;
+    ball.x += ball.vx * dt;
+    ball.y += ball.vy * dt;
+
+    // ground collision
+    const groundY = h*0.88;
+    if(ball.y + ball.r > groundY){
+      ball.y = groundY - ball.r;
+      ball.vy *= -0.35;
+      ball.vx *= 0.6;
+      if(Math.abs(ball.vx) < 20 && Math.abs(ball.vy) < 20){
+        ball.moving = false;
+        ball.vx = 0; ball.vy = 0;
+        ball.x = player.x; ball.y = player.y - 40;
+      }
     }
-}
+    // walls
+    if(ball.x - ball.r < 12){ ball.x = 12 + ball.r; ball.vx *= -0.6;}
+    if(ball.x + ball.r > w-12){ ball.x = w-12 - ball.r; ball.vx *= -0.6;}
+  } else {
+    // resting ball follows player area
+    ball.x = player.x;
+    ball.y = player.y - 40;
+  }
 
-function endDrag(x, y) {
-    if (isDragging) {
-        ball.vx = (dragStart.x - x) / 10;
-        ball.vy = (dragStart.y - y) / 10;
-        isDragging = false;
+  // keeper behaviour (simple)
+  // small patrol + respond to incoming ball
+  keeper.vx *= 0.92;
+  // patrol movement
+  keeper.vx += Math.sin(Date.now()/1200) * 0.02;
+  keeper.x += keeper.vx;
+
+  // clamp keeper within posts area
+  const g = goalArea();
+  const half = keeper.w/2;
+  keeper.x = Math.max(g.x + half + 6, Math.min(g.x + g.w - half - 6, keeper.x));
+
+  // if ball moving toward goal and near, attempt dive
+  if(ball.moving && ball.vy < 0 && ball.y < h*0.6){
+    const predictedX = ball.x + ball.vx * 0.18;
+    const dist = Math.abs(predictedX - keeper.x);
+    const now = Date.now();
+    if(dist < keeper.w*0.9 && now - keeper.lastDive > 800){
+      keeper.lastDive = now;
+      // probability to save depends on small randomness and power
+      const saveChance = 0.7;
+      if(Math.random() < saveChance){
+        // goalie jumps to intercept
+        const dir = predictedX < keeper.x ? -1 : 1;
+        keeper.vx = dir * 700 * (0.9 + Math.random()*0.4);
+      } else {
+        // misses dive
+        keeper.vx = (predictedX < keeper.x ? -1:1) * 200;
+      }
     }
+  }
+
+  // collision: if ball close to keeper, deflect
+  if(ball.moving){
+    const dx = ball.x - keeper.x;
+    const dy = ball.y - keeper.y;
+    const dist = Math.hypot(dx, dy);
+    if(dist < ball.r + Math.max(keeper.w, keeper.h)/2){
+      // deflect the ball
+      ball.vx = (dx / Math.max(1, Math.abs(dx))) * (200 + Math.random()*200);
+      ball.vy = Math.abs(ball.vy) * 0.6;
+      // small bounce
+    }
+  }
+
+  // goal detection
+  const g2 = goalArea();
+  if(ball.moving && (ball.y - ball.r) < (g2.y + g2.h)){
+    if(ball.x > g2.x + 8 && ball.x < g2.x + g2.w - 8){
+      // check keeper proximity - if keeper very close treat as save else goal
+      const keeperDist = Math.abs(ball.x - keeper.x);
+      const blocked = keeperDist < keeper.w*0.6 && Math.abs(ball.y - keeper.y) < keeper.h;
+      if(!blocked){
+        // goal!
+        score += 1;
+        updateHUD();
+        ball.moving = false;
+        // brief celebration: freeze ball then reset
+        setTimeout(()=> resetBall(), 700);
+      } else {
+        // blocked - deflect already handled
+      }
+    } else {
+      // hits crossbar/outside -> bounce (handled by physics)
+      ball.vy = Math.abs(ball.vy) * 0.4;
+    }
+  }
 }
 
-// Mouse
-canvas.addEventListener("mousedown", e => startDrag(e.offsetX, e.offsetY));
-canvas.addEventListener("mouseup", e => endDrag(e.offsetX, e.offsetY));
+/* reset ball to player */
+function resetBall(){
+  ball.moving = false;
+  ball.vx = 0; ball.vy = 0;
+  ball.x = player.x; ball.y = player.y - 40;
+}
 
-// Dokunmatik
-canvas.addEventListener("touchstart", e => {
-    let rect = canvas.getBoundingClientRect();
-    let touch = e.touches[0];
-    startDrag(touch.clientX - rect.left, touch.clientY - rect.top);
+/* UI updates */
+function updateHUD(){
+  timerEl.textContent = formatTime(Math.max(0, GAME_TIME - Math.floor(elapsed)));
+  scoreEl.textContent = `Skor: ${score}`;
+}
+
+/* timer */
+function formatTime(s){
+  const mm = Math.floor(s/60).toString().padStart(2,'0');
+  const ss = Math.floor(s%60).toString().padStart(2,'0');
+  return `${mm}:${ss}`;
+}
+
+/* input handling - pointer events */
+let dragging = false;
+let dragStart = null;
+let dragPos = null;
+
+function getPointer(evt){
+  const rect = canvas.getBoundingClientRect();
+  const p = evt.touches ? evt.touches[0] : evt;
+  return { x: p.clientX - rect.left, y: p.clientY - rect.top };
+}
+
+canvas.addEventListener('pointerdown', (e)=>{
+  if(!running) return;
+  const rect = canvas.getBoundingClientRect();
+  const p = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  // allow start only if near ball
+  if(Math.hypot(p.x - ball.x, p.y - ball.y) <= ball.r*2.6 && !ball.moving){
+    dragging = true; dragStart = p; dragPos = p;
+    hint.textContent = 'Sürükle ve bırak: şut!';
+    canvas.setPointerCapture(e.pointerId);
+  }
 });
-canvas.addEventListener("touchend", e => {
-    let rect = canvas.getBoundingClientRect();
-    let touch = e.changedTouches[0];
-    endDrag(touch.clientX - rect.left, touch.clientY - rect.top);
+canvas.addEventListener('pointermove', (e)=>{
+  if(!dragging) return;
+  const rect = canvas.getBoundingClientRect();
+  dragPos = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+});
+canvas.addEventListener('pointerup', (e)=>{
+  if(!dragging) return;
+  dragging = false;
+  const rect = canvas.getBoundingClientRect();
+  const p = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  shootFromDrag(dragStart, p);
+  dragStart = null; dragPos = null;
+  hint.textContent = 'Kontrol: Topa dokun/sürük -> bırak';
 });
 
-gameLoop();
+/* fallback for touch events on some browsers */
+canvas.addEventListener('touchstart', (e)=>{ /* pointer events handle this */ }, {passive:true});
+
+/* compute shot */
+function shootFromDrag(start, end){
+  const dx = start.x - end.x;
+  const dy = start.y - end.y;
+  const dist = Math.hypot(dx, dy);
+  if(dist < 6) return;
+  // map drag distance to velocity
+  // larger drag => stronger shot. Multiply by character power.
+  const power = clamp(dist * 3.2, 120, 2600) * selectedPower;
+  const angle = Math.atan2(dy, dx);
+  ball.vx = Math.cos(angle) * power;
+  ball.vy = Math.sin(angle) * power * 0.95;
+  ball.moving = true;
+}
+
+/* helper */
+function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+
+/* game loop */
+let last = performance.now();
+function loop(now){
+  const dt = (now - last)/1000;
+  last = now;
+  if(running){
+    elapsed = (Date.now() - startTime)/1000;
+    if(elapsed >= GAME_TIME){
+      running = false;
+      endGame();
+    }
+    step(dt);
+  }
+  draw();
+  // aim drawing
+  if(dragging && dragStart && dragPos){
+    ctx.save();
+    ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(dragStart.x, dragStart.y);
+    ctx.lineTo(dragPos.x, dragPos.y);
+    ctx.stroke();
+    ctx.restore();
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* start/reset/end */
+function startRound(){
+  // init ents & vars
+  resize(); createEntities();
+  score = 0; elapsed = 0; updateHUD();
+  running = true; startTime = Date.now(); last = performance.now();
+  resultOverlay.style.display = 'none';
+  hint.textContent = 'Oyun başladı! Topa dokun/sürük -> bırak';
+  // place ball
+  resetBall();
+}
+
+function resetAll(){
+  running = false;
+  elapsed = 0;
+  score = 0;
+  createEntities();
+  resetBall();
+  updateHUD();
+  hint.textContent = 'Karakter seçip Başla tuşuna basın';
+}
+
+function endGame(){
+  running = false;
+  // decide win/lose
+  const won = score >= GOAL_TARGET;
+  resultOverlay.style.display = 'flex';
+  if(won){
+    resultTitle.textContent = 'KAZANDIN!';
+    resultText.textContent = `Tebrikler — ${score} gol attın.`;
+  } else {
+    resultTitle.textContent = 'SÜRE BİTTİ';
+    resultText.textContent = `Toplam ${score} gol attın. Tekrar dene.`;
+  }
+}
+
+/* UI wiring */
+startBtn.addEventListener('click', ()=> startOverlay.style.display = 'flex');
+overlayCancel.addEventListener('click', ()=> startOverlay.style.display = 'none');
+overlayStart.addEventListener('click', ()=>{
+  // if no char selected, default
+  startOverlay.style.display = 'none';
+  startRound();
+});
+resetBtn.addEventListener('click', resetAll);
+
+retryBtn.addEventListener('click', ()=>{
+  resultOverlay.style.display = 'none';
+  // reopen selection to pick char again
+  startOverlay.style.display = 'flex';
+});
+menuBtn.addEventListener('click', ()=> window.location.href = 'index.html');
+
+/* character selection logic */
+charsWrap.querySelectorAll('.char').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    charsWrap.querySelectorAll('.char').forEach(c=>c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedCharEl = el;
+    selectedCharId = el.dataset.id;
+    selectedPower = parseFloat(el.dataset.power) || 1.0;
+    // update overlay Start label
+    overlayStart.textContent = `Başla (${selectedCharId.toUpperCase()})`;
+  });
+});
+// default select first
+const first = charsWrap.querySelector('.char');
+if(first){ first.classList.add('selected'); selectedCharEl = first; selectedCharId = first.dataset.id; selectedPower = parseFloat(first.dataset.power); overlayStart.textContent = `Başla (${selectedCharId.toUpperCase()})`; }
+
+/* ensure HUD shows initial values */
+updateHUD();
+
+/* utility: when score changes and reaches target trigger win */
+const scoreObserver = new MutationObserver(()=>{
+  if(score >= GOAL_TARGET && running){
+    running = false;
+    endGame();
+  }
+});
+scoreObserver.observe(scoreEl, {childList:true, characterData:true, subtree:true});
+
 </script>
-
 </body>
 </html>
