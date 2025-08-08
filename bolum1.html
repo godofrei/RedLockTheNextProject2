@@ -3,55 +3,72 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Red Lock - Bölüm 1</title>
+<title>Bölüm 1 - Red Lock</title>
 <style>
     body {
         margin: 0;
-        font-family: 'Arial', sans-serif;
+        font-family: Arial, sans-serif;
+        background-color: black;
         color: white;
         overflow-x: hidden;
     }
+
     .scene {
         position: relative;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 40px;
-        background-attachment: fixed;
+        height: 100vh;
         background-size: cover;
         background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
         animation: fadeIn 1.5s ease-in-out;
     }
-    .scene p {
-        background: rgba(0, 0, 0, 0.6);
-        padding: 20px;
-        border-radius: 10px;
-        font-size: 1.3rem;
-        max-width: 800px;
-        line-height: 1.8;
-    }
+
     @keyframes fadeIn {
         from {opacity: 0;}
         to {opacity: 1;}
     }
+
+    .speech-bubble {
+        position: relative;
+        background: rgba(255,255,255,0.85);
+        color: black;
+        padding: 15px;
+        border-radius: 15px;
+        max-width: 70%;
+        font-size: 1.1em;
+        box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .speech-bubble::after {
+        content: '';
+        position: absolute;
+        bottom: -20px;
+        left: 40px;
+        border-width: 10px;
+        border-style: solid;
+        border-color: rgba(255,255,255,0.85) transparent transparent transparent;
+    }
+
     .buttons {
         text-align: center;
-        padding: 30px;
-        background: #000;
+        margin: 30px;
     }
+
     .buttons a {
         display: inline-block;
-        margin: 10px;
-        padding: 15px 25px;
         background: crimson;
         color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin: 10px;
         text-decoration: none;
         font-weight: bold;
-        border-radius: 8px;
         transition: 0.3s;
     }
+
     .buttons a:hover {
         background: darkred;
     }
@@ -59,68 +76,34 @@
 </head>
 <body>
 
-<div class="scene" style="background-image: url('https://i.ibb.co/8Y6H1hG/manga-bg1.jpg');">
-    <p>Soğuk bir rüzgar stadın boş tribünlerinden esiyordu. Isagi, gözlerini sahanın merkezine dikmiş, sessizce bekliyordu. Rei ise birkaç adım ötede, dudaklarının kenarında alaycı bir gülümsemeyle ona bakıyordu.</p>
+<!-- SAHNE 1 -->
+<div class="scene" style="background-image: url('img/karakter1.jpg');">
+    <div class="speech-bubble">Isagi: "Burası... Red Lock tesisi mi? Hayal ettiğimden çok daha büyük..."</div>
 </div>
 
-<div class="scene" style="background-image: url('https://i.ibb.co/9hWc3rx/manga-bg2.jpg');">
-    <p>"Hazır mısın?" diye sordu Rei, sesi meydan okuyan bir tonda. Isagi derin bir nefes aldı. "Hazır değilim ama bu beni durdurmayacak." dedi kararlılıkla.</p>
+<!-- SAHNE 2 -->
+<div class="scene" style="background-image: url('img/karakter2.jpg');">
+    <div class="speech-bubble">Rei: "Hoş geldin, Isagi. Artık geri dönüş yok. Burada sadece en iyiler hayatta kalır."</div>
 </div>
 
-<div class="scene" style="background-image: url('https://i.ibb.co/FwnybN8/manga-bg3.jpg');">
-    <p>Top, sahanın tam ortasında duruyordu. Ayak sesleri yankılandı, ardından Rei hızlı bir adım atarak topa ilk dokunan kişi oldu. Isagi'nin gözleri bir anlığına büyüdü.</p>
+<!-- SAHNE 3 -->
+<div class="scene" style="background-image: url('img/karakter3.jpg');">
+    <div class="speech-bubble">Isagi: "Ben hazırım. Ne olursa olsun, buradan şampiyon olarak çıkacağım."</div>
 </div>
 
-<div class="scene" style="background-image: url('https://i.ibb.co/hZwP7Kj/manga-bg4.jpg');">
-    <p>"Hızın iyi... ama yeterli değil!" Rei'nin sesi, tribünlerde yankılanırken, Isagi hızla topu kapmak için öne atıldı.</p>
+<!-- SAHNE 4 -->
+<div class="scene" style="background-image: url('img/karakter4.jpg');">
+    <div class="speech-bubble">Antrenör: "O zaman başlayalım. İlk test: hız, teknik ve kararlılık!"</div>
 </div>
 
-<div class="scene" style="background-image: url('https://i.ibb.co/JcfqJ2v/manga-bg5.jpg');">
-    <p>Top ayağında, Isagi bir an tereddüt etti. Geçmişteki başarısız anları aklına geldi. Fakat bu kez, vazgeçmeyecekti.</p>
+<!-- SAHNE 5 -->
+<div class="scene" style="background-image: url('img/karakter5.jpg');">
+    <div class="speech-bubble">Isagi: "Kalbim deli gibi atıyor... Ama bu, hayatımın fırsatı!"</div>
 </div>
 
-<div class="scene" style="background-image: url('https://i.ibb.co/nMtjTh2/manga-bg6.jpg');">
-    <p>"Göster bana Isagi... egoistliğini göster!" Rei bağırdı. Isagi, kelimeleri bir meydan okuma gibi içine çekti.</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/1GySZ5q/manga-bg7.jpg');">
-    <p>Tribünlerde hayali bir kalabalığın çığlıkları yankılandı. Sanki bütün dünya bu maçı izliyordu. Isagi topu kontrol etti ve kaleye yöneldi.</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/92tKSC0/manga-bg8.jpg');">
-    <p>Rei hızla arkasından geldi. Ayak sesleri gittikçe yaklaşıyordu. "Kaçamazsın!" diye haykırdı Rei.</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/6s6nX9L/manga-bg9.jpg');">
-    <p>Isagi, ani bir dönüşle Rei'yi geçti. Bu hareket ona birkaç saniye kazandırmıştı. Topu sürerken aklı sadece bir şey düşünüyordu: Gol.</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/SVr7nZj/manga-bg10.jpg');">
-    <p>Kale önündeydi. Isagi şut pozisyonuna geçti, gözleri sadece ağları görüyordu. Ancak Rei yeniden yanına yetişmişti.</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/02d4V6h/manga-bg11.jpg');">
-    <p>"Bunu yapamazsın Isagi!" dedi Rei. Ama Isagi'nin gözleri hiç olmadığı kadar kararlıydı. "Senin dediğin değil, benim istediğim olacak!"</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/QNmh5Xy/manga-bg12.jpg');">
-    <p>Bir anda şutunu çekti. Top, sanki zaman yavaşlamış gibi havada süzüldü. Rei sadece izleyebildi.</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/DwBfNzk/manga-bg13.jpg');">
-    <p>Top ağlara çarptığında, sahanın sessizliği bir alkış tufanına dönüştü. Isagi derin bir nefes verdi.</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/jy4gJMX/manga-bg14.jpg');">
-    <p>Rei gülümsedi. "Demek bu senin egoistliğin ha?" dedi. Isagi ise sadece başını salladı. "Bu, benim yolum."</p>
-</div>
-
-<div class="scene" style="background-image: url('https://i.ibb.co/WvBrQZL/manga-bg15.jpg');">
-    <p>Güneş batarken, sahada sadece iki gölge kaldı. Yeni bir mücadele ufukta görünüyordu.</p>
-</div>
-
+<!-- Butonlar -->
 <div class="buttons">
-    <a href="index.html">Ana Sayfa</a>
+    <a href="index.html">Ana Sayfaya Dön</a>
     <a href="bolum2.html">Diğer Bölüme Geç</a>
 </div>
 
