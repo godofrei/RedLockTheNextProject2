@@ -1,493 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Red Lock — Bölüm 1</title>
-<style>
-  :root{
-    --accent1:#ff4b2b;
-    --accent2:#ff416c;
-    --overlay: rgba(0,0,0,0.56);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family: "Inter", "Helvetica Neue", Arial, sans-serif;background:#000;color:#fff;}
-  a{color:inherit;text-decoration:none}
-
-  /* Genel sayfa yapısı */
-  .page{width:100%;min-height:100%;overflow-x:hidden}
-
-  /* Her sahne full-screen panel */
-  .scene{
-    position:relative;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:6vh 6vw;
-    text-align:left;
-    overflow:hidden;
-  }
-
-  /* Gömülü SVG panel (arka plan görselimiz) */
-  .panel-art{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:-3;
-    object-fit:cover;
-    /* manga hissi: mono + kontrast */
-    filter: grayscale(100%) contrast(1.06) brightness(0.96);
-    transform-origin:center;
-    will-change: transform;
-  }
-
-  /* Karartma (vignette) */
-  .vignette{
-    position:absolute;
-    inset:0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.66));
-    z-index:-2;
-    pointer-events:none;
-  }
-
-  /* İçerik kutusu (manga baloncuğu hissi) */
-  .content{
-    position:relative;
-    z-index:2;
-    max-width:980px;
-    color:#fff;
-    animation: fadeUp 0.9s ease both;
-    padding: 18px;
-  }
-
-  .chapter-tag{
-    display:inline-block;
-    background: rgba(0,0,0,0.7);
-    color:#fff;
-    padding:6px 12px;
-    border-radius:8px;
-    font-weight:700;
-    margin-bottom:12px;
-    border:2px solid rgba(255,255,255,0.06);
-  }
-
-  h1{
-    margin:6px 0 10px 0;
-    font-size: clamp(24px, 4.6vw, 48px);
-    line-height:1;
-    letter-spacing:1.2px;
-    -webkit-text-stroke: 2px rgba(0,0,0,0.95);
-    text-transform:uppercase;
-  }
-
-  .lead{
-    display:inline-block;
-    margin: 12px 0 20px 0;
-    font-size: clamp(14px, 2.2vw, 20px);
-    background: rgba(255,255,255,0.96);
-    color:#111;
-    padding: 12px 18px;
-    border-radius: 10px;
-    font-weight:700;
-    border:3px solid #000;
-    box-shadow: 6px 10px 0 rgba(0,0,0,0.22);
-  }
-
-  p{
-    font-size: clamp(15px, 1.9vw, 18px);
-    line-height:1.65;
-    background: rgba(0,0,0,0.45);
-    padding:12px 14px;
-    border-radius:8px;
-    border:1px solid rgba(255,255,255,0.04);
-    margin-top:12px;
-  }
-
-  .actions{ margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; }
-  .btn{
-    display:inline-block;
-    padding:12px 26px;
-    border-radius:999px;
-    background: linear-gradient(45deg,var(--accent1),var(--accent2));
-    color:white;
-    font-weight:800;
-    box-shadow:0 10px 30px rgba(0,0,0,0.45);
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-  .btn:hover{ transform: translateY(-6px) scale(1.03); box-shadow: 0 18px 40px rgba(0,0,0,0.5); }
-
-  .end-cta{ text-align:center; padding:40px 16px; }
-
-  @keyframes fadeUp{
-    from{opacity:0; transform:translateY(10px)}
-    to{opacity:1; transform:translateY(0)}
-  }
-
-  /* Responsive */
-  @media (max-width:720px){
-    .lead{ font-size:16px; padding:10px 14px;}
-    p{ font-size:15px; padding:12px;}
-    h1{ font-size: clamp(18px, 8vw, 28px); -webkit-text-stroke: 1.6px; }
-  }
-
-  /* Küçük estetik: sayfa yüklenince body opacity */
-  body{opacity:0; animation:pageIn .6s ease forwards}
-  @keyframes pageIn{ to{opacity:1} }
-
-</style>
-</head>
-<body>
-  <div class="page">
-
-    <!-- --- 1. SAHNE --- -->
-    <section class="scene" data-scene="1">
-      <!-- Gömülü SVG: çizgisel manga panel that we 'invented' -->
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <defs>
-          <linearGradient id="g1-1" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/>
-          </linearGradient>
-        </defs>
-        <rect width="100%" height="100%" fill="#ffffff"/>
-        <!-- motion lines -->
-        <g stroke="#000" stroke-width="8" stroke-linecap="round" opacity="0.15">
-          <path d="M0,900 C400,700 800,850 1200,600 1600,350 1920,500" fill="none"/>
-          <path d="M0,750 C500,600 900,750 1400,450 1700,300 1920,420" fill="none"/>
-        </g>
-        <!-- silhouette -->
-        <g transform="translate(220,120) scale(1.1)" fill="#000">
-          <ellipse cx="900" cy="650" rx="300" ry="350" opacity="0.95"/>
-          <path d="M760 420 C830 360 980 360 1060 420 C1000 390 900 380 760 420 Z" />
-        </g>
-        <!-- halftone dots (subtle) -->
-        <g fill="#000" opacity="0.06">
-          <!-- repeated small circles -->
-          <circle cx="70" cy="70" r="6"/><circle cx="170" cy="90" r="6"/><circle cx="270" cy="120" r="5"/>
-          <circle cx="340" cy="180" r="5"/><circle cx="520" cy="240" r="4"/>
-        </g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 1</div>
-        <h1>Başlangıç — Kapıların Ardında</h1>
-        <div class="lead">Red Lock’un kapıları açıldı; içeri giren her nefes, yeni bir sınavın habercisiydi.</div>
-        <p>
-          Kapı ağır ağır açıldı. Metalin soğuk sesi, Rei’nin kulaklarında çınladı. İçeri girdiğinde
-          karşısında bir arena değil, hayatının sahnesi duruyordu. Çevresindeki boş tribünler, bir
-          tür sessiz tanıklıkla izliyordu onu; duvarlardaki dev paneller ise geçmişten gelen gölgeleri
-          taşıyordu. Rei derin bir nefes aldı ve adımını attı.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 2. SAHNE --- -->
-    <section class="scene" data-scene="2">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <!-- energetic radial lines -->
-        <g stroke="#000" stroke-width="6" opacity="0.12">
-          <path d="M960 540 L1920 0 M960 540 L0 0 M960 540 L1920 1080 M960 540 L0 1080" />
-        </g>
-        <!-- player silhouette left -->
-        <g transform="translate(140,120)" fill="#000">
-          <path d="M600 200 C660 240 760 240 820 200 L820 420 L600 420 Z"/>
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 2</div>
-        <h1>İlk İzlenim — Yazılı Söz</h1>
-        <div class="lead">Duvarlardaki yazı: “Egoist olmak sadece kendini beğenmek değildir.”</div>
-        <p>
-          Dev ekranın yüzeyinde beliren cümle, Rei’yi durdurdu. Söz basit ama ağırdı — bir aynaydı sanki.
-          Kendi içindeki fısıltıları susturup, doğruca gerçekliği görmesini istiyordu. Oradaki herkes için
-          bu bir uyarıydı; ama Rei için bir meydan okumaydı.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 3. SAHNE --- -->
-    <section class="scene" data-scene="3">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="5" opacity="0.14">
-          <path d="M0 300 C400 150 800 350 1200 200 1600 40 1920 160" fill="none"/>
-          <path d="M0 420 C400 300 800 500 1200 340" fill="none"/>
-        </g>
-        <g transform="translate(900,480)" fill="#000">
-          <ellipse cx="0" cy="0" rx="200" ry="260" />
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 3</div>
-        <h1>İç Ses — Sessiz Çatışma</h1>
-        <div class="lead">Kalabalık yoktu; ama kalbinin içindeki sesler boğuk bir koro gibiydi.</div>
-        <p>
-          Isagi, adımlarını yavaşlattı. Her adım, geçmişin bir yankısı gibiydi; başarıların gölgesi,
-          başarısızlıkların izleri ardında sürükleniyordu. İçindeki çelişki, dışardaki sessizlikle çatışıyordu.
-          Şimdi ne yapacağı, geleceğine yön verecekti.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 4. SAHNE --- -->
-    <section class="scene" data-scene="4">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.16">
-          <path d="M0 800 C300 600 700 780 1100 520 1500 240 1920 420" fill="none"/>
-        </g>
-        <g transform="translate(360,200)" fill="#000">
-          <path d="M300 180 C380 130 520 130 620 180 L620 420 L300 420 Z"/>
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 4</div>
-        <h1>Karanlık Motivasyon</h1>
-        <div class="lead">Egoist olmak, başkalarını ezecek bir akım değilmiş gibi görünüyordu; daha çok kendini zorlamakmış.</div>
-        <p>
-          Isagi adımlarını sıklaştırdı. Her antrenman, her tek vuruş, ona sınırlarını biraz daha gösteriyordu.
-          Acı çekmeden öğrenilen derslerin değeri yoktu; ve burada acının bir anlamı vardı — güçlü olmak.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 5. SAHNE --- -->
-    <section class="scene" data-scene="5">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="6" opacity="0.12">
-          <path d="M0 100 C400 280 800 80 1200 300 1600 540 1920 400" fill="none"/>
-        </g>
-        <g transform="translate(740,400)" fill="#000">
-          <rect x="-240" y="-160" width="480" height="320" rx="120"/>
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 5</div>
-        <h1>Deneme — Tekrarlar</h1>
-        <div class="lead">Dakikalar gözüktüğünden daha yoğundu; her tekrar bir ipucu gizliyordu.</div>
-        <p>
-          Saatler ağır ağır geçti; topun her temasında bir ritim buldu. Her başarısız vuruş bir nefes aldırdı,
-          ve her başarılı deneme biraz daha güven verdi. İlerlemek, sabır ve defalarca denemekti.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 6. SAHNE --- -->
-    <section class="scene" data-scene="6">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="8" opacity="0.14">
-          <path d="M0 500 C400 360 800 540 1200 300 1600 60 1920 200" fill="none"/>
-        </g>
-        <g transform="translate(500,260)" fill="#000">
-          <path d="M220 120 C290 70 420 70 480 120 L480 420 L220 420 Z"/>
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 6</div>
-        <h1>İlk Çarpışma</h1>
-        <div class="lead">Bir rakip aniden belirdi; her şey bir anda hızlandı.</div>
-        <p>
-          Parkta rastlantı gibi başlayan idman, bir anda sınav havasına büründü. Rakip genç yetenek, ona meydan okudu.
-          Gözler, dizilim ve adımlar; kısa bir süre içinde gerçek bir sınav başladı. Bu, Red Lock’un doğasıydı.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 7. SAHNE --- -->
-    <section class="scene" data-scene="7">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.15">
-          <path d="M0 640 C400 450 800 720 1200 430 1600 160 1920 300" fill="none"/>
-        </g>
-        <g transform="translate(820,380)" fill="#000">
-          <ellipse cx="0" cy="0" rx="220" ry="300" />
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 7</div>
-        <h1>Temas — Hızın Anı</h1>
-        <div class="lead">Topla kurulan ilişki, bir ritim gibiydi; her hareket anlam taşıyordu.</div>
-        <p>
-          Top ayağında dans ederken Rei, oyunun ritmine uydu. Her dokunuş, her pas bir hamle; her hamle bir hesap.
-          Bu anlarda düşünmek değil, hissetmek gerekiyordu. Oyunun kalbi atmaya başladı.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 8. SAHNE --- -->
-    <section class="scene" data-scene="8">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="6" opacity="0.13">
-          <path d="M0 200 C400 80 800 240 1200 90 1600 -40 1920 60" fill="none"/>
-        </g>
-        <g transform="translate(300,520)" fill="#000">
-          <rect x="-180" y="-240" width="360" height="480" rx="90"/>
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 8</div>
-        <h1>Rakiplerin Gözü</h1>
-        <div class="lead">Rakipler soğuk, odaklıydı; onların bakışları bir sınav raporu gibiydi.</div>
-        <p>
-          Her oyuncu burada bir hikaye taşıyordu; kimi kibirle, kimi utançla, kimi umutla doluydu.
-          Bakışlar karşılaştığında, bir bilinç doğdu: burada ayakta kalmak, kendin olmakla alakalı değildi —
-          burada sınırlarını zorlamakla alakalıydı.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 9. SAHNE --- -->
-    <section class="scene" data-scene="9">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.14">
-          <path d="M0 520 C500 360 900 580 1400 300 1800 60 1920 140" fill="none"/>
-        </g>
-        <g transform="translate(980,430)" fill="#000">
-          <ellipse cx="0" cy="0" rx="180" ry="240" />
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 9</div>
-        <h1>Şut — Zamanın Yavaşlaması</h1>
-        <div class="lead">Kalecinin gözü, topun takipçisi oldu; saniyeler uzadı.</div>
-        <p>
-          Rei topa doğru eğildi. Her şey bir an için durdu: Nefesler, kalp sesleri, hatta ışıklar sanki
-          çekildi. O an, sadece istekleri kaldı — topu ağlarla kavuşturmak. Ayaklanıp vurdu.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 10. SAHNE --- -->
-    <section class="scene" data-scene="10">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="9" opacity="0.15">
-          <path d="M0 800 C300 620 700 840 1100 560 1500 280 1920 420" fill="none"/>
-        </g>
-        <g transform="translate(760,320)" fill="#000">
-          <rect x="-220" y="-260" width="440" height="520" rx="110"/>
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 10</div>
-        <h1>Gol — Sessizlik ve Çığlık</h1>
-        <div class="lead">Top ağlarla buluştu; önce bir sessizlik, sonra patlayan bir enerji.</div>
-        <p>
-          Ağların titremesiyle tribünlerde kısa bir durgunluk oldu; sonra bir ateş gibi coşku yayıldı.
-          Bu gol, tüm hikâyeyi değiştirmiyordu ama bir kapı aralıyordu: gücün, cesaretin ve devam etme isteğinin.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 11. SAHNE --- -->
-    <section class="scene" data-scene="11">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="6" opacity="0.12">
-          <path d="M0 240 C480 120 880 260 1360 120 1760 20 1920 40" fill="none"/>
-        </g>
-        <g transform="translate(420,420)" fill="#000">
-          <ellipse cx="0" cy="0" rx="260" ry="340" />
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 11</div>
-        <h1>Sona Doğru — Ter ve Bakışlar</h1>
-        <div class="lead">Maç bitişine yakın, her adımın ağırlığı arttı.</div>
-        <p>
-          Nefes nefese, ter içinde; ama gözlerindeki ışık hâlâ sönmemişti. Rakiplerin bakışı artık farklıydı:
-          sadece engel değil, bazen saygının habercisiydi. Rei bunun farkındaydı ve yüzünde ince bir tebessüm belirdi.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 12. SAHNE --- -->
-    <section class="scene" data-scene="12">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="5" opacity="0.13">
-          <path d="M0 480 C380 320 820 520 1280 320 1680 160 1920 200" fill="none"/>
-        </g>
-        <g transform="translate(820,260)" fill="#000">
-          <rect x="-200" y="-220" width="400" height="440" rx="100"/>
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 12</div>
-        <h1>Yeni İsimler</h1>
-        <div class="lead">Duvarlardaki çerçeveler, yeni isimleri bekliyordu.</div>
-        <p>
-          Koridorlara döndüğünde yaşayan panolar gördü; eskiden yapılmış zaferlerin isimleri. Boş çerçevelerden
-          biri sanki onun adını çağırıyordu. İçinde hem gurur hem de merak kabardı: Acaba adı o çerçeveye mi yazılacaktı?
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 13. SAHNE --- -->
-    <section class="scene" data-scene="13">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="8" opacity="0.14">
-          <path d="M0 360 C480 200 920 400 1400 220 1800 80 1920 120" fill="none"/>
-        </g>
-        <g transform="translate(680,340)" fill="#000">
-          <ellipse cx="0" cy="0" rx="240" ry="320" />
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 13</div>
-        <h1>Koridorların Fısıltısı</h1>
-        <div class="lead">Her kapı, bir sır saklıyordu; her adımda merak çoğalıyor.</div>
-        <p>
-          Koridorlarda yürürken duvarların anlattığı hikâyeleri dinledi. Bazı isimler alkışlandırılmış, bazıları unutulmuştu.
-          Kendi isminin bu döngüye nerede oturacağını merak ediyordu; ama bildiği bir şey vardı — mücadele asla boşa gitmezdi.
-        </p>
-      </div>
-    </section>
-
-    <!-- --- 14. SAHNE --- -->
-    <section class="scene" data-scene="14">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.12">
-          <path d="M0 220 C420 120 840 260 1260 120 1680 0 1920 20" fill="none"/>
-        </g>
-        <g transform="translate(520,260)" fill="#000">
-          <rect x="-220" y="-200" width="440" height="400" rx="100"/>
-        </g>
-      </svg>
-      <div class="vignette"></div>
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 1 • SAHNE 14</div>
-        <h1>Seçim Kapısı</h1>
-        <div class="lead">Üzerinde sadece iki kelime yazılıydı: “Seçimini Yap”.</div>
-        <p>
-          Bir kapının önünde durdu. Kapının tokmağı soğuktu; üstünde yazan kelime onu çağırıyordu.
-          İçeri adım atmak mı, beklemek mi? Rei elini tokmağa koydu ve bilincini topladı. Seçim kaçınılmazdı.
-          <!DOCTYPE html>
-<html lang="tr">
-<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Red Lock - Bölüm 1</title>
@@ -496,49 +9,169 @@
         margin: 0;
         font-family: Arial, sans-serif;
         color: white;
-        background: url('arkaplan1.jpg') no-repeat center center fixed;
+        overflow-x: hidden;
+    }
+    .scene {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background-attachment: fixed;
         background-size: cover;
-        animation: fadeIn 1.5s ease-in;
+        background-position: center;
+        padding: 50px;
+        animation: fadeIn 1.5s ease-in-out;
+    }
+    .overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+    }
+    .content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        font-size: 1.3em;
+        line-height: 1.6em;
     }
     @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {opacity: 0;}
+        to {opacity: 1;}
     }
-    .kararma {
-        background: rgba(0, 0, 0, 0.6);
-        padding: 20px;
+    .buttons {
+        text-align: center;
+        padding: 30px;
+        background: black;
     }
-    .butonlar {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        margin-top: 40px;
-    }
-    .butonlar a {
-        background: #ff3333;
-        padding: 12px 20px;
-        text-decoration: none;
+    .buttons a {
+        display: inline-block;
+        margin: 10px;
+        padding: 15px 25px;
+        font-size: 1.2em;
+        background: red;
         color: white;
+        text-decoration: none;
         border-radius: 8px;
-        font-size: 18px;
-        transition: background 0.3s;
+        transition: 0.3s;
     }
-    .butonlar a:hover {
-        background: #cc0000;
+    .buttons a:hover {
+        background: darkred;
     }
 </style>
 </head>
 <body>
-<div class="kararma">
-    <h1>Bölüm 1: Başlangıç</h1>
-    <p>Red Lock sahasında ilk adımlarını atan oyuncular, geleceğin kaderini belirleyecek yolculuklarına hazırlanıyordu...</p>
-    <p>Takım arkadaşlığı, rekabet ve hırs... Hepsi bu yerde birleşiyordu.</p>
-    <div class="butonlar">
-        <a href="bolum2.html">Diğer Bölüme Geç</a>
-        <a href="index.html">Ana Sayfaya Dön</a>
+
+<div class="scene" style="background-image: url('bg1.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Red Lock'un demir kapıları açıldığında Rei, derin bir nefes aldı. Bu an, hayatının dönüm noktasıydı. Artık geri dönüş yoktu...</p>
     </div>
 </div>
+
+<div class="scene" style="background-image: url('bg2.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>İlk adımlarını atarken, duvarlarda yankılanan ayak sesleri ona yalnız olmadığını hatırlatıyordu. Isagi, köşede onu dikkatle izliyordu.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg3.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>“Burada zayıflara yer yok,” dedi Isagi, gözleri kararlı bir şekilde Rei’ye kilitlenmişti. Rei ise gülümsedi. “Ben zayıf değilim.”</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg4.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Antrenman sahasında çığlıklar, pas sesleri ve topun fileye çarpan yankısı duyuluyordu. Herkes, ilk maç için hazırlanıyordu.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg5.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Rei, topu kontrol ederken karşısına Rin çıktı. “Beni geçebileceğini mi sanıyorsun?” dedi alaycı bir şekilde. Rei’nin gözleri parladı.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg6.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Kalabalık kenardan tezahürat yapıyordu. Rei, hızla yön değiştirip topu Rin’in yanından geçirdi. Taraftarlar ayağa kalktı.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg7.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>İlk yarı bitmişti. Rei, ter içinde soyunma odasına döndü. Isagi kapıda onu bekliyordu. “İkinci yarı asıl savaş başlıyor.”</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg8.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Maç yeniden başladığında, yağmur yağmaya başlamıştı. Saha kaygandı ama bu Rei’yi durdurmadı. Aksine, daha da hızlandı.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg9.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Isagi ile Rei karşı karşıya geldi. Tribünler sessizleşti. Top ikisinin arasında, kaderini bekliyordu.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg10.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Bir anda Rei topu kapıp ceza sahasına girdi. Kaleciyle karşı karşıya kaldığında zaman yavaşladı.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg11.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Şutunu çekti… Top ağlara gittiğinde bütün stat patladı. Takım arkadaşları ona sarıldı.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg12.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Maç bitmişti ama bu sadece başlangıçtı. Rei, Isagi’nin yanına gidip elini uzattı. “Sıradaki maçta görüşürüz.”</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg13.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Isagi gülümsedi. “Bu daha ilk sayfa. Red Lock’ta hayatta kalmak istiyorsan, her gününü savaş gibi yaşamalısın.”</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg14.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>Rei kafasını salladı. “Tam da bunun için buradayım.” Gözlerinde sönmeyen bir ateş yanıyordu.</p>
+    </div>
+</div>
+
+<div class="scene" style="background-image: url('bg15.jpg');">
+    <div class="overlay"></div>
+    <div class="content">
+        <p>O gece, yatakhanede herkes uyurken Rei pencereden sahaya baktı. “Burası benim krallığım olacak.” dedi kendi kendine.</p>
+    </div>
+</div>
+
+<div class="buttons">
+    <a href="bolum2.html">Diğer Bölüme Geç</a>
+    <a href="index.html">Ana Sayfaya Dön</a>
+</div>
+
 </body>
 </html>
-        </p>
-      </div>
