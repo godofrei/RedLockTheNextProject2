@@ -5,443 +5,244 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Red Lock — Bölüm 1</title>
 <style>
-  :root{
-    --accent1:#ff4b2b; --accent2:#ff416c;
-    --glass: rgba(0,0,0,0.45);
-  }
+  :root{--accent1:#ff4b2b; --accent2:#ff416c; --muted:#9fb0d0}
   *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:#0b0b0d;color:#fff}
+  html,body{margin:0;height:100%;background:#07080a;color:#fff;font-family:Inter,Arial,sans-serif}
   a{color:inherit;text-decoration:none}
 
-  /* scene layout: içerik kadar yükseklik (boşluk yok) */
-  .scene {
-    position: relative;
-    padding: 60px 6vw;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 18px;
-    align-items: center;
-  }
+  /* kompakt sahne (içerik kadar yer kaplar) */
+  .scene{position:relative;padding:46px 6vw;display:grid;gap:14px;align-items:start;overflow:visible}
+  .bg{position:absolute;inset:0;z-index:-4;pointer-events:none;transition:transform .25s linear}
+  .vignette{position:absolute;inset:0;z-index:-3;background:linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.62));pointer-events:none}
 
-  /* arka plan / karakter image */
-  .bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    z-index: -4;
-    filter: grayscale(40%) contrast(1.02) brightness(0.82);
-    transform-origin: center;
-    transition: transform .3s linear;
-  }
-  .vignette {
-    position:absolute;inset:0;z-index:-3;
-    background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.65));
-    pointer-events:none;
-  }
+  /* içerik kartı */
+  .card{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:14px 16px;border-radius:12px;
+        background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
+        border:1px solid rgba(255,255,255,0.03);box-shadow:0 18px 48px rgba(0,0,0,0.6);animation:fadeUp .7s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-  /* content card */
-  .card {
-    position: relative;
-    z-index: 2;
-    max-width: 980px;
-    margin: 0 auto;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
-    border-radius: 12px;
-    padding: 18px;
-    border:1px solid rgba(255,255,255,0.04);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    animation: fadeUp .9s ease both;
-  }
+  .meta{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+  .thumb{width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.04);flex:0 0 64px;display:flex;align-items:center;justify-content:center;background:#0b0d10}
+  .who{font-weight:800}
+  .role{font-size:0.9rem;color:var(--muted)}
 
-  .metaChar {
-    display:flex;gap:12px;align-items:center;margin-bottom:10px;
-  }
-  .charThumb {
-    width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.06);
-    flex:0 0 64px;
-  }
-  .charThumb img{width:100%;height:100%;object-fit:cover;display:block}
-  .charName{font-weight:800;color:#fff;font-size:1rem}
+  /* konuşma balonu */
+  .bubble{display:inline-block;background:#fff;color:#07101a;padding:12px 16px;border-radius:18px;max-width:92%;line-height:1.5;box-shadow:0 10px 28px rgba(0,0,0,0.36);white-space:pre-wrap}
+  .bubble::after{content:"";position:absolute;left:36px;bottom:-16px;border-width:16px 10px 0 0;border-style:solid;border-color:#fff transparent transparent transparent;transform:rotate(8deg)}
 
-  /* speech bubble (konuşma balonu) */
-  .bubble {
-    position: relative;
-    display:inline-block;
-    background: #fff;
-    color: #07101a;
-    padding: 12px 16px;
-    border-radius: 18px;
-    max-width: 78%;
-    font-size: 1rem;
-    line-height:1.5;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-  }
-  /* tail - alt üçgen */
-  .bubble::after{
-    content: "";
-    position: absolute;
-    bottom: -18px;
-    left: 36px;
-    border-width: 18px 16px 0 0;
-    border-style: solid;
-    border-color: #fff transparent transparent transparent;
-    transform: rotate(18deg);
-  }
+  .thought{font-style:italic;color:#26384a}
 
-  /* iç ses stili */
-  .thought { font-style: italic; color:#233044; }
+  /* nav */
+  .nav{display:flex;gap:12px;justify-content:center;padding:26px 6vw}
+  .btn{padding:12px 20px;border-radius:999px;font-weight:800;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061018;text-decoration:none}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
 
-  /* butonlar alanı */
-  .nav {
-    margin:28px 6vw;
-    display:flex;
-    justify-content:space-between;
-    gap:12px;
-  }
-  .btn {
-    display:inline-block;
-    padding:12px 20px;
-    border-radius:999px;
-    background: linear-gradient(90deg,var(--accent1),var(--accent2));
-    color:#061018;font-weight:800;text-decoration:none;
-  }
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#dbeeff}
-
-  /* anim */
-  @keyframes fadeUp { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
-
-  /* responsive */
+  /* responsive tweaks */
   @media (max-width:720px){
-    .bubble{max-width:92%;font-size:0.98rem}
-    .charThumb{width:52px;height:52px}
-    .scene{padding:30px 4vw}
+    .card{padding:12px}
+    .thumb{width:52px;height:52px}
+    .bubble{font-size:0.98rem}
+    .scene{padding:28px 4vw}
   }
 
-  /* - küçük parallax hareket on scroll - */
+  .label{position:fixed;right:14px;top:14px;z-index:120;background:rgba(0,0,0,0.45);padding:8px 12px;border-radius:10px;font-size:0.9rem;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
 </style>
 </head>
 <body>
 
-<!-- ----------------------
-     Her "scene" bloğu:
-     - .bg arka plan: karakterin fotoğrafı
-     - .card içinde karakter kartı ve konuşma balonu
-   ---------------------- -->
+<div class="label">Bölüm 1 — Red Lock</div>
 
-<!-- SCENE 1 -->
-<section class="scene" data-char="Rei">
-  <div class="bg" style="background-image:url('img/karakter1.jpg')"></div>
+<!-- ---------- SAHNE: Rei (açık/küllü saç, kahverengi göz, kırmızı forma) ---------- -->
+<section class="scene" data-speaker="Rei">
+  <div class="bg" aria-hidden="true">
+    <!-- Gömülü SVG portre: açık/küllü saçlı, kahverengi gözlü, kırmızı forma (RED LOCK yazılı) -->
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <rect width="100%" height="100%" fill="#0b0c0f"/>
+      <!-- dot texture -->
+      <defs>
+        <pattern id="p1" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.2" fill="#11151a"/></pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#p1)" opacity="0.24"/>
+
+      <!-- torso & jersey -->
+      <g transform="translate(260,140) scale(1.1)">
+        <path d="M120 330 C140 260 360 260 380 330 L380 420 L120 420 Z" fill="#b31f1f"/> <!-- jersey red -->
+        <text x="165" y="360" fill="#fff" font-size="28" font-weight="700" font-family="sans-serif">RED LOCK</text>
+      </g>
+
+      <!-- head / hair (küllü açık ton) -->
+      <g transform="translate(320,40) scale(1.05)">
+        <ellipse cx="420" cy="220" rx="170" ry="200" fill="#0f1216"/>
+        <!-- hair block -->
+        <path d="M300 130 C360 60 520 60 580 130 C600 170 560 210 520 210 C480 210 430 200 390 210 C350 220 310 180 300 130Z" fill="#d6c9a6"/> <!-- light ash hair -->
+        <!-- face shadow -->
+        <ellipse cx="420" cy="260" rx="120" ry="140" fill="#0b0e11"/>
+        <!-- eyes brown -->
+        <ellipse cx="380" cy="240" rx="16" ry="9" fill="#5b3a26"/>
+        <ellipse cx="460" cy="240" rx="16" ry="9" fill="#5b3a26"/>
+        <!-- highlights -->
+        <circle cx="376" cy="235" r="3" fill="#fff" opacity="0.95"/>
+        <circle cx="456" cy="235" r="3" fill="#fff" opacity="0.95"/>
+      </g>
+
+      <!-- subtle border -->
+      <rect x="8" y="8" width="1184" height="584" fill="none" stroke="#05060a" stroke-width="12" opacity="0.12"/>
+    </svg>
+  </div>
+
   <div class="vignette"></div>
 
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter1-thumb.jpg" alt="Rei"></div>
-      <div>
-        <div class="charName">Rei</div>
-        <div style="font-size:0.85rem;color:#9fb0d0">Saldırgan, özgüveni yüksek</div>
+  <article class="card" aria-label="Rei konuşma">
+    <div class="meta">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="thumb" aria-hidden="true">
+          <!-- mini thumb (same style) -->
+          <svg viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
+            <rect x="10" y="10" width="100" height="100" rx="10" fill="#0f1216"/>
+            <path d="M20 50 C36 26 84 26 100 50 C96 68 76 78 60 78 C44 78 24 70 20 50Z" fill="#d6c9a6"/>
+            <circle cx="42" cy="56" r="4" fill="#5b3a26"/>
+            <circle cx="78" cy="56" r="4" fill="#5b3a26"/>
+          </svg>
+        </div>
+
+        <div>
+          <div class="who">Rei</div>
+          <div class="role">Saldırgan — hırslı, direkt</div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px; position:relative">
+        <div class="bubble">
+          “Kapılar kapandığında arkanızda kalan tek şey kararınızdır. 
+          Tereddüt eden kaybeder; ben tereddüt etmiyorum. Her vuruşum bir seçimdi — bugün o seçimleri göstereceğim.”
+        </div>
       </div>
     </div>
-
-    <div class="bubble">
-      “Bugün buraya gelmek için binlerce sebep vardı — ama tek bir neden yeterli: kendimi kanıtlamak. 
-      Eğer zafer istiyorsam, her şeyi riske atmalıyım.” 
-    </div>
-  </div>
+  </article>
 </section>
 
-<!-- SCENE 2 -->
-<section class="scene" data-char="Isagi">
-  <div class="bg" style="background-image:url('img/karakter2.jpg')"></div>
+<!-- ---------- SAHNE: Isagi (sahayı OKUYAN) ---------- -->
+<section class="scene" data-speaker="Isagi">
+  <div class="bg" aria-hidden="true">
+    <!-- Isagi stilize SVG (daha koyu arka plan, düşünceli yüz) -->
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
+      <rect width="100%" height="100%" fill="#0b0d10"/>
+      <defs><pattern id="p2" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="#0f151a"/></pattern></defs>
+      <rect width="100%" height="100%" fill="url(#p2)" opacity="0.26"/>
+      <g transform="translate(260,120) scale(1.08)">
+        <path d="M130 320 C160 240 360 240 390 320 L390 410 L130 410 Z" fill="#223142"/>
+      </g>
+      <g transform="translate(320,50) scale(1.04)">
+        <ellipse cx="420" cy="240" rx="180" ry="210" fill="#0d1115"/>
+        <path d="M320 140 C360 80 480 72 520 132 C540 180 500 208 480 206 C460 204 420 198 380 204 C340 210 320 170 320 140Z" fill="#cfcfbf" opacity="0.95"/>
+        <ellipse cx="380" cy="230" rx="14" ry="8" fill="#4b3626"/>
+        <ellipse cx="460" cy="230" rx="14" ry="8" fill="#4b3626"/>
+      </g>
+    </svg>
+  </div>
+
   <div class="vignette"></div>
 
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter2-thumb.jpg" alt="Isagi"></div>
-      <div>
-        <div class="charName">Isagi</div>
-        <div style="font-size:0.85rem;color:#9fb0d0">Düşünen, stratejik</div>
+  <article class="card" aria-label="Isagi konuşma">
+    <div class="meta">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="thumb" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><rect x="10" y="10" width="100" height="100" rx="10" fill="#0d1114"/><circle cx="60" cy="56" r="26" fill="#ced3c9"/></svg>
+        </div>
+
+        <div>
+          <div class="who">Isagi</div>
+          <div class="role">Stratejist — sahayı okuyan</div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <div class="bubble">
+          <strong>Isagi:</strong> “Hız tek başına hiçbir şeyi çözmez. Boşluğu yaratan tarafın sabrı ve zekâsı, 
+          kazananı belirler. Bugün acele etmeyeceğim; önce pozisyonu yaratacağım, sonra bitireceğim.”
+        </div>
       </div>
     </div>
-
-    <div class="bubble">
-      <strong>Isagi:</strong> “Benim yolum farklı — acele yok. Önce alanı yaratırsın, sonra boşluğu değerlendirirsin. 
-      Her adım bir plan; hata affetmez.” 
-    </div>
-  </div>
+  </article>
 </section>
 
-<!-- SCENE 3 -->
-<section class="scene" data-char="Bachira">
-  <div class="bg" style="background-image:url('img/karakter3.jpg')"></div>
-  <div class="vignette"></div>
+<!-- Daha fazla sahne gerekiyorsa aynı pattern ile ekleyebilirsin (Bachira, Nagi, Antrenör, vs.) -->
+<!-- Örnek: üç sahne daha (kısa form) -->
 
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter3-thumb.jpg" alt="Bachira"></div>
-      <div>
-        <div class="charName">Bachira</div>
-        <div style="font-size:0.85rem;color:#9fb0d0">Cesur, çılgın driblingleriyle tanınır</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Bachira (kıkırdayarak):</strong> “Hadi bakalım! Sahada yalnızca korkaklar kaybeder. 
-      Göster bakalım hangi tarafın gerçek cesareti taşıdığını.” 
-    </div>
+<section class="scene" data-speaker="Bachira">
+  <div class="bg" aria-hidden="true">
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%"><rect width="100%" height="100%" fill="#081018"/><defs><pattern id="p3" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#111826"/></pattern></defs><rect width="100%" height="100%" fill="url(#p3)" opacity="0.18"/><g transform="translate(140,30) scale(1.06)"><ellipse cx="420" cy="240" rx="200" ry="240" fill="#0b0f13"/></g></svg>
   </div>
+  <div class="vignette"></div>
+  <article class="card">
+    <div class="meta">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="thumb" aria-hidden="true"><svg viewBox="0 0 120 120"><rect x="10" y="10" width="100" height="100" rx="10" fill="#081016"/><circle cx="60" cy="56" r="27" fill="#0d1116"/></svg></div>
+        <div><div class="who">Bachira</div><div class="role">Yaratıcı • Beklenmedik</div></div>
+      </div>
+      <div style="margin-top:10px"><div class="bubble">“Kuralları bozmak bazen en etkili taktiktir. Sürpriz, en büyük silahtır.”</div></div>
+    </div>
+  </article>
 </section>
 
-<!-- SCENE 4 -->
-<section class="scene" data-char="Nagi">
-  <div class="bg" style="background-image:url('img/karakter4.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter4-thumb.jpg" alt="Nagi"></div>
-      <div>
-        <div class="charName">Nagi</div>
-        <div style="font-size:0.85rem;color:#9fb0d0">Soğukkanlı, keskin vuruşlu</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      “Taktik? Gerektiğinde taktik kullanırım ama çoğu zaman doğru vuruş her şeyi halleder. 
-      Eğer fırsat bulursam, bitiririm.” 
-    </div>
+<section class="scene" data-speaker="Nagi">
+  <div class="bg" aria-hidden="true">
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%"><rect width="100%" height="100%" fill="#0b0d10"/><defs><pattern id="p4" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#12171c"/></pattern></defs><rect width="100%" height="100%" fill="url(#p4)" opacity="0.2"/></svg>
   </div>
+  <div class="vignette"></div>
+  <article class="card">
+    <div class="meta">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="thumb" aria-hidden="true"><svg viewBox="0 0 120 120"><rect x="10" y="10" width="100" height="100" rx="10" fill="#0d1014"/><circle cx="60" cy="56" r="26" fill="#0f1316"/></svg></div>
+        <div><div class="who">Nagi</div><div class="role">Soğukkanlı • Bitirici</div></div>
+      </div>
+      <div style="margin-top:10px"><div class="bubble">“Soğukkanlı vuruş, her şeyi bitirir. Acele etme; doğru anı bekle.”</div></div>
+    </div>
+  </article>
 </section>
 
-<!-- SCENE 5 -->
-<section class="scene" data-char="Antrenor">
-  <div class="bg" style="background-image:url('img/karakter5.jpg')"></div>
+<!-- Kapanış sahnesi örneği -->
+<section class="scene" data-speaker="Rei">
+  <div class="bg" aria-hidden="true">
+    <!-- tekrar Rei variant -->
+    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%"><rect width="100%" height="100%" fill="#0c0d10"/><defs><pattern id="p5" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1.6" cy="1.6" r="1.1" fill="#14202a"/></pattern></defs><rect width="100%" height="100%" fill="url(#p5)" opacity="0.22"/></svg>
+  </div>
   <div class="vignette"></div>
 
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter5-thumb.jpg" alt="Antrenör"></div>
-      <div>
-        <div class="charName">Antrenör</div>
-        <div style="font-size:0.85rem;color:#9fb0d0">Disiplinli, sert</div>
+  <article class="card">
+    <div class="meta">
+      <div style="display:flex;gap:12px;align-items:center">
+        <div class="thumb" aria-hidden="true"><svg viewBox="0 0 120 120"><rect x="10" y="10" width="100" height="100" rx="10" fill="#0c0f12"/><circle cx="60" cy="56" r="28" fill="#111418"/></svg></div>
+        <div><div class="who">Rei</div><div class="role">Kapanış</div></div>
+      </div>
+
+      <div style="margin-top:10px">
+        <div class="bubble">“Bu sadece başlangıç. Red Lock’ta kimse kolay kazanmaz; kazanmak isteyen çalışır, öğrenir, tekrar eder.
+        Hazır ol — daha büyük sınavlar yolda.”</div>
+
+        <div style="margin-top:14px">
+          <a class="btn" href="bolum2.html">Diğer Bölüme Geç</a>
+          <a class="btn ghost" href="index.html">Ana Sayfaya Dön</a>
+        </div>
       </div>
     </div>
-
-    <div class="bubble">
-      <strong>Antrenör:</strong> “Sizden beklediğim: risk alırken akıl—akıl varken risk. 
-      Hepiniz yeteneğiniz kadar sorumluluk taşıyacaksınız.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 6 -->
-<section class="scene" data-char="Rei">
-  <div class="bg" style="background-image:url('img/karakter1-2.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter1-thumb.jpg" alt="Rei"></div>
-      <div>
-        <div class="charName">Rei</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Rei:</strong> “Ben antrenmanda hep sınırımın ötesini gördüm. Bugün o sınırı kıracağım. 
-      İzleyin.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 7 -->
-<section class="scene" data-char="Isagi">
-  <div class="bg" style="background-image:url('img/karakter2-2.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter2-thumb.jpg" alt="Isagi"></div>
-      <div>
-        <div class="charName">Isagi</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Isagi:</strong> “Sabrın da bir gücü var. Koşu, pas, pozisyon; hepsi birer satranç hamlesi.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 8 -->
-<section class="scene" data-char="Bachira">
-  <div class="bg" style="background-image:url('img/karakter3-2.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter3-thumb.jpg" alt="Bachira"></div>
-      <div>
-        <div class="charName">Bachira</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Bachira:</strong> “Siz strateji konuşurken, ben boşluklar yaratırım. Sonra o boşluğu bitiririm.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 9 -->
-<section class="scene" data-char="Nagi">
-  <div class="bg" style="background-image:url('img/karakter4-2.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter4-thumb.jpg" alt="Nagi"></div>
-      <div>
-        <div class="charName">Nagi</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Nagi:</strong> “Bir saniyelik zaaf, bir maçı kaybettirir. Gözlerin açık olsun.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 10 -->
-<section class="scene" data-char="Antrenor">
-  <div class="bg" style="background-image:url('img/karakter5-2.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter5-thumb.jpg" alt="Antrenör"></div>
-      <div>
-        <div class="charName">Antrenör</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      “Sahada ne yaptığınız değil, sahada ne yaptırdığınız önemlidir. Rakibin kararını değiştir, oyunu sen şekillendir.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 11 -->
-<section class="scene" data-char="Rei">
-  <div class="bg" style="background-image:url('img/karakter1-3.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter1-thumb.jpg" alt="Rei"></div>
-      <div>
-        <div class="charName">Rei</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Rei (iç ses):</strong> <span class="thought">“Bu an için çalıştım. Kimse beni durduramaz.”</span>
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 12 -->
-<section class="scene" data-char="Isagi">
-  <div class="bg" style="background-image:url('img/karakter2-3.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter2-thumb.jpg" alt="Isagi"></div>
-      <div>
-        <div class="charName">Isagi</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Isagi:</strong> “Yine de korkmamalıyım. Hata yapsam da yeniden kurarım. Bu bir yarış değil, öğrenme süreci.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 13 -->
-<section class="scene" data-char="Bachira">
-  <div class="bg" style="background-image:url('img/karakter3-3.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter3-thumb.jpg" alt="Bachira"></div>
-      <div>
-        <div class="charName">Bachira</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Bachira:</strong> “Güç, sadece çalım atmak değil; sürpriz yaratmaktır. Sürprizleri seviyorum.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 14 -->
-<section class="scene" data-char="Nagi">
-  <div class="bg" style="background-image:url('img/karakter4-3.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter4-thumb.jpg" alt="Nagi"></div>
-      <div>
-        <div class="charName">Nagi</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      <strong>Nagi:</strong> “Bitirici vuruşun soğukkanlılığı bambaşkadır. O anda her şey durur.” 
-    </div>
-  </div>
-</section>
-
-<!-- SCENE 15 (Kapanış) -->
-<section class="scene" data-char="Rei">
-  <div class="bg" style="background-image:url('img/karakter1-4.jpg')"></div>
-  <div class="vignette"></div>
-
-  <div class="card">
-    <div class="metaChar">
-      <div class="charThumb"><img src="img/karakter1-thumb.jpg" alt="Rei"></div>
-      <div>
-        <div class="charName">Rei</div>
-        <div style="font-size:0.85rem;color:#9fb0d0">Bugünün akşamında, yeni bir hedef belirdi.</div>
-      </div>
-    </div>
-
-    <div class="bubble">
-      “Bu gece sadece bir prova değildi—başlangıçtı. Daha büyük sınavlar bizi bekliyor. Hazır olmamız gerek.” 
-    </div>
-
-    <div style="margin-top:16px" class="actions">
-      <a class="btn" href="bolum2.html">Diğer Bölüme Geç</a>
-      <a class="btn ghost" href="index.html">Ana Sayfaya Dön</a>
-    </div>
-  </div>
+  </article>
 </section>
 
 <script>
-/* Parallax küçük hareket + fade-in on scroll */
+/* ufak parallax + inview logic (boşluk yok, akıcı kaydırma) */
 (function(){
   const scenes = Array.from(document.querySelectorAll('.scene'));
   const bgs = scenes.map(s => s.querySelector('.bg'));
 
+  // IntersectionObserver: kartlara fade anim ekle
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(en=>{
-      if(en.isIntersecting) en.target.classList.add('inview');
+      if(en.isIntersecting){
+        en.target.querySelector('.card')?.classList.add('inview');
+      }
     });
-  }, {threshold:0.18});
+  }, {threshold:0.15});
   scenes.forEach(s=> io.observe(s));
 
   function onScroll(){
@@ -452,7 +253,7 @@
       const mid = rect.top + rect.height/2 - winH/2;
       const max = winH + rect.height;
       const v = Math.max(-1, Math.min(1, -mid / (max/2)));
-      const ty = v * 24;
+      const ty = v * 22;
       bg.style.transform = `translateY(${ty}px) scale(1.02)`;
     });
   }
@@ -463,4 +264,4 @@
 </script>
 
 </body>
-</html>> 
+  </html>
