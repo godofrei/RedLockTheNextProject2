@@ -1,198 +1,66 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Red Lock — Kayıt Ol</title>
-<style>
-  :root{
-    --accent1:#ff4b2b;
-    --accent2:#ff416c;
-    --bg-overlay: rgba(0,0,0,0.6);
-    --card-bg: rgba(0,0,0,0.55);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter, Arial, sans-serif;background:#000;color:#fff;}
-  body{display:flex;align-items:center;justify-content:center;padding:24px;}
-
-  /* subtle manga-style background (SVG) */
-  .bg-art{
-    position:fixed;inset:0;z-index:-3;pointer-events:none;
-    filter:grayscale(100%) contrast(1.05) brightness(0.95);
-  }
-  .vignette{
-    position:fixed;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.7));z-index:-2;pointer-events:none;
-  }
-
-  .card{
-    width:100%;
-    max-width:760px;
-    background:var(--card-bg);
-    border-radius:14px;
-    padding:28px;
-    box-shadow:0 20px 60px rgba(0,0,0,0.6);
-    border:1px solid rgba(255,255,255,0.04);
-    backdrop-filter: blur(2px);
-  }
-
-  h1{margin:0 0 8px 0;font-size:clamp(20px,4.2vw,34px);letter-spacing:1px;text-transform:uppercase;
-      -webkit-text-stroke:1.8px rgba(0,0,0,0.9);}
-
-  p.lead{margin:0 0 18px 0;color:rgba(255,255,255,0.9);font-weight:600;}
-
-  form{display:grid;gap:12px;}
-  .row{display:flex;gap:12px;flex-wrap:wrap;}
-  label{display:block;font-size:0.92rem;margin-bottom:6px;color:rgba(255,255,255,0.9)}
-  input[type="text"],input[type="email"],input[type="password"]{
-    width:100%;
-    padding:12px 14px;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,0.08);
-    background: rgba(255,255,255,0.03);
-    color:#fff;
-    font-size:1rem;
-    outline:none;
-    transition: box-shadow .15s ease, transform .08s ease;
-  }
-  input:focus{ box-shadow:0 6px 18px rgba(255,65,108,0.06); transform:translateY(-2px); }
-
-  .small{font-size:0.88rem;color:rgba(255,255,255,0.75);}
-
-  .actions{display:flex;gap:12px;align-items:center;margin-top:8px}
-  .btn{
-    padding:12px 20px;border-radius:999px;background:linear-gradient(45deg,var(--accent1),var(--accent2));
-    color:#fff;font-weight:800;border:none;cursor:pointer;box-shadow:0 10px 28px rgba(0,0,0,0.45);
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-  .btn:hover{ transform: translateY(-5px); box-shadow:0 18px 40px rgba(0,0,0,0.6); }
-  .btn.ghost{ background: transparent;border: 1px solid rgba(255,255,255,0.12); color: #fff; font-weight:700; }
-
-  .error{ color:#ffd2d2; background: rgba(255,50,50,0.06); padding:8px 10px;border-radius:8px;border:1px solid rgba(255,50,50,0.08); font-weight:600; }
-
-  .note{ margin-top:8px;font-size:0.86rem;color:rgba(255,255,255,0.7); }
-
-  /* responsive */
-  @media (max-width:520px){
-    .card{padding:18px;}
-    .actions{flex-direction:column;align-items:stretch;}
-    .btn{width:100%;}
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #0f172a, #1e293b);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #38bdf8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0ea5e9;
+        }
+    </style>
 </head>
 <body>
+    <div class="form-container">
+        <h2>Kayıt Ol</h2>
+        <form onsubmit="return kayitOl()">
+            <input type="text" id="kullanici" placeholder="Kullanıcı Adı" required>
+            <input type="password" id="sifre" placeholder="Şifre" required>
+            <button type="submit">Kayıt Ol</button>
+        </form>
+    </div>
 
-  <!-- SVG arkaplan (soyut manga-panel hissi) -->
-  <svg class="bg-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="100%" height="100%">
-    <rect width="100%" height="100%" fill="#ffffff"/>
-    <!-- diagonal motion lines -->
-    <g stroke="#000" stroke-width="8" stroke-linecap="round" opacity="0.10">
-      <path d="M0 1080 L1920 300"/>
-      <path d="M0 980 L1920 200"/>
-      <path d="M0 880 L1920 100"/>
-    </g>
-    <!-- abstract silhouette blocks -->
-    <g fill="#000" opacity="0.9">
-      <ellipse cx="300" cy="860" rx="260" ry="300"/>
-      <ellipse cx="1600" cy="240" rx="260" ry="300"/>
-    </g>
-    <!-- halftone dots -->
-    <g fill="#000" opacity="0.06">
-      <circle cx="80" cy="80" r="6"/><circle cx="160" cy="120" r="5"/><circle cx="240" cy="160" r="4"/>
-      <circle cx="400" cy="80" r="4"/><circle cx="560" cy="120" r="5"/>
-    </g>
-  </svg>
-  <div class="vignette" aria-hidden="true"></div>
-
-  <div class="card" role="main" aria-labelledby="head">
-    <h1 id="head">Red Lock — Kayıt Ol</h1>
-    <p class="lead">Hesabını oluştur. Hikâyeye adım atmak için bilgilerini gir ve devam et.</p>
-
-    <form id="signupForm" novalidate>
-      <div>
-        <label for="nick">Kullanıcı Adı</label>
-        <input id="nick" name="nick" type="text" placeholder="Takma adın (ör: Rei23)" required />
-      </div>
-
-      <div>
-        <label for="email">E-posta</label>
-        <input id="email" name="email" type="email" placeholder="ornek@eposta.com" required />
-      </div>
-
-      <div class="row">
-        <div style="flex:1">
-          <label for="pass">Parola</label>
-          <input id="pass" name="pass" type="password" placeholder="Parolanız" minlength="6" required />
-        </div>
-        <div style="flex:1">
-          <label for="pass2">Parola (Tekrar)</label>
-          <input id="pass2" name="pass2" type="password" placeholder="Tekrar" minlength="6" required />
-        </div>
-      </div>
-
-      <div>
-        <label class="small"><input id="agree" type="checkbox" required /> &nbsp; Kuralları okudum ve kabul ediyorum</label>
-      </div>
-
-      <div id="err" class="error" style="display:none;"></div>
-
-      <div class="actions">
-        <button type="submit" class="btn">Kayıt Ol ve Başla</button>
-        <button type="button" class="btn ghost" id="back">Geri (Ana Sayfa)</button>
-      </div>
-
-      <div class="note">Kayıt sonrası otomatik olarak <strong>index.html</strong> sayfasına yönlendirileceksiniz. (Test için veriler tarayıcıda saklanır.)</div>
-    </form>
-  </div>
-
-<script>
-// Basit client-side doğrulama + localStorage kaydı + yönlendirme index.html'e
-document.getElementById('signupForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const nick = document.getElementById('nick').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const pass = document.getElementById('pass').value;
-  const pass2 = document.getElementById('pass2').value;
-  const agree = document.getElementById('agree').checked;
-  const errEl = document.getElementById('err');
-
-  function showErr(msg){
-    errEl.style.display = 'block';
-    errEl.textContent = msg;
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
-
-  errEl.style.display='none';
-
-  if(!nick || nick.length < 2) return showErr('Lütfen geçerli bir kullanıcı adı girin (en az 2 karakter).');
-  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if(!emailRe.test(email)) return showErr('Lütfen geçerli bir e-posta adresi girin.');
-  if(pass.length < 6) return showErr('Parola en az 6 karakter olmalı.');
-  if(pass !== pass2) return showErr('Parolalar eşleşmiyor.');
-  if(!agree) return showErr('Site kurallarını kabul etmelisiniz.');
-
-  // Basit "kayıt" - localStorage (test amaçlı). Gerçek projede sunucuya POST atılmalı.
-  try {
-    const user = { nick, email, createdAt: new Date().toISOString() };
-    localStorage.setItem('redlock_user', JSON.stringify(user));
-  } catch(err) {
-    // ignore storage errors
-  }
-
-  // Küçük başarı animasyonu gösterebiliriz
-  document.querySelector('.btn').textContent = 'Yönlendiriliyor...';
-  document.querySelector('.btn').disabled = true;
-
-  // 400ms bekleyip index.html'e gönder
-  setTimeout(()=> {
-    window.location.href = 'index.html';
-  }, 400);
-});
-
-// Geri butonu - index.html'e dön
-document.getElementById('back').addEventListener('click', ()=> {
-  window.location.href = 'index.html';
-});
-</script>
-
+    <script>
+        function kayitOl() {
+            alert("Kayıt başarılı! Ana sayfaya yönlendiriliyorsunuz.");
+            window.location.href = "index.html";
+            return false; // Sayfanın yenilenmesini engeller
+        }
+    </script>
 </body>
 </html>
