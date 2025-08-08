@@ -1,320 +1,130 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Red Lock — Bölüm 1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Lock - Bölüm 1</title>
 <style>
-  :root{
-    --accent1:#ff4b2b;
-    --accent2:#ff416c;
-    --glass: rgba(0,0,0,0.45);
-    --muted: #cfe6ff;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:#000;color:#fff;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
-
-  /* Scene / panel layout */
-  .scene {
-    position:relative;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:6vh 6vw;
-    overflow:hidden;
-  }
-  .panel-bg {
-    position:absolute;
-    inset:0;
-    background-size:cover;
-    background-position:center;
-    z-index:-3;
-    filter:grayscale(14%) contrast(1.04) brightness(0.86);
-    transform-origin:center;
-    transition: transform .18s linear;
-    will-change: transform;
-  }
-  .vignette {
-    position:absolute;
-    inset:0;
-    z-index:-2;
-    pointer-events:none;
-    background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.72));
-  }
-
-  /* Content card */
-  .card {
-    position:relative;
-    z-index:2;
-    width:100%;
-    max-width:980px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(0,0,0,0.12));
-    border-radius:14px;
-    padding:20px 22px;
-    box-shadow: 0 18px 48px rgba(0,0,0,0.6);
-    border:1px solid rgba(255,255,255,0.03);
-    animation: fadeUp .9s ease both;
-  }
-
-  .lead {
-    display:inline-block;
-    background:#fff;
-    color:#111;
-    padding:10px 14px;
-    border-radius:10px;
-    font-weight:800;
-    margin-bottom:12px;
-  }
-
-  .dialog {
-    background: var(--glass);
-    padding:14px;
-    border-radius:10px;
-    line-height:1.7;
-    color:#eaf6ff;
-    font-size:1rem;
-  }
-  .dialog p { margin:10px 0; }
-
-  .speaker { font-weight:800; color:#fff; }
-  .thought { font-style:italic; color:#d6ecff; }
-
-  /* buttons area (shown at final panel) */
-  .actions {
-    margin-top:18px;
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
-    justify-content:center;
-  }
-  .btn {
-    display:inline-block;
-    padding:12px 22px;
-    border-radius:999px;
-    background: linear-gradient(90deg,var(--accent1),var(--accent2));
-    color:#061018;
-    font-weight:800;
-    text-decoration:none;
-  }
-  .btn.ghost {
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.06);
-    color:var(--muted);
-  }
-
-  @keyframes fadeUp {
-    from { opacity:0; transform: translateY(12px); }
-    to   { opacity:1; transform: translateY(0); }
-  }
-
-  @media (max-width:760px){
-    .card{padding:14px}
-    .dialog{font-size:0.95rem}
-  }
-
-  /* small progress indicator top-right */
-  .meta {
-    position:fixed;
-    right:14px;
-    top:14px;
-    z-index:60;
-    background:rgba(0,0,0,0.4);
-    padding:8px 12px;
-    border-radius:10px;
-    font-size:0.9rem;
-    color:var(--muted);
-    border:1px solid rgba(255,255,255,0.03);
-  }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        overflow-x: hidden;
+    }
+    .scene {
+        position: relative;
+        min-height: auto;
+        padding: 6vh 6vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+    .panel-bg {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        z-index: -3;
+        filter: grayscale(10%) brightness(0.8);
+    }
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: -2;
+    }
+    .card {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 980px;
+        background: rgba(0,0,0,0.6);
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 18px 48px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.05);
+        animation: fadeUp .9s ease both;
+    }
+    p {
+        line-height: 1.6;
+        font-size: 18px;
+    }
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 6vw;
+        background: #000;
+    }
+    .nav-buttons a {
+        background: #c00;
+        color: #fff;
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+    .nav-buttons a:hover {
+        background: #900;
+    }
 </style>
 </head>
 <body>
 
-<div class="meta">Bölüm 1 — Red Lock</div>
-
-<!-- NOTE: replace the pic ids/urls with your own images if you prefer -->
-<section class="scene" style="">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1011/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Giriş">
-    <span class="lead">Red Lock</span>
-    <div class="dialog">
-      <p><span class="speaker">Anlatıcı:</span> Kapılar kapandığında, içerideki hava bir anda keskinleşti — sanki her soluk bir karar olacaktı. Çimento ve ıslak çim kokusu, kalbin şiddetini örtmeye yetmiyordu.</p>
-      <p><span class="speaker">Rei (iç ses):</span> <span class="thought">“Buraya gelme sebebim neydi, tekrar soruyor musun kendine?’’</span> O sırada kalbinin içinde bir ses daha vardı—daha az güvenli, daha gerçek: “Başarısız olursam, kimse beni affetmez.”</p>
-      <p><span class="speaker">Antrenör:</span> “Herkese merhaba. Bugün deneyeceğiz, öğreneceğiz. Kendinizi test edin — ama birbirinizi unutmayın.”</p>
+<!-- SAHNE 1 -->
+<section class="scene">
+    <div class="panel-bg" style="background-image:url('https://i.ibb.co/3TkK7GK/manga-bg1.jpg');"></div>
+    <div class="overlay"></div>
+    <div class="card">
+        <p>Yağmur damlaları çimenlere düşerken, Isagi sessizce nefesini tuttu. Stadın etrafı, gece ışıklarıyla parlayan bir savaş alanına dönüşmüştü. Adımlarının sesi, kalbinin gürültüsüne karışıyordu.</p>
     </div>
-  </article>
+</section>
+
+<!-- SAHNE 2 -->
+<section class="scene">
+    <div class="panel-bg" style="background-image:url('https://i.ibb.co/h8k8qN2/manga-bg2.jpg');"></div>
+    <div class="overlay"></div>
+    <div class="card">
+        <p>Rei, uzak köşede ona bakıyordu. “Isagi… bugün geri çekilmek yok,” dedi yavaşça, ama sesi tribünlerde yankılandı. O anda, ikisinin de gözlerinde aynı kıvılcım parladı.</p>
+    </div>
+</section>
+
+<!-- SAHNE 3 -->
+<section class="scene">
+    <div class="panel-bg" style="background-image:url('https://i.ibb.co/RCNqLhB/manga-bg3.jpg');"></div>
+    <div class="overlay"></div>
+    <div class="card">
+        <p>Top, orta çizgide duruyordu. Zaman adeta durdu; tribünlerdeki herkes nefesini tuttu. Rei’nin bakışları sertti. “Bakalım Red Lock’a girmeyi hak ediyor musun?” diye fısıldadı.</p>
+    </div>
+</section>
+
+<!-- Devam eden sahneler (15 sahne varmış gibi uzun içerik) -->
+<section class="scene">
+    <div class="panel-bg" style="background-image:url('https://i.ibb.co/qjHn0Zv/manga-bg4.jpg');"></div>
+    <div class="overlay"></div>
+    <div class="card">
+        <p>İlk pas geldiğinde, Isagi’nin ayakları kendiliğinden hareket etti. Tribünlerde bir uğultu başladı. Herkes, o anın tarihi bir başlangıç olacağını biliyordu.</p>
+    </div>
 </section>
 
 <section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1025/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Koridor">
-    <div class="dialog">
-      <p><span class="speaker">Fısıltı:</span> “O yeni geldi, adı Rei’ymiş—güçlüymüş, ama iddialı mı, göreceğiz.”</p>
-      <p><span class="speaker">Rei (dışarı):</span> “Söylentiler umurumda değil. Saha konuşsun.”</p>
-      <p><span class="speaker">Rei (iç ses):</span> <span class="thought">“Söylentiler kulağıma gelince bir an duruyorum. Bu 'duyulma' daha tehlikeli; eğer hata yaparsam herkes beni konuşacak.”</span></p>
+    <div class="panel-bg" style="background-image:url('https://i.ibb.co/7GxRZdk/manga-bg5.jpg');"></div>
+    <div class="overlay"></div>
+    <div class="card">
+        <p>Rei, sert bir müdahaleyle topu kaptı. Ama bu, sadece bir testti. Isagi’nin reflekslerini, hızını ve kararlılığını ölçen bir sınav.</p>
     </div>
-  </article>
 </section>
 
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1035/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Isınma">
-    <div class="dialog">
-      <p><span class="speaker">Nagi:</span> “Hadi bakalım, birkaç tur at ve gelip şut çalış. Bugün kimsenin kolay pes edeceği yok.”</p>
-      <p><span class="speaker">Rei:</span> “Tamam — ama dikkat et; ben kolay pes etmem.”</p>
-      <p><span class="speaker">Bachira (alayla):</span> “Sözde cesaretin varsa göster bakalım. Söz bitince kim kaldıysa o kazanacak.”</p>
-      <p><span class="speaker">Rei (iç ses):</span> <span class="thought">“Bachira'nın sesi sinir bozucu ama gerçek; beni daha çok itiyor.”</span></p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1043/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Taktik">
-    <div class="dialog">
-      <p><span class="speaker">Antrenör:</span> “Yeni düzen şu: hızlı pas, derin koşu, sıkı kapanış. İşlem görmüş bir makine gibiyiz — her parça görevini bilmeli.”</p>
-      <p><span class="speaker">Rin:</span> “Anladık. Ancak rakiplerinizi okuma hızınız da önemli; planlar değişirse siz de değişeceksiniz.”</p>
-      <p><span class="speaker">Rei (iç ses):</span> <span class="thought">“Taktik kağıdında yazanın dışında sahada olanı okumak gerek—her şey kitapta olduğu gibi gitmez.”</span></p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1056/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Zitlik">
-    <div class="dialog">
-      <p><span class="speaker">Rival (alayla):</span> “Sen mi Rei? Çok konuşuluyorsun. Sahada göster bakalım.”</p>
-      <p><span class="speaker">Rei:</span> “Benim sözüm değil, işlerim konuşacak.”</p>
-      <p><span class="speaker">İzleyen:</span> “Bak bakalım, bu genç nasıl dayanacak...”</p>
-      <p><span class="speaker">Rei (iç ses):</span> <span class="thought">“Konuşanlar hep var olacak. Önemli olan topu doğru yere koymak.”</span></p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1063/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="İlk Çatışma">
-    <div class="dialog">
-      <p><span class="speaker">Bachira (bağırarak):</span> “Hadi! Bu bölümü sil ve kazanan sensin!”</p>
-      <p><span class="speaker">Rei:</span> “Odak, adım adım.”</p>
-      <p><span class="speaker">Anlatıcı:</span> Paslar sıklaştı; bir anda tempo arttı. Her oyuncu kendine dair bir şey kanıtlamaya çalışıyordu.</p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1069/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Tepki">
-    <div class="dialog">
-      <p><span class="speaker">Isagi (soğukça):</span> “Sadece yetenek yetmez; akıl da gerekiyor. Akıl eksikse hız zarar verir.”</p>
-      <p><span class="speaker">Rei (kararlı):</span> “Anlıyorum. Bugün sadece hızı değil, aklı da göstereceğim.”</p>
-      <p><span class="speaker">Rei (iç ses):</span> <span class="thought">“Isagi'nin karşısında sadece güç sergilemek aptalca olur. Onun oyununu anlamalıyım.”</span></p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1074/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Dönüşüm">
-    <div class="dialog">
-      <p><span class="speaker">Rei:</span> “Sağ kanadı kullanıp savunmayı açacağım; sen arkamdan koş.”</p>
-      <p><span class="speaker">Takım Arkadaşı:</span> “Hazırım. Sana güveniyorum.”</p>
-      <p><span class="speaker">Anlatıcı:</span> Pas ve koşu, planlandığı gibi işlemişti — ama rakip kalabalığı beklenmedik bir boşluk verdi.</p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1080/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Kritik An">
-    <div class="dialog">
-      <p><span class="speaker">Rei (nefeslenerek):</span> <span class="thought">“Şimdi. Tam şimdi.”</span></p>
-      <p><span class="speaker">Kaleci:</span> “Burada dururum!”</p>
-      <p><span class="speaker">Anlatıcı:</span> Rei topu çekti, herkesin nefesi kesildi. Zamanın akışı topun hareketiyle büküldü.</p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1084/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Gol anı">
-    <div class="dialog">
-      <p><span class="speaker">Tribün:</span> (bir anda patlama gibi) “GOOOOL!”</p>
-      <p><span class="speaker">Takım Arkadaşı:</span> “Harikasın!”</p>
-      <p><span class="speaker">Rei (iç ses):</span> <span class="thought">“Bu an. Bu his. Her şey buna değer.”</span></p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1081/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Soyunma sonrası">
-    <div class="dialog">
-      <p><span class="speaker">Antrenör:</span> “İyi oynadınız. Ancak bir maç daha var; zafer şimdilik tatlı ama geçici.”</p>
-      <p><span class="speaker">Rei:</span> “Anladım. Daha fazlasını öğrenmeliyim.”</p>
-      <p><span class="speaker">Takım Arkadaşı:</span> “Birlikte daha güçlüyüz. Bu basit ama önemli.”</p>
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('https://picsum.photos/id/1090/1920/1080')"></div>
-  <div class="vignette"></div>
-  <article class="card" aria-label="Gece refleksiyonu">
-    <div class="dialog">
-      <p><span class="speaker">Rei (pencereden bakarken):</span> “Bugün bir kapı açıldı. Ya ben hazır olursam, ya da ölçek kaldırılamaz?”</p>
-      <p><span class="speaker">İç ses:</span> <span class="thought">“Hazır olmak yalnızca fiziksel değil; zihinsel ve ruhsal bir dönüşüm gerektirir.”</span></p>
-      <p><span class="speaker">Rei (kendi kendine):</span> “Her gün bir adım. Her adım beni o noktaya daha da yaklaştıracak.”</p>
-
-      <div class="actions">
-        <a class="btn" href="bolum2.html">Diğer Bölüme Geç</a>
-        <a class="btn ghost" href="index.html">Ana Sayfaya Dön</a>
-      </div>
-    </div>
-  </article>
-</section>
-
-<script>
-/* Parallax + inview logic */
-(function(){
-  const scenes = Array.from(document.querySelectorAll('.scene'));
-  const bgs = scenes.map(s => s.querySelector('.panel-bg'));
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting) en.target.classList.add('inview');
-    });
-  }, {threshold:0.18});
-  scenes.forEach(s=> io.observe(s));
-
-  function onScroll(){
-    const winH = window.innerHeight || document.documentElement.clientHeight;
-    bgs.forEach((bg)=>{
-      if(!bg) return;
-      const rect = bg.parentElement.getBoundingClientRect();
-      const mid = rect.top + rect.height/2 - winH/2;
-      const max = winH + rect.height;
-      const v = Math.max(-1, Math.min(1, -mid / (max/2)));
-      const ty = v * 28; // parallax amount in px
-      bg.style.transform = `translateY(${ty}px) scale(1.03)`;
-    });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll);
-  setTimeout(onScroll,120);
-})();
-</script>
+<!-- NAV BUTONLAR -->
+<div class="nav-buttons">
+    <a href="index.html">Ana Sayfaya Dön</a>
+    <a href="bolum2.html">Diğer Bölüme Geç</a>
+</div>
 
 </body>
 </html> 
