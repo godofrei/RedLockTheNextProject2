@@ -1,576 +1,125 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>Red Lock - Mini Oyun</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Oyun - Frikik</title>
 <style>
-  :root{
-    --bg:#0b1020;
-    --panel:#0f1724;
-    --accent1:#ff4b2b;
-    --accent2:#ff416c;
-    --ui:#e6eef8;
-  }
-  html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#07101a);font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ui);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-  .wrap{max-width:980px;margin:0 auto;padding:12px;display:flex;flex-direction:column;gap:12px;min-height:100vh;box-sizing:border-box;}
-  header{display:flex;justify-content:space-between;align-items:center;gap:8px}
-  h1{font-size:1.15rem;margin:0;letter-spacing:1px}
-  .top-info{display:flex;gap:8px;align-items:center;}
-  .stat{background:rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;font-weight:700;font-size:0.95rem;}
-  /* Character selection */
-  .chooser{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-  .char{background:linear-gradient(180deg,#111417,#0c1116);border-radius:12px;padding:8px;width:110px;text-align:center;border:2px solid transparent;cursor:pointer;transition:transform .12s ease, border-color .12s;}
-  .char.selected{transform:translateY(-6px);border-color:linear-gradient(45deg,var(--accent1),var(--accent2));box-shadow:0 10px 30px rgba(0,0,0,0.45);}
-  .char .avatar{width:72px;height:72px;border-radius:8px;margin:0 auto 6px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:800;}
-  .char small{display:block;color:#bfcbdc;font-size:13px;margin-top:4px}
-  /* game area */
-  .game-panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.18));border-radius:12px;padding:8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 12px 40px rgba(0,0,0,0.5);}
-  canvas{width:100%;height:60vh;border-radius:8px;background:#0b1420;touch-action:none}
-  .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
-  .btn{padding:10px 16px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;font-weight:800;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,0.45)}
-  .ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);color:var(--ui)}
-  .small{font-size:13px;color:#b7c4d9}
-  /* overlay messages */
-  .overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(2,6,23,0.6),rgba(2,6,23,0.85));z-index:40;padding:24px;}
-  .panel{background:linear-gradient(180deg,#0f1724,#05070a);padding:20px;border-radius:12px;max-width:520px;text-align:center;border:1px solid rgba(255,255,255,0.04)}
-  .panel h2{margin:0 0 8px 0}
-  .panel p{color:#aebed6;margin:8px 0 12px 0}
-  .flex{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-  footer{display:flex;justify-content:space-between;align-items:center;color:#9fb0d0;padding:8px 0;font-size:13px}
-  /* responsive */
-  @media (max-width:720px){
-    canvas{height:55vh}
-    .char{width:84px;padding:6px}
-    .stat{padding:6px 10px;font-size:0.9rem}
-  }
+    body {
+        margin: 0;
+        background: #1a1a1a;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: white;
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+    }
+    canvas {
+        background: url('saha.jpg') no-repeat center center/cover;
+        border: 2px solid white;
+        border-radius: 10px;
+    }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Red Lock — Mini Oyun</h1>
-    <div class="top-info">
-      <div class="stat" id="timer">Süre: 01:30</div>
-      <div class="stat" id="score">Skor: 0 / 10</div>
-    </div>
-  </header>
 
-  <!-- Karakter seçimi -->
-  <section>
-    <div class="small" style="margin-bottom:6px">Karakter seç (oyun başlamadan seç):</div>
-    <div class="chooser" id="chooser">
-      <div class="char" data-id="rei" data-power="1.0" title="Denge — orta güç">
-        <div class="avatar" style="background:linear-gradient(135deg,#2b5fff,#7db8ff);">REI</div>
-        <div><strong>Rei</strong></div>
-        <small>Denge</small>
-      </div>
-      <div class="char" data-id="nagi" data-power="1.15" title="Güçlü şutlar">
-        <div class="avatar" style="background:linear-gradient(135deg,#ff8a00,#ffd27a);">NAGI</div>
-        <div><strong>Nagi</strong></div>
-        <small>Güç</small>
-      </div>
-      <div class="char" data-id="bachira" data-power="0.95" title="Hızlı ve ince kontrollü">
-        <div class="avatar" style="background:linear-gradient(135deg,#7cffb2,#00c17a);">BCH</div>
-        <div><strong>Bachira</strong></div>
-        <small>Çeviklik</small>
-      </div>
-      <div class="char" data-id="rin" data-power="1.05" title="Teknik şutlar">
-        <div class="avatar" style="background:linear-gradient(135deg,#ff5ea3,#ffb0d1);">RIN</div>
-        <div><strong>Rin</strong></div>
-        <small>Teknik</small>
-      </div>
-    </div>
-  </section>
-
-  <!-- Oyun paneli -->
-  <section class="game-panel" aria-label="Oyun Alanı">
-    <canvas id="game" width="1280" height="720"></canvas>
-
-    <div class="controls">
-      <button class="btn" id="startBtn">Oyna (Başlat)</button>
-      <button class="btn ghost" id="resetBtn">Sıfırla</button>
-      <div class="small" id="hint">Kontrol: Dokun ve sürükle → bırak = şut</div>
-    </div>
-  </section>
-
-  <footer>
-    <div>Rakip: <strong>Isagi</strong></div>
-    <div class="small">Hedef: <strong>10 Gol</strong> • Süre: <strong>1:30</strong></div>
-  </footer>
-</div>
-
-<!-- Overlays -->
-<div class="overlay" id="overlay">
-  <div class="panel" id="panel">
-    <h2 id="panelTitle">Hazır mısın?</h2>
-    <p id="panelText">Oyun başladığında 90 saniyen var. 10 gol at ki kazan.</p>
-    <div class="flex" id="panelBtns">
-      <button class="btn" id="panelStart">Başla</button>
-      <button class="btn ghost" id="panelCancel">İptal</button>
-    </div>
-  </div>
-</div>
+<canvas id="gameCanvas" width="360" height="600"></canvas>
 
 <script>
-/*
-  Mini oyun: basit 2D top + kaleci
-  - canvas rendering
-  - touch/mouse drag to set shot direction+power
-  - score, timer, goal detection
-  - mobile friendly
-*/
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-// --- Oyun ayarları
-const GAME_TIME = 90; // seconds
-const GOAL_TARGET = 10;
-const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d', {alpha:false});
+// Top verileri
+let ball = { x: 180, y: 500, radius: 15, color: "white", vx: 0, vy: 0 };
+let isDragging = false;
+let dragStart = { x: 0, y: 0 };
 
-// High-DPI support
-function resizeCanvas() {
-  const rect = canvas.getBoundingClientRect();
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = Math.round(rect.width * dpr);
-  canvas.height = Math.round(rect.height * dpr);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+// Kale verileri
+const goal = { x: 110, y: 50, width: 140, height: 20 };
 
-// Game state
-let selectedChar = null;
-let charPower = 1.0;
-let running = false;
-let timer = GAME_TIME;
-let score = 0;
-let lastTime = 0;
-let ball = null;
-let keeper = null;
-let startedAt = null;
+// Fizik
+function update() {
+    ball.x += ball.vx;
+    ball.y += ball.vy;
 
-// UI refs
-const timerEl = document.getElementById('timer');
-const scoreEl = document.getElementById('score');
-const startBtn = document.getElementById('startBtn');
-const resetBtn = document.getElementById('resetBtn');
-const hintEl = document.getElementById('hint');
-const overlay = document.getElementById('overlay');
-const panelStart = document.getElementById('panelStart');
-const panelCancel = document.getElementById('panelCancel');
-const panelTitle = document.getElementById('panelTitle');
-const panelText = document.getElementById('panelText');
+    // Sürtünme
+    ball.vx *= 0.98;
+    ball.vy *= 0.98;
 
-// Setup chooser
-document.querySelectorAll('.char').forEach(el=>{
-  el.addEventListener('click', ()=>{
-    document.querySelectorAll('.char').forEach(c=>c.classList.remove('selected'));
-    el.classList.add('selected');
-    selectedChar = el.dataset.id;
-    charPower = parseFloat(el.dataset.power) || 1.0;
-  });
-});
-// default select first
-const firstChar = document.querySelector('.char');
-if(firstChar){ firstChar.classList.add('selected'); selectedChar = firstChar.dataset.id; charPower = parseFloat(firstChar.dataset.power); }
+    // Duvar çarpması
+    if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) ball.vx *= -0.8;
+    if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) ball.vy *= -0.8;
 
-// Start / Reset handlers
-startBtn.addEventListener('click', ()=> openOverlay('Başla?', 'Oyun başlayınca 90 saniyen olacak. 10 gol atmaya çalış.', ()=>startGame(), ()=>closeOverlay()));
-resetBtn.addEventListener('click', resetGame);
-
-panelStart.addEventListener('click', ()=>{ closeOverlay(); startGame(); });
-panelCancel.addEventListener('click', closeOverlay);
-
-function openOverlay(title, text, onOk, onCancel){
-  panelTitle.textContent = title;
-  panelText.textContent = text;
-  overlay.style.display = 'flex';
-  panelStart.onclick = onOk;
-  panelCancel.onclick = onCancel || closeOverlay;
-}
-function closeOverlay(){ overlay.style.display = 'none'; }
-
-// Utility
-function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
-function formatTime(s){
-  const mm = Math.floor(s/60).toString().padStart(2,'0');
-  const ss = Math.floor(s%60).toString().padStart(2,'0');
-  return `${mm}:${ss}`;
-}
-
-// Game entities
-function resetEntities(){
-  const w = canvas.width / (window.devicePixelRatio || 1);
-  const h = canvas.height / (window.devicePixelRatio || 1);
-  ball = {
-    x: w * 0.5,
-    y: h * 0.7,
-    vx: 0, vy: 0,
-    r: Math.min(18, w*0.025),
-    moving: false
-  };
-  keeper = {
-    x: w * 0.5,
-    y: h * 0.18,
-    w: Math.min(140, w*0.18),
-    h: Math.min(90, h*0.12),
-    vx: 0,
-    state: 'idle', // idle, dive-left, dive-right
-    lastDiveAt: 0
-  };
-}
-
-// Physics and drawing
-function step(dt){
-  // update ball physics
-  if(ball.moving){
-    // simple drag
-    ball.vy += 800 * dt; // gravity-like for arc
-    ball.x += ball.vx * dt;
-    ball.y += ball.vy * dt;
-
-    // friction off ground
-    const groundY = canvas.height / (window.devicePixelRatio || 1) * 0.9;
-    if(ball.y + ball.r > groundY){
-      ball.y = groundY - ball.r;
-      ball.vx *= 0.6;
-      ball.vy *= -0.4;
-      if(Math.abs(ball.vx) < 20 && Math.abs(ball.vy) < 20) ball.moving = false;
+    // Gol kontrol
+    if (ball.y - ball.radius < goal.y + goal.height &&
+        ball.x > goal.x &&
+        ball.x < goal.x + goal.width) {
+        ctx.fillStyle = "yellow";
+        ctx.font = "30px Arial";
+        ctx.fillText("GOOOL!", 120, 300);
+        ball.vx = 0;
+        ball.vy = 0;
     }
-  }
-
-  // keeper AI: move left-right subtly, and attempt to dive when shot is near goal
-  const w = canvas.width / (window.devicePixelRatio || 1);
-  const h = canvas.height / (window.devicePixelRatio || 1);
-  // patrol
-  const patrolSpeed = 80 + (score * 2);
-  keeper.x += (Math.sin(Date.now()/1000 + keeper.x) * 0.5) * 0.5;
-  // dive logic: if ball is moving and near the keeper, chance to dive
-  if(ball.moving && ball.vy < 0 && ball.y < h*0.5){
-    // if shot heading towards keeper area
-    const targetX = ball.x + ball.vx * 0.2;
-    const dist = Math.abs(targetX - keeper.x);
-    const timeSince = Date.now() - keeper.lastDiveAt;
-    if(dist < keeper.w*0.9 && timeSince > 800){
-      // dive chance depends on difficulty (we keep medium)
-      const chance = 0.7; // 70% chance
-      if(Math.random() < chance){
-        // set dive
-        keeper.state = (targetX < keeper.x) ? 'dive-left' : 'dive-right';
-        keeper.lastDiveAt = Date.now();
-        keeper.vx = (keeper.state === 'dive-left') ? -520 : 520;
-      }
-    }
-  }
-  // apply keeper velocity damping
-  keeper.x += keeper.vx * dt;
-  keeper.vx *= 0.92;
-  // bounds
-  keeper.x = clamp(keeper.x, keeper.w/2 + 20, w - keeper.w/2 - 20);
-
-  // collision: ball with keeper
-  if(ball.moving){
-    const dx = ball.x - keeper.x;
-    const dy = ball.y - keeper.y;
-    const dist = Math.hypot(dx, dy);
-    // approximate keeper as rectangle, but check proximity
-    if(dist < ball.r + Math.max(keeper.w, keeper.h)/2){
-      // deflect
-      // small chance to save
-      if(Math.random() < 0.85){
-        // deflect ball
-        ball.vx = (dx / Math.max(1, Math.abs(dx))) * 300;
-        ball.vy = -Math.abs(ball.vy) * 0.6;
-        // small bounce back
-        ball.x += ball.vx * 0.02;
-      }
-    }
-  }
-
-  // goal detection: if ball crosses top area within goal bounds
-  const goalY = h * 0.09; // y position where goal line exists
-  const goalWidth = w * 0.5;
-  const goalLeft = (w - goalWidth)/2;
-  const goalRight = goalLeft + goalWidth;
-
-  if(ball.moving && ball.y - ball.r < goalY){
-    // check x in goal
-    if(ball.x > goalLeft + 10 && ball.x < goalRight - 10){
-      // Check keeper didn't block: if keeper close to ball x and y similar then blocked already handled
-      // register goal
-      score += 1;
-      updateUI();
-      ball.moving = false;
-      // celebration: small pause + reset ball
-      spawnGoalEffect(ball.x, ball.y);
-      setTimeout(()=> resetBall(), 700);
-    } else {
-      // hit crossbar or outside -> bounce
-      ball.vy = Math.abs(ball.vy) * 0.4;
-    }
-  }
 }
 
-function resetBall(){
-  const w = canvas.width / (window.devicePixelRatio || 1);
-  const h = canvas.height / (window.devicePixelRatio || 1);
-  ball.x = w*0.5;
-  ball.y = h*0.7;
-  ball.vx = 0; ball.vy = 0; ball.moving = false;
-}
+// Çizim
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-// draw
-let effects = [];
-function spawnGoalEffect(x,y){
-  effects.push({x,y,time:Date.now()});
-}
+    // Kale
+    ctx.fillStyle = "red";
+    ctx.fillRect(goal.x, goal.y, goal.width, goal.height);
 
-function draw(){
-  const w = canvas.width / (window.devicePixelRatio || 1);
-  const h = canvas.height / (window.devicePixelRatio || 1);
-  // background
-  ctx.fillStyle = '#07121a';
-  ctx.fillRect(0,0,w,h);
-
-  // stadium gradient
-  const g = ctx.createLinearGradient(0,0,0,h);
-  g.addColorStop(0,'#07121a');
-  g.addColorStop(1,'#0b1a2a');
-  ctx.fillStyle = g;
-  ctx.fillRect(0,0,w,h);
-
-  // draw field - simple
-  const fieldH = h * 0.9;
-  ctx.fillStyle = '#0e2b18';
-  ctx.fillRect(20, fieldH*0.15, w-40, fieldH*0.75);
-
-  // draw goal (top center)
-  const goalWidth = w * 0.5;
-  const goalLeft = (w - goalWidth)/2;
-  const goalTop = h * 0.04;
-  const goalHeight = h * 0.06;
-  ctx.fillStyle = '#e8f1fb';
-  ctx.fillRect(goalLeft, goalTop, goalWidth, 6);
-  // posts
-  ctx.fillStyle = '#d9e6f6';
-  ctx.fillRect(goalLeft-6, goalTop, 6, goalHeight);
-  ctx.fillRect(goalLeft+goalWidth, goalTop, 6, goalHeight);
-
-  // keeper
-  ctx.save();
-  ctx.translate(keeper.x, keeper.y);
-  // body
-  ctx.fillStyle = '#111827';
-  ctx.fillRect(-keeper.w/2, -keeper.h/2, keeper.w, keeper.h);
-  // face (simple)
-  ctx.fillStyle = '#f1c27d';
-  ctx.beginPath();
-  ctx.ellipse(0, -keeper.h/2 - 12, 18, 18, 0, 0, Math.PI*2);
-  ctx.fill();
-  ctx.restore();
-
-  // ball
-  ctx.beginPath();
-  ctx.fillStyle = '#ffffff';
-  ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI*2);
-  ctx.fill();
-  // pattern for soccer ball
-  ctx.strokeStyle = '#000'; ctx.lineWidth = 1;
-  ctx.stroke();
-
-  // player representation near bottom (static)
-  ctx.save();
-  ctx.fillStyle = '#0b3b6f';
-  ctx.beginPath();
-  ctx.ellipse(w*0.5, h*0.82, 34, 42, 0, 0, Math.PI*2);
-  ctx.fill();
-  ctx.restore();
-
-  // draw effects
-  const now = Date.now();
-  effects = effects.filter(e => now - e.time < 900);
-  effects.forEach((e, idx)=>{
-    const t = (now - e.time) / 900;
-    ctx.globalAlpha = 1 - t;
-    ctx.fillStyle = `rgba(255,220,120,${1-t})`;
+    // Top
     ctx.beginPath();
-    ctx.arc(e.x, e.y - t*30, 40 + t*40, 0, Math.PI*2);
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+    ctx.fillStyle = ball.color;
     ctx.fill();
-    ctx.globalAlpha = 1;
-  });
+    ctx.closePath();
 }
 
-// input handling: drag to aim and shoot
-let dragging = false;
-let dragStart = null;
-let dragPos = null;
-
-function getPointerPos(evt){
-  const rect = canvas.getBoundingClientRect();
-  const touch = evt.touches ? evt.touches[0] : evt;
-  return { x: (touch.clientX - rect.left), y: (touch.clientY - rect.top) };
+function gameLoop() {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
 }
 
-canvas.addEventListener('pointerdown', (e)=>{
-  if(!running) return;
-  const p = getPointerPos(e);
-  const d = Math.hypot(p.x - ball.x, p.y - ball.y);
-  // only start drag if touching near ball
-  if(d < ball.r * 2.5 && !ball.moving){
-    dragging = true;
-    dragStart = p;
-    dragPos = p;
-    hintEl.textContent = 'Sürükle, bırak: şut!';
-  }
-});
-canvas.addEventListener('pointermove', (e)=>{
-  if(!dragging) return;
-  dragPos = getPointerPos(e);
-});
-canvas.addEventListener('pointerup', (e)=>{
-  if(!dragging) return;
-  dragging = false;
-  const p = getPointerPos(e);
-  shootFromDrag(dragStart, p);
-  dragStart = null; dragPos = null;
-});
-
-// support touchstart/move/end fallback
-canvas.addEventListener('touchstart', (e)=>{ canvas.dispatchEvent(new PointerEvent('pointerdown', {clientX: e.touches[0].clientX, clientY: e.touches[0].clientY})); }, {passive:true});
-canvas.addEventListener('touchmove', (e)=>{ canvas.dispatchEvent(new PointerEvent('pointermove', {clientX: e.touches[0].clientX, clientY: e.touches[0].clientY})); }, {passive:true});
-canvas.addEventListener('touchend', (e)=>{ canvas.dispatchEvent(new PointerEvent('pointerup', {})); }, {passive:true});
-
-// keyboard controls (desktop)
-window.addEventListener('keydown', (e)=>{
-  if(!running) return;
-  if(e.code === 'Space'){
-    // small automatic shot forward if not moving
-    if(!ball.moving){
-      ball.moving = true;
-      ball.vx = 0;
-      ball.vy = -420 * charPower;
+function startDrag(x, y) {
+    if (Math.hypot(x - ball.x, y - ball.y) <= ball.radius) {
+        isDragging = true;
+        dragStart.x = x;
+        dragStart.y = y;
     }
-  }
+}
+
+function endDrag(x, y) {
+    if (isDragging) {
+        ball.vx = (dragStart.x - x) / 10;
+        ball.vy = (dragStart.y - y) / 10;
+        isDragging = false;
+    }
+}
+
+// Mouse
+canvas.addEventListener("mousedown", e => startDrag(e.offsetX, e.offsetY));
+canvas.addEventListener("mouseup", e => endDrag(e.offsetX, e.offsetY));
+
+// Dokunmatik
+canvas.addEventListener("touchstart", e => {
+    let rect = canvas.getBoundingClientRect();
+    let touch = e.touches[0];
+    startDrag(touch.clientX - rect.left, touch.clientY - rect.top);
+});
+canvas.addEventListener("touchend", e => {
+    let rect = canvas.getBoundingClientRect();
+    let touch = e.changedTouches[0];
+    endDrag(touch.clientX - rect.left, touch.clientY - rect.top);
 });
 
-// compute shot from drag
-function shootFromDrag(start, end){
-  // vector from start to end gives direction & power (reverse: pull back then release)
-  // user will drag backward from ball, so we invert
-  const dx = start.x - end.x;
-  const dy = start.y - end.y;
-  const dist = Math.hypot(dx, dy);
-  if(dist < 8) return;
-  // scale to velocity
-  const pow = clamp(dist / 1.6, 0, 1400) * charPower;
-  // direction toward top (negative y)
-  const angle = Math.atan2(dy, dx);
-  ball.vx = Math.cos(angle) * pow;
-  ball.vy = Math.sin(angle) * pow * 0.9;
-  ball.moving = true;
-  // small sound (optional)
-}
-
-// game loop
-function gameLoop(ts){
-  if(!lastTime) lastTime = ts;
-  const dt = (ts - lastTime) / 1000;
-  lastTime = ts;
-  if(running){
-    // timer decrement
-    if(startedAt){
-      const elapsed = Math.floor((Date.now() - startedAt)/1000);
-      const remain = GAME_TIME - elapsed;
-      timer = Math.max(0, remain);
-      if(timer <= 0){
-        endGame();
-      }
-    }
-    step(dt);
-  }
-  // draw
-  draw();
-  // draw UI overlays on canvas for dragging aim
-  if(dragging && dragStart && dragPos){
-    drawAim(dragStart, dragPos);
-  }
-  requestAnimationFrame(gameLoop);
-}
-requestAnimationFrame(gameLoop);
-
-// draw aim helper
-function drawAim(start, pos){
-  ctx.save();
-  ctx.strokeStyle = 'rgba(255,255,255,0.9)';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(start.x, start.y);
-  ctx.lineTo(pos.x, pos.y);
-  ctx.stroke();
-  // arrow
-  const dx = pos.x - start.x;
-  const dy = pos.y - start.y;
-  const a = Math.atan2(dy, dx);
-  const ax = pos.x, ay = pos.y;
-  ctx.fillStyle = 'rgba(255,255,255,0.9)';
-  ctx.beginPath();
-  ctx.moveTo(ax, ay);
-  ctx.lineTo(ax - 12*Math.cos(a - 0.4), ay - 12*Math.sin(a - 0.4));
-  ctx.lineTo(ax - 12*Math.cos(a + 0.4), ay - 12*Math.sin(a + 0.4));
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
-}
-
-// UI updates
-function updateUI(){
-  timerEl.textContent = `Süre: ${formatTime(timer)}`;
-  scoreEl.textContent = `Skor: ${score} / ${GOAL_TARGET}`;
-  // win condition
-  if(score >= GOAL_TARGET){
-    endGame(true);
-  }
-}
-
-function startGame(){
-  if(running) return;
-  resetEntities();
-  score = 0;
-  timer = GAME_TIME;
-  updateUI();
-  running = true;
-  startedAt = Date.now();
-  lastTime = 0;
-  hintEl.textContent = 'Oyun başladı! Dokun ve sürükle şut için.';
-}
-
-function endGame(win){
-  running = false;
-  startedAt = null;
-  // show overlay
-  if(score >= GOAL_TARGET || win){
-    openOverlay('Kazandın!', `Tebrikler — ${score} gol attın!`, ()=>{ closeOverlay(); resetGame(); }, ()=>{ window.location.href='index.html'; });
-  } else {
-    openOverlay('Süre bitti', `Toplam ${score} gol attın. Tekrar deneyebilirsin.`, ()=>{ closeOverlay(); startGame(); }, ()=>{ window.location.href='index.html'; });
-  }
-}
-
-function resetGame(){
-  running = false;
-  startedAt = null;
-  score = 0;
-  timer = GAME_TIME;
-  updateUI();
-  resetEntities();
-  closeOverlay();
-  hintEl.textContent = 'Kontrol: Dokun ve sürükle (veya Space tuşu)';
-}
-
-// init
-resetGame();
-resizeCanvas(); // ensure sizes
-updateUI();
-
+gameLoop();
 </script>
+
 </body>
 </html>
