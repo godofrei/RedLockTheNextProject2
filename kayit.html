@@ -1,78 +1,69 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kayıt Ol - Red Lock</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #1a1a1a, #333);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: rgba(0,0,0,0.8);
-            padding: 30px;
-            border-radius: 10px;
-            width: 300px;
-            text-align: center;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 5px;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background: #38bdf8;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background: #0ea5e9;
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Red Lock - Kayıt Ol</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#06121a,#041016);color:#e6f0ff;display:flex;align-items:center;justify-content:center;height:100vh;padding:16px}
+  .card{width:100%;max-width:420px;background:linear-gradient(180deg,#08141c,#07101a);padding:20px;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+  h2{margin:0 0 8px}
+  label{display:block;margin-top:8px;font-size:0.95rem;color:#cfe6ff}
+  input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#e6f0ff;margin-top:6px}
+  .row{display:flex;gap:8px}
+  .btn{margin-top:12px;padding:10px 14px;border-radius:8px;border:none;background:linear-gradient(90deg,#38bdf8,#ff7aa6);color:#022;font-weight:800;cursor:pointer}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#cfe6ff}
+  .note{margin-top:10px;color:#9fb0d0;font-size:0.9rem}
+</style>
 </head>
 <body>
+  <div class="card">
+    <h2>Kayıt Ol</h2>
+    <form id="regForm">
+      <label for="nick">Kullanıcı Adı</label>
+      <input id="nick" name="nick" type="text" placeholder="Rei23" required />
 
-    <div class="container">
-        <h2>Kayıt Ol</h2>
-        <input type="text" id="name" placeholder="Adınız" required>
-        <input type="email" id="email" placeholder="E-posta" required>
-        <input type="password" id="password" placeholder="Şifre" required>
-        <button onclick="register()">Kayıt Ol</button>
-    </div>
+      <label for="email">E-posta</label>
+      <input id="email" name="email" type="email" placeholder="ornek@eposta.com" required />
 
-    <script>
-        function register() {
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
+      <label for="pass">Parola</label>
+      <input id="pass" name="pass" type="password" placeholder="En az 6 karakter" required minlength="6" />
 
-            if (!name || !email || !password) {
-                alert("Lütfen tüm alanları doldurun!");
-                return;
-            }
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button type="submit" class="btn">Kayıt Ol</button>
+        <a class="btn ghost" href="index.html" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none">Geri</a>
+      </div>
 
-            localStorage.setItem('name', name);
-            localStorage.setItem('email', email);
-            localStorage.setItem('password', password);
+      <div class="note">Not: Bu demo yerelde (tarayıcıda) saklama yapar. Gerçek uygulamada sunucuya gönderilmelidir.</div>
+    </form>
+  </div>
 
-            alert("Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...");
-            window.location.href = "giris.html";
-        }
-    </script>
+<script>
+document.getElementById('regForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const nick = document.getElementById('nick').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const pass = document.getElementById('pass').value;
 
+  if(!nick || !email || pass.length < 6){
+    alert('Lütfen tüm alanları doğru doldurun (parola en az 6 karakter).');
+    return;
+  }
+
+  // Basit doğrulama: e-posta benzersiz değil kontrolü yok (lokal demo)
+  const user = { nick, email, password: pass, createdAt: new Date().toISOString() };
+  try {
+    localStorage.setItem('redlock_user', JSON.stringify(user));
+  } catch(err){
+    alert('Tarayıcıda kayıt yapılamıyor.');
+    return;
+  }
+
+  // Kayıt olunca index'e dön — index.js bu durumda Kayıt Ol butonunu gizleyecek
+  alert('Kayıt başarılı! Hoş geldin, ' + nick + '.');
+  window.location.href = 'index.html';
+});
+</script>
 </body>
 </html>
