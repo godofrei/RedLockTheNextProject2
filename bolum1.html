@@ -7,122 +7,120 @@
 <style>
     body {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #111;
-        color: #fff;
+        font-family: 'Arial', sans-serif;
+        color: white;
         overflow-x: hidden;
     }
     .scene {
         position: relative;
-        min-height: auto;
-        padding: 6vh 6vw;
+        min-height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
-        box-sizing: border-box;
-    }
-    .panel-bg {
-        position: absolute;
-        inset: 0;
+        align-items: center;
+        text-align: center;
+        padding: 40px;
+        background-attachment: fixed;
         background-size: cover;
         background-position: center;
-        z-index: -3;
-        filter: grayscale(10%) brightness(0.8);
+        animation: fadeIn 1.5s ease-in-out;
     }
-    .overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: -2;
-    }
-    .card {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        max-width: 980px;
-        background: rgba(0,0,0,0.6);
-        border-radius: 14px;
+    .scene p {
+        background: rgba(0, 0, 0, 0.6);
         padding: 20px;
-        box-shadow: 0 18px 48px rgba(0,0,0,0.6);
-        border: 1px solid rgba(255,255,255,0.05);
-        animation: fadeUp .9s ease both;
+        border-radius: 10px;
+        font-size: 1.3rem;
+        max-width: 800px;
+        line-height: 1.8;
     }
-    p {
-        line-height: 1.6;
-        font-size: 18px;
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
     }
-    @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .nav-buttons {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 6vw;
+    .buttons {
+        text-align: center;
+        padding: 30px;
         background: #000;
     }
-    .nav-buttons a {
-        background: #c00;
-        color: #fff;
+    .buttons a {
+        display: inline-block;
+        margin: 10px;
+        padding: 15px 25px;
+        background: crimson;
+        color: white;
         text-decoration: none;
-        padding: 10px 18px;
+        font-weight: bold;
         border-radius: 8px;
         transition: 0.3s;
     }
-    .nav-buttons a:hover {
-        background: #900;
+    .buttons a:hover {
+        background: darkred;
     }
 </style>
 </head>
 <body>
 
-<!-- SAHNE 1 -->
-<section class="scene">
-    <div class="panel-bg" style="background-image:url('https://i.ibb.co/3TkK7GK/manga-bg1.jpg');"></div>
-    <div class="overlay"></div>
-    <div class="card">
-        <p>Yağmur damlaları çimenlere düşerken, Isagi sessizce nefesini tuttu. Stadın etrafı, gece ışıklarıyla parlayan bir savaş alanına dönüşmüştü. Adımlarının sesi, kalbinin gürültüsüne karışıyordu.</p>
-    </div>
-</section>
+<div class="scene" style="background-image: url('https://i.ibb.co/8Y6H1hG/manga-bg1.jpg');">
+    <p>Soğuk bir rüzgar stadın boş tribünlerinden esiyordu. Isagi, gözlerini sahanın merkezine dikmiş, sessizce bekliyordu. Rei ise birkaç adım ötede, dudaklarının kenarında alaycı bir gülümsemeyle ona bakıyordu.</p>
+</div>
 
-<!-- SAHNE 2 -->
-<section class="scene">
-    <div class="panel-bg" style="background-image:url('https://i.ibb.co/h8k8qN2/manga-bg2.jpg');"></div>
-    <div class="overlay"></div>
-    <div class="card">
-        <p>Rei, uzak köşede ona bakıyordu. “Isagi… bugün geri çekilmek yok,” dedi yavaşça, ama sesi tribünlerde yankılandı. O anda, ikisinin de gözlerinde aynı kıvılcım parladı.</p>
-    </div>
-</section>
+<div class="scene" style="background-image: url('https://i.ibb.co/9hWc3rx/manga-bg2.jpg');">
+    <p>"Hazır mısın?" diye sordu Rei, sesi meydan okuyan bir tonda. Isagi derin bir nefes aldı. "Hazır değilim ama bu beni durdurmayacak." dedi kararlılıkla.</p>
+</div>
 
-<!-- SAHNE 3 -->
-<section class="scene">
-    <div class="panel-bg" style="background-image:url('https://i.ibb.co/RCNqLhB/manga-bg3.jpg');"></div>
-    <div class="overlay"></div>
-    <div class="card">
-        <p>Top, orta çizgide duruyordu. Zaman adeta durdu; tribünlerdeki herkes nefesini tuttu. Rei’nin bakışları sertti. “Bakalım Red Lock’a girmeyi hak ediyor musun?” diye fısıldadı.</p>
-    </div>
-</section>
+<div class="scene" style="background-image: url('https://i.ibb.co/FwnybN8/manga-bg3.jpg');">
+    <p>Top, sahanın tam ortasında duruyordu. Ayak sesleri yankılandı, ardından Rei hızlı bir adım atarak topa ilk dokunan kişi oldu. Isagi'nin gözleri bir anlığına büyüdü.</p>
+</div>
 
-<!-- Devam eden sahneler (15 sahne varmış gibi uzun içerik) -->
-<section class="scene">
-    <div class="panel-bg" style="background-image:url('https://i.ibb.co/qjHn0Zv/manga-bg4.jpg');"></div>
-    <div class="overlay"></div>
-    <div class="card">
-        <p>İlk pas geldiğinde, Isagi’nin ayakları kendiliğinden hareket etti. Tribünlerde bir uğultu başladı. Herkes, o anın tarihi bir başlangıç olacağını biliyordu.</p>
-    </div>
-</section>
+<div class="scene" style="background-image: url('https://i.ibb.co/hZwP7Kj/manga-bg4.jpg');">
+    <p>"Hızın iyi... ama yeterli değil!" Rei'nin sesi, tribünlerde yankılanırken, Isagi hızla topu kapmak için öne atıldı.</p>
+</div>
 
-<section class="scene">
-    <div class="panel-bg" style="background-image:url('https://i.ibb.co/7GxRZdk/manga-bg5.jpg');"></div>
-    <div class="overlay"></div>
-    <div class="card">
-        <p>Rei, sert bir müdahaleyle topu kaptı. Ama bu, sadece bir testti. Isagi’nin reflekslerini, hızını ve kararlılığını ölçen bir sınav.</p>
-    </div>
-</section>
+<div class="scene" style="background-image: url('https://i.ibb.co/JcfqJ2v/manga-bg5.jpg');">
+    <p>Top ayağında, Isagi bir an tereddüt etti. Geçmişteki başarısız anları aklına geldi. Fakat bu kez, vazgeçmeyecekti.</p>
+</div>
 
-<!-- NAV BUTONLAR -->
-<div class="nav-buttons">
-    <a href="index.html">Ana Sayfaya Dön</a>
+<div class="scene" style="background-image: url('https://i.ibb.co/nMtjTh2/manga-bg6.jpg');">
+    <p>"Göster bana Isagi... egoistliğini göster!" Rei bağırdı. Isagi, kelimeleri bir meydan okuma gibi içine çekti.</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/1GySZ5q/manga-bg7.jpg');">
+    <p>Tribünlerde hayali bir kalabalığın çığlıkları yankılandı. Sanki bütün dünya bu maçı izliyordu. Isagi topu kontrol etti ve kaleye yöneldi.</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/92tKSC0/manga-bg8.jpg');">
+    <p>Rei hızla arkasından geldi. Ayak sesleri gittikçe yaklaşıyordu. "Kaçamazsın!" diye haykırdı Rei.</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/6s6nX9L/manga-bg9.jpg');">
+    <p>Isagi, ani bir dönüşle Rei'yi geçti. Bu hareket ona birkaç saniye kazandırmıştı. Topu sürerken aklı sadece bir şey düşünüyordu: Gol.</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/SVr7nZj/manga-bg10.jpg');">
+    <p>Kale önündeydi. Isagi şut pozisyonuna geçti, gözleri sadece ağları görüyordu. Ancak Rei yeniden yanına yetişmişti.</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/02d4V6h/manga-bg11.jpg');">
+    <p>"Bunu yapamazsın Isagi!" dedi Rei. Ama Isagi'nin gözleri hiç olmadığı kadar kararlıydı. "Senin dediğin değil, benim istediğim olacak!"</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/QNmh5Xy/manga-bg12.jpg');">
+    <p>Bir anda şutunu çekti. Top, sanki zaman yavaşlamış gibi havada süzüldü. Rei sadece izleyebildi.</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/DwBfNzk/manga-bg13.jpg');">
+    <p>Top ağlara çarptığında, sahanın sessizliği bir alkış tufanına dönüştü. Isagi derin bir nefes verdi.</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/jy4gJMX/manga-bg14.jpg');">
+    <p>Rei gülümsedi. "Demek bu senin egoistliğin ha?" dedi. Isagi ise sadece başını salladı. "Bu, benim yolum."</p>
+</div>
+
+<div class="scene" style="background-image: url('https://i.ibb.co/WvBrQZL/manga-bg15.jpg');">
+    <p>Güneş batarken, sahada sadece iki gölge kaldı. Yeni bir mücadele ufukta görünüyordu.</p>
+</div>
+
+<div class="buttons">
+    <a href="index.html">Ana Sayfa</a>
     <a href="bolum2.html">Diğer Bölüme Geç</a>
 </div>
 
