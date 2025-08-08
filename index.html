@@ -1,107 +1,48 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Red Lock - Bölüm 1</title>
-<style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        height: 100vh;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        overflow: hidden;
-        opacity: 0;
-        animation: fadeIn 1s ease forwards;
-    }
-
-    /* Parallax arka plan */
-    body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('https://w0.peakpx.com/wallpaper/835/51/HD-wallpaper-blue-lock-yoichi-isagi-manga.jpg') no-repeat center center/cover;
-        transform: scale(1.05);
-        animation: parallax 8s ease-in-out infinite alternate;
-        z-index: -2;
-    }
-
-    /* Kararma efekti */
-    body::after {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: -1;
-    }
-
-    .container {
-        max-width: 900px;
-        padding: 20px;
-    }
-
-    h1 {
-        font-size: 2.8rem;
-        margin-bottom: 20px;
-    }
-
-    p {
-        font-size: 1.2rem;
-        line-height: 1.6;
-        margin-bottom: 40px;
-    }
-
-    .btn {
-        padding: 15px 30px;
-        background: linear-gradient(45deg, #ff4b2b, #ff416c);
-        color: white;
-        font-size: 1.2rem;
-        text-decoration: none;
-        border-radius: 50px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-
-    .btn:hover {
-        transform: scale(1.1);
-        background: linear-gradient(45deg, #ff416c, #ff4b2b);
-        box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-    }
-
-    /* Fade-in */
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    /* Parallax animasyonu */
-    @keyframes parallax {
-        0% { transform: scale(1.05) translateY(0px); }
-        100% { transform: scale(1.05) translateY(-20px); }
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Lock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #0f172a, #1e293b);
+            color: white;
+            text-align: center;
+            padding-top: 150px;
+            margin: 0;
+        }
+        h1 {
+            font-size: 40px;
+        }
+        p {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .btn {
+            display: inline-block;
+            margin: 20px 10px;
+            padding: 12px 25px;
+            background: #38bdf8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background: #0ea5e9;
+        }
+    </style>
 </head>
 <body>
+    <h1>RED LOCK'A HOŞ GELDİNİZ</h1>
+    <p>"Egoist olmak sadece kendini beğenmek değildir"</p>
 
-<div class="container">
-    <h1>Bölüm 1: Başlangıç</h1>
-    <p>
-        Red Lock macerasının ilk adımı... Bu sayfada hikayenin başlangıcına tanık olacaksınız.  
-        Her şey, seçilen futbolcuların hayatlarını değiştirecek bir davetiyeyle başlıyor.
-    </p>
-    <a href="bolum2.html" class="btn">Sonraki Bölüm</a>
-</div>
-
+    <a href="bolum1.html" class="btn">Okumaya Başla</a>
+    <a href="minioyun.html" class="btn">Mini Oyun Oyna</a>
+    <a href="kayit.html" class="btn">Kayıt Ol</a>
 </body>
 </html>
