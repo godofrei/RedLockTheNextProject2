@@ -1,73 +1,103 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Lock - Ana Sayfa</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: url('arka-plan.jpg') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        .overlay {
-            background: rgba(0,0,0,0.6);
-            padding: 40px;
-            border-radius: 15px;
-        }
-        h1 {
-            color: #fff;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #ddd;
-            font-style: italic;
-            margin-bottom: 30px;
-        }
-        .buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        a {
-            text-decoration: none;
-            color: white;
-            background: #38bdf8;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 1.1em;
-            transition: background 0.3s;
-        }
-        a:hover {
-            background: #0ea5e9;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @media (max-width: 600px) {
-            h1 { font-size: 2em; }
-            p { font-size: 0.9em; }
-        }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Red Lock - Ana Sayfa</title>
+<style>
+  :root{ --accent:#38bdf8; --bg1:#07101a; --card:#0c1722; }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,var(--bg1),#03101a);color:#e6f0ff;display:flex;align-items:center;justify-content:center;padding:24px}
+  .card{width:100%;max-width:960px;background:linear-gradient(180deg,#071826,#06121a);padding:36px;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,0.6);text-align:center}
+  h1{margin:0 0 8px;font-size:2rem;letter-spacing:1px}
+  p.lead{margin:0 0 20px;color:#cfe6ff;opacity:0.9}
+  .buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+  .btn{padding:12px 20px;border-radius:10px;border:none;cursor:pointer;font-weight:800;background:linear-gradient(90deg,var(--accent),#ff7aa6);color:#022; text-decoration:none}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);color:#cfe6ff}
+  .meta{margin-top:18px;color:#9fb0d0}
+  .welcome{display:inline-flex;gap:12px;align-items:center}
+  .small-muted{font-size:0.9rem;color:#b6c7db}
+  @media(max-width:600px){ h1{font-size:1.5rem} .btn{padding:10px 14px} }
+</style>
 </head>
 <body>
-    <div class="overlay">
-        <h1>RED LOCK'A HOŞ GELDİNİZ</h1>
-        <p>"Egoist olmak sadece kendini beğenmek değildir"</p>
-        <div class="buttons">
-            <a href="bolum1.html">📖 Okumaya Başla</a>
-            <a href="kayit.html">📝 Kayıt Ol</a>
-            <a href="mini-oyun.html">🎮 Mini Oyun Oyna</a>
-        </div>
+
+  <div class="card">
+    <h1>RED LOCK'A HOŞ GELDİNİZ</h1>
+    <p class="lead">"Egoist olmak sadece kendini beğenmek değildir"</p>
+
+    <!-- When logged out show these -->
+    <div id="authButtons" class="buttons">
+      <a class="btn" href="bolum1.html" id="readBtn">📖 Okumaya Başla</a>
+      <a class="btn" href="kayit.html" id="registerBtn">📝 Kayıt Ol</a>
+      <a class="btn" href="giris.html" id="loginBtn">🔐 Giriş Yap</a>
+      <a class="btn" href="mini-oyun.html" id="gameBtn">🎮 Mini Oyun Oyna</a>
     </div>
+
+    <!-- When logged in show welcome and logout -->
+    <div id="loggedInUI" class="buttons" style="display:none">
+      <div class="welcome" id="welcomeText" aria-live="polite"><strong>Hoş geldin, <span id="nickHere"></span></strong></div>
+      <button class="btn ghost" id="logoutBtn">Çıkış Yap</button>
+      <a class="btn" href="bolum1.html">📖 Okumaya Başla</a>
+      <a class="btn" href="mini-oyun.html">🎮 Mini Oyun Oyna</a>
+    </div>
+
+    <div class="meta">Hızlı bağlantılar: bölüm ve mini oyun. Kayıt olursan profilin yerel olarak saklanır (tarayıcı).</div>
+  </div>
+
+<script>
+/*
+  Kullanıcı yönetimi:
+  - kayıtlı kullanıcı localStorage 'redlock_user' altında JSON olarak saklanır:
+      { nick: 'Rei', email:'x@x', password: 'hashedOrPlainForDemo' }
+  - index.html açıldığında kontrol edilir; eğer kullanıcı varsa Kayıt/Giriş gizlenir.
+*/
+
+// DOM refs
+const authButtons = document.getElementById('authButtons');
+const loggedInUI = document.getElementById('loggedInUI');
+const nickHere = document.getElementById('nickHere');
+const logoutBtn = document.getElementById('logoutBtn');
+
+function getStoredUser(){
+  try {
+    const raw = localStorage.getItem('redlock_user');
+    if(!raw) return null;
+    return JSON.parse(raw);
+  } catch(e){ return null; }
+}
+
+function showLoggedIn(user){
+  authButtons.style.display = 'none';
+  loggedInUI.style.display = 'flex';
+  nickHere.textContent = user.nick || user.email || 'Oyuncu';
+}
+
+function showLoggedOut(){
+  authButtons.style.display = 'flex';
+  loggedInUI.style.display = 'none';
+}
+
+// on page load
+document.addEventListener('DOMContentLoaded', ()=>{
+  const user = getStoredUser();
+  if(user){
+    showLoggedIn(user);
+  } else {
+    showLoggedOut();
+  }
+});
+
+// logout
+logoutBtn.addEventListener('click', ()=>{
+  // remove stored user (or you could just remove auth flag)
+  localStorage.removeItem('redlock_user');
+  // optionally also remove other keys if used
+  showLoggedOut();
+  // a quick visual feedback
+  setTimeout(()=> { alert('Çıkış yapıldı.'); }, 50);
+});
+</script>
+
 </body>
 </html>
