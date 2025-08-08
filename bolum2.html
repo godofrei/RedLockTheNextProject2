@@ -1,384 +1,231 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Red Lock — Bölüm 2 (Uzun Diyaloglu)</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Red Lock — Bölüm 2</title>
 <style>
-  :root{ --accent1:#ff4b2b; --accent2:#ff416c; --bg:#000; --card-bg:rgba(0,0,0,0.6); }
+  :root{ --accent1:#ff4b2b; --accent2:#ff416c; --muted:#9fb0d0; }
   *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family: "Inter", "Helvetica Neue", Arial, sans-serif;background:var(--bg);color:#fff;}
-  .page{width:100%;min-height:100%;overflow-x:hidden}
+  html,body{height:100%;margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:#000;color:#fff;}
   .scene{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:6vh 6vw;text-align:left;overflow:hidden}
-  .panel-art{position:absolute;inset:0;width:100%;height:100%;z-index:-3;object-fit:cover;filter:grayscale(100%) contrast(1.06) brightness(0.95);transform-origin:center;will-change:transform;transition:transform .18s linear}
-  .vignette{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.7));z-index:-2;pointer-events:none}
-  .content{position:relative;z-index:2;max-width:980px;color:#fff;animation:fadeUp .9s ease both;padding:18px;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.04));border-radius:12px}
-  .chapter-tag{display:inline-block;background:rgba(0,0,0,0.66);padding:6px 12px;border-radius:8px;font-weight:800;margin-bottom:12px;border:2px solid rgba(255,255,255,0.04)}
-  h1{margin:6px 0 10px 0;font-size:clamp(22px,4.6vw,40px);letter-spacing:1.1px;text-transform:uppercase;-webkit-text-stroke:0.6px rgba(0,0,0,0.7)}
-  .lead{display:inline-block;margin:12px 0 18px 0;font-size:clamp(13px,2.1vw,18px);background:#fff;color:#111;padding:10px 16px;border-radius:10px;font-weight:800}
-  .dialog{background:rgba(0,0,0,0.55);padding:12px;border-radius:8px;margin-top:12px;border:1px solid rgba(255,255,255,0.04);line-height:1.7}
-  .dialog p{margin:8px 0}
+  .panel-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:-3;filter:grayscale(30%) contrast(1.02) brightness(0.85);transform-origin:center;transition:transform .18s linear}
+  .vignette{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.18),rgba(0,0,0,0.72));z-index:-2;pointer-events:none}
+  .content{position:relative;z-index:2;max-width:980px;padding:22px;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.04));border-radius:12px;animation:fadeUp .9s ease both;}
+  .lead{display:block;margin-bottom:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;font-weight:800;max-width:fit-content}
+  .para{margin-top:12px;line-height:1.7;font-size:1rem;background:rgba(0,0,0,0.45);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
   .actions{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
-  .btn{display:inline-block;padding:12px 24px;border-radius:999px;background:linear-gradient(45deg,var(--accent1),var(--accent2));color:white;font-weight:800;box-shadow:0 12px 36px rgba(0,0,0,0.45)}
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06)}
+  .btn{padding:12px 20px;border-radius:999px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#04101a;font-weight:800;text-decoration:none;display:inline-block}
+  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#dbeeff}
   @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-  @media (max-width:720px){ .content{padding:14px} h1{font-size:20px} }
+  @media(max-width:720px){ .content{padding:14px} .para{font-size:0.95rem} }
   .scene.inview .content{animation:fadeUp .9s ease both}
 </style>
 </head>
 <body>
-  <div class="page">
 
-    <!-- SAHNE 1 -->
-    <section class="scene" data-scene="1">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="9" opacity="0.14"><path d="M0 900 C400 700 800 850 1200 600 1600 350 1920 500" fill="none"/></g>
-        <g transform="translate(160,120) scale(1.06)" fill="#000" opacity="0.95"><path d="M700 420 C760 360 900 360 980 420 L980 700 L700 700 Z"/></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 1</div>
-        <h1>Sis Dağıldığında</h1>
-        <div class="lead">Sabahın ilk ışıklarıyla birlikte planlar konuşmaya başladı.</div>
-
-        <div class="dialog">
-          <p><strong>Anlatıcı:</strong> Sis henüz tamamen dağılmamışken, saha çimlerinin üzerinde ince bir nem vardı. Her adım, toprağın kokusunu daha güçlü getiriyordu. O gün herkesin içinde bir bekleyiş vardı; zaferin tatlı ya da acı tarafı henüz belirgin değildi.</p>
-
-          <p><strong>Rei (iç ses):</strong> "Geçen seferki hata hâlâ aklımda. Bu sefer farklı olmalı. Paslarımın hızı, vuruşumun açısı—hepsi birer küçük hesap. Ama hesap yeterli mi? Saha konuşacak, ben de ona cevap vereceğim."</p>
-
-          <p><strong>Isagi (uzak):</strong> "Hazırsın mı? Bugün yeterince çalıştın mı?"</p>
-
-          <p><strong>Rei:</strong> "Hazır olduğumu söyleyemem; ama denemekten vazgeçmeyeceğim."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 2 -->
-    <section class="scene" data-scene="2">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.12"><path d="M0 320 C500 120 900 320 1400 80 1800 -40 1920 40" fill="none"/></g>
-        <g transform="translate(120,200)" fill="#000"><rect x="300" y="140" width="520" height="360" rx="120"/></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 2</div>
-        <h1>Koridorların Fısıltısı</h1>
-        <div class="lead">Kimin adı fısıldanıp kimin ismi duyulmaz oldu; dedikodular bir sis gibi yayıldı.</div>
-
-        <div class="dialog">
-          <p><strong>Çevre Görevlisi (fısıltıyla):</strong> "Sen duydun mu? Dün gece Nagi yalnız çalışmış. Yeni bir numara varmış gibi." </p>
-
-          <p><strong>Oyuncu A (sinirli bir ton):</strong> "Herkes çalışıyor. Söylentiler işi yavaşlatır. Sahada olan, sahada belli olur."</p>
-
-          <p><strong>Rei (iç ses):</strong> "Söylentilere kulak tıkamak kolay; fakat kulak tıkamak aynı zamanda bir körlüktür. Kim ne söylüyorsa, kendi oyunumuzu kusursuz yaparak susturacağız."</p>
-
-          <p><strong>Rei (dışarıya):</strong> "Hazırsak başlayalım. Sessiz çalışmak, kazanmanın yarısıdır."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 3 -->
-    <section class="scene" data-scene="3">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.15"><path d="M0 760 C420 560 840 760 1260 480 1680 200 1920 260" fill="none"/></g>
-        <g transform="translate(420,260)" fill="#000"><path d="M300 180 C380 120 520 120 600 180 L600 420 L300 420 Z"/></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 3</div>
-        <h1>İçindeki Savaş</h1>
-        <div class="lead">Her top, içindeki korku ve arzuları tek bir anda ortaya çıkarıyordu.</div>
-
-        <div class="dialog">
-          <p><strong>Rei:</strong> "Neden bu kadar titriyorum? Herkesi izleyecekler. Başarısız olursam..."</p>
-
-          <p><strong>İç ses:</strong> "Başarısızlık bir son değil; bir kayıt. Kayıtlar, bir sonraki denemeyi şekillendirir. Hatadan korkma; hatayı kullan."</p>
-
-          <p><strong>Rei (cesaretle):</strong> "Doğru. Bir sonraki temas daha düzgün olacak. Bacaklarım beni unutmasın, aklım rehberim olsun."</p>
-
-          <p><strong>Antrenör (uzaktan):</strong> "Odaklan! Sadece topa bakma — rakibin gözüne, pozisyonuna bak!"</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 4 -->
-    <section class="scene" data-scene="4">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="6" opacity="0.14"><path d="M0 520 C400 360 800 540 1200 300 1600 60 1920 200" fill="none"/></g>
-        <g transform="translate(540,300)" fill="#000"><ellipse cx="0" cy="0" rx="240" ry="320" /></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 4</div>
-        <h1>Kırılma Anı</h1>
-        <div class="lead">Bir adımın fazlası, bir hatanın bedeli oluyor; anları doğru seçmek gerekiyordu.</div>
-
-        <div class="dialog">
-          <p><strong>Nagi (fısıltıyla):</strong> "Herkes bekliyor. Bir hamleyle her şeyi değiştirebilirim."</p>
-
-          <p><strong>Bachira:</strong> "Alelacele hareket etme. Güç tek başına karar vermiyor; zamanlama da gerek."</p>
-
-          <p><strong>Nagi (iç ses):</strong> "Zamanlama mı? O zaman şu an doğru an olmalı. Kalbim hızlanıyor ama ellerim soğuk."</p>
-
-          <p><strong>Rei (uzaktan):</strong> "Ne olursa olsun, takım. Birinci görev takım. Bunu unutma."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 5 -->
-    <section class="scene" data-scene="5">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.13"><path d="M0 360 C420 200 920 400 1400 220 1800 80 1920 120" fill="none"/></g>
-        <g transform="translate(680,340)" fill="#000"><ellipse cx="0" cy="0" rx="220" ry="300" /></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 5</div>
-        <h1>Yorgunlukla Yüzleşme</h1>
-        <div class="lead">Vücudun sınırlarıyla konuşmak, ruhun sınırlarıyla konuşmaktır.</div>
-
-        <div class="dialog">
-          <p><strong>Isagi (sertçe):</strong> "Daha hızlı! Vakti boşa harcamıyoruz!"</p>
-
-          <p><strong>Rei (nefes nefese):</strong> "Hadi… bir... iki... üç..."</p>
-
-          <p><strong>İç ses:</strong> "Nefes al. Her nefes bir ritim. Ritmini kaybetme. Rakip sadece fiziksel değil, zihinsel de yorulur. Senin avantajın zihnin." </p>
-
-          <p><strong>Rei (kendiyle):</strong> "Haklısın. Fiziksel sınır var ama zihinsel sınır yok. Bir tek hamleyle geri çekilip nefes alacağım, sonra patlayacağım."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 6 -->
-    <section class="scene" data-scene="6">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="8" opacity="0.16"><path d="M0 800 C300 600 700 780 1100 520 1500 240 1920 420" fill="none"/></g>
-        <g transform="translate(360,200)" fill="#000"><path d="M300 180 C380 130 520 130 620 180 L620 420 L300 420 Z"/></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 6</div>
-        <h1>Karşı Karşıya</h1>
-        <div class="lead">Göz göze geldiğinde kelimeler anlamsızlaşır; sadece hareket kalır.</div>
-
-        <div class="dialog">
-          <p><strong>Rakip (alaycı):</strong> "Bugün seni yıpratacağım. Hazır mısın?"</p>
-
-          <p><strong>Rei (soğukkanlı):</strong> "Sana karşı değil, kendime karşıyım. Eğer kazanırsam, bunun sebebi benim kararlılığımdı."</p>
-
-          <p><strong>Rakip (sinirli):</strong> "Sözler kazanmaz. Yapılan işler kazanır."</p>
-
-          <p><strong>Rei (iç ses):</strong> "Evet. O zaman yapacağım işi yap. Her pas, her vuruş planlı olacak."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 7 -->
-    <section class="scene" data-scene="7">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="6" opacity="0.12"><path d="M0 240 C480 120 880 260 1360 120 1760 20 1920 40" fill="none"/></g>
-        <g transform="translate(420,420)" fill="#000"><ellipse cx="0" cy="0" rx="260" ry="340" /></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 7</div>
-        <h1>Beklenmedik Hamle</h1>
-        <div class="lead">Bir çalım, bir pas — küçük anların toplamı kaderi yazdı.</div>
-
-        <div class="dialog">
-          <p><strong>Bachira (coşkuyla):</strong> "Hadi! Şimdi!"</p>
-
-          <p><strong>Rei:</strong> "Pas atıyorum—sağ kanat açık!"</p>
-
-          <p><strong>Diğer (sakin):</strong> "Kapattım, kes!"</p>
-
-          <p><strong>Rei (iç ses):</strong> "Bir anlık tereddüt yüzünden kaybetmek istemiyorum. O yüzden tam isabet."</p>
-
-          <p><strong>Anlatıcı:</strong> Beklenmedik hamle karşısında sahadaki ritim bozuldu, ama bu bozulma kimi zaman yeni bir düzenin kıvılcımıdır.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 8 -->
-    <section class="scene" data-scene="8">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.14"><path d="M0 520 C420 360 840 540 1260 320 1680 140 1920 180" fill="none"/></g>
-        <g transform="translate(900,360)" fill="#000"><ellipse cx="0" cy="0" rx="300" ry="360" /></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 8</div>
-        <h1>İçsel Zafer</h1>
-        <div class="lead">Küçük bir başarı, büyük bir dönüşümün kıvılcımı olabilir.</div>
-
-        <div class="dialog">
-          <p><strong>Rei (neşeyle):</strong> "O pas işe yaradı! Görüyor musun?"</p>
-
-          <p><strong>Bachira:</strong> "Güzel. Ama daha fazlası lazım. Bir gol, her şeyi konuşur."</p>
-
-          <p><strong>Rei (iç ses):</strong> "Bir gol atmak, sadece skor değil; kendine duyulan güvenin kanıtı olacak."</p>
-
-          <p><strong>Isagi (uzaktan, alaylı):</strong> "Sizi izliyorum. Bunu sürdüremeyeceksiniz."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 9 -->
-    <section class="scene" data-scene="9">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="6" opacity="0.13"><path d="M0 100 C400 280 800 80 1200 300 1600 540 1920 400" fill="none"/></g>
-        <g transform="translate(740,400)" fill="#000"><rect x="-240" y="-160" width="480" height="320" rx="120"/></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 9</div>
-        <h1>Anların Ağırlığı</h1>
-        <div class="lead">Zaman azalıyor; her karar daha sonra bedelini soruyor.</div>
-
-        <div class="dialog">
-          <p><strong>Rei:</strong> "Dakika daralıyor. Şimdi risk mi almalıyım, yoksa savunmaya mı çekileyim?"</p>
-
-          <p><strong>İç ses:</strong> "Risk planlıysa, ödülü büyüktür. Risk körse, kayıp büyüktür. Hesapla."</p>
-
-          <p><strong>Rei (takım arkadaşına):</strong> "Sağdan gel—sen orada kal, ben arkadan çıkacağım."</p>
-
-          <p><strong>Bachira:</strong> "Anlaştık. Hadi, tek vuruşla bitirelim."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 10 -->
-    <section class="scene" data-scene="10">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="8" opacity="0.16"><path d="M0 640 C420 420 840 700 1260 420 1680 140 1920 200" fill="none"/></g>
-        <g transform="translate(860,420)" fill="#000"><ellipse cx="0" cy="0" rx="220" ry="300" /></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 10</div>
-        <h1>Golün Eşiği</h1>
-        <div class="lead">Her hamle bir cümleydi; gol ise o cümlenin tamamlanması.</div>
-
-        <div class="dialog">
-          <p><strong>Rei (odaklanmış):</strong> "Şimdi! Hedefe bak!"</p>
-
-          <p><strong>Top (anlatıcı diliyle):</strong> "Bir temas, bir kader."</p>
-
-          <p><strong>Kaleci (ıslıkla):</strong> "Burada duracağım!"</p>
-
-          <p><strong>Sonraki saniyeler:</strong> Top filelere gitse de gitmese de herkes nefesini tuttu. O an, takımın ruhu sınanıyordu.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 11 -->
-    <section class="scene" data-scene="11">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.14"><path d="M0 280 C480 120 880 260 1360 120 1760 20 1920 40" fill="none"/></g>
-        <g transform="translate(520,260)" fill="#000"><rect x="-220" y="-200" width="440" height="400" rx="100"/></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 11</div>
-        <h1>Sona Yaklaşırken</h1>
-        <div class="lead">Her nefes, sonuca bir adım daha yaklaştırıyor.</div>
-
-        <div class="dialog">
-          <p><strong>Rei:</strong> "Yorgun ama motiveyim. Bu his… açıklanamaz."</p>
-
-          <p><strong>Takım Arkadaşı:</strong> "Aynı hissediyorum. Kaybetsek bile, bu gece öğrendiklerimiz bizimle kalacak."</p>
-
-          <p><strong>Antrenör:</strong> "İyi oynadınız. Hataları not alın, tekrar çalışacağız."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 12 -->
-    <section class="scene" data-scene="12">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="6" opacity="0.13"><path d="M0 520 C380 360 800 520 1220 320 1640 120 1920 160" fill="none"/></g>
-        <g transform="translate(760,320)" fill="#000"><ellipse cx="0" cy="0" rx="240" ry="320" /></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 12</div>
-        <h1>Çıkışın Sessizliği</h1>
-        <div class="lead">Saha boşaldığında, geriye yankılar kalır.</div>
-
-        <div class="dialog">
-          <p><strong>İç ses (Rei):</strong> "Saha şimdi sakin. Her şey daha net. Hatalar, seçimler… Hepsi önümde."</p>
-
-          <p><strong>Rei (düşünerek):</strong> "Bir sonraki antrenmanda o küçük hataları düzelteceğim. Pasları daha hızlı, vuruşları daha soğukkanlı."</p>
-
-          <p><strong>Takım Arkadaşı (uzaktan):</strong> "Toplanıyoruz. Yemek sonra. Bugün konuşulur."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 13 -->
-    <section class="scene" data-scene="13">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="8" opacity="0.16"><path d="M0 640 C420 420 840 700 1260 420 1680 140 1920 200" fill="none"/></g>
-        <g transform="translate(820,360)" fill="#000"><rect x="-220" y="-260" width="440" height="520" rx="120"/></g>
-      </svg>
-
-      <div class="vignette"></div>
-
-      <div class="content">
-        <div class="chapter-tag">BÖLÜM 2 • SAHNE 13</div>
-        <h1>Yeni Hedefler</h1>
-        <div class="lead">Bir gece bitti ama hedefler yeniden yazıldı.</div>
-
-        <div class="dialog">
-          <p><strong>Rei:</strong> "Bu defa hata kabul edilmez. Bana bir hafta verin; dönüşümünü göreceksiniz."</p>
-
-          <p><strong>Antrenör:</strong> "Sözler önemlidir; ama eylem daha önemlidir. Sözünü eyleme döktüğünü göreceğim."</p>
-
-          <p><strong>Rei (iç ses):</strong> "Sözlerim anlamsız olmasın. Her tekrar, her antrenman—her biri bir yatırım."</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- SAHNE 14 -->
-    <section class="scene" data-scene="14">
-      <svg class="panel-art" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect width="100%" height="100%" fill="#fff"/>
-        <g stroke="#000" stroke-width="7" opacity="0.13"><path d="M0 220 C420 120 840 260 1260 120 1680 0 1920 20" fill="none"/></g>
-        <g transform="translate(520,260)" fill="#000"><rect x="-220" y="ara
+<!-- NOTE: replace bg16.jpg..bg30.jpg with your images -->
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg16.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <span class="lead">İkinci Bölüm — Gölgenin Sınırı</span>
+    <div class="para">
+      Yeni sabah, yeni bir meydan okuma demektir. Saha hâlâ ıslak ve parlaktı; oyuncuların adımları keskin,
+      nefesleri ritimli. Bu bölümde herkesin iç sesi daha yüksekti, çünkü oyun dışındaki yaşanmışlıklar da sahada
+      etki yapıyordu.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg17.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Koridorlarda dolaşan dedikodular, taktiklere gölgeler düşürüyordu. Kimisi için bu moral bozucu, kimisi içinse
+      bir motivasyon kaynağıydı. Rei, kendi ritmini kaybetmemek için zihnini temizlemeye çalıştı.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg18.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Antrenör farklı bir diziliş denedi; oyuncular yeni rolleri üstlenirken ilk denemeler hantal geçti. Ama bir tane
+      hareket vardı ki doğru zamanda yapılırsa tüm dengeleri değiştirebilirdi — herkes o anı bekliyordu.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg19.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Isagi'nın soğukkanlılığı herkesin dikkatini çekiyordu. Sanki sahayı üç boyutlu okuyordu; her pasın veya boşluğun
+      hesabını yapıyordu. Rakipler onun planlarını çözmeye çalışıyordu ama o hep bir adım öndeydi.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg20.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Bir an geldiğinde Bachira beklenmedik bir çalımla bir fırsat yarattı. Rei topu aldı, kaleye bakarken zaman kısa
+      bir an için durdu. "Şimdi ya da hiç," dedi kendi kendine. O an kararları tüm takımı etkiledi.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg21.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Şut, kalenin üst köşesine doğru bir yay çizdi. Kaleci uzandı ama yetmedi. Gol! Saha bir anda coşkuyla doldu.
+      Ancak zaferin tadı kısa sürdü çünkü herkes biliyordu: hedef sadece bir adımdı.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg22.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Soyunma odasındaki tartışmalar daha uzundu; hatalar konuşuldu, eksikler not edildi. Isagi sessizce kendi notlarını
+      yazıyordu; o notlar sonraki maçın temelini oluşturacaktı.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg23.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Akşam antrenmanı yağmura tutuldu; zemin kayganlaştı ama bu, bazı oyuncuların yeteneğini parlatıyordu. Karanlıkta
+      parlayan ayakkabı tabanlarında bir hikâye var gibiydi — kimse pes etmeyecekti.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg24.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Bir oyuncu sakatlanma riski aldı; ama takım onun için plan değiştirdi, destek verdi. Bu dayanışma anı, Red Lock'un
+      sert yüzünün arkasında yumuşak bir çekirdeğin olduğunu hatırlattı.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg25.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Gece ilerledikçe, oyuncular kişisel mücadelelerini tekrar etti; bazıları teknik çalıştı, bazıları koşu yaptı. Rei,
+      tek başına ekstra pas çalıştı — her hareketini daha net hale getirmek için.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg26.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Sabah güneşinin ilk ışıklarıyla birlikte küçük bir rütbe hissi oluştu — insanlar uykularından yeni uyanmış gibi
+      taze bir enerjiyle sahadaydı. Bu enerji, küçük hataların düzeltilmesi için kullanıldı.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg27.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Bir antrenör gençlerden birini kenara çekti ve fısıldadı: "Gözlerini açık tut. Hareketleri hisset, sadece görme."
+      Bu söz, ileriki maçlarda bir açılım sağlayacaktı.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg28.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Son bölümde, takımın birliği, dünün hata kayıtlarını başarıya çevirmek için sahaya yayılıyordu. Herkes
+      öğrendiklerini uygulamaya koydu; küçük paslar ahenkli bir melodiye dönüştü.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg29.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Güneş batarken, herkes sahadan ayrıldı ama gözlerinde bir azim ışığı kaldı. Rei, ufka baktı ve gülümsedi —
+      daha zor bir mücadeleye hazır olduğunu hissediyordu.
+    </div>
+  </article>
+</section>
+
+<section class="scene">
+  <div class="panel-bg" style="background-image:url('bg30.jpg')"></div>
+  <div class="vignette"></div>
+  <article class="content">
+    <div class="para">
+      Gece sona erdi; ama bu sadece bir dönemeçti. Her küçük adım, ilerideki büyük hamlelerin altyapısını oluşturuyordu.
+      Takım birbirine daha sıkı bağlanmıştı—bundan sonra her adım daha anlamlı olacaktı.
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="bolum3.html">Diğer Bölüme Geç</a>
+      <a class="btn ghost" href="index.html">Ana Sayfaya Dön</a>
+    </div>
+  </article>
+</section>
+
+<script>
+/* Parallax + inview (aynı script her iki dosyada da çalışır) */
+(function(){
+  const scenes = Array.from(document.querySelectorAll('.scene'));
+  const bgs = scenes.map(s => s.querySelector('.panel-bg'));
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting) en.target.classList.add('inview');
+    });
+  }, {threshold:0.18});
+  scenes.forEach(s=> io.observe(s));
+
+  function onScroll(){
+    const winH = window.innerHeight || document.documentElement.clientHeight;
+    bgs.forEach((bg)=>{
+      if(!bg) return;
+      const rect = bg.parentElement.getBoundingClientRect();
+      const mid = rect.top + rect.height/2 - winH/2;
+      const max = winH + rect.height;
+      const v = Math.max(-1, Math.min(1, -mid / (max/2)));
+      const ty = v * 26;
+      bg.style.transform = `translateY(${ty}px) scale(1.03)`;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  setTimeout(onScroll,120);
+})();
+</script>
+
+</body>
+    </html>
