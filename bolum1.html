@@ -3,157 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Red Lock - 1. Bölüm</title>
+<title>Red Lock - Bölüm 1</title>
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    animation: fadeIn 1.5s ease-in-out;
-}
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-}
-.scene {
-    position: relative;
-    max-width: 900px;
-    margin: 50px auto;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-}
-.scene img {
-    width: 100%;
-    display: block;
-}
-.bubble {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(255,255,255,0.88);
-    border-radius: 15px;
-    padding: 15px 20px;
-    max-width: 75%;
-    font-size: 1.05em;
-    line-height: 1.5em;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-}
-.buttons {
-    text-align: center;
-    margin: 40px 0;
-}
-button {
-    padding: 12px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-button:hover {
-    background: #ccc;
-}
+body { background-color: #f2f2f2; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+.container { max-width: 800px; margin: auto; padding: 20px; }
+.speech { background: #fff; border-radius: 20px; padding: 15px; margin-bottom: 10px; position: relative; }
+.speech::after { content: ""; position: absolute; bottom: -20px; left: 30px; border-width: 10px; border-style: solid; border-color: #fff transparent transparent transparent; }
+.name { font-weight: bold; color: #c00; display: block; margin-bottom: 5px; }
+.buttons { margin-top: 20px; text-align: center; }
+button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; border: none; border-radius: 8px; }
+.home { background-color: #ccc; }
+.next { background-color: #4CAF50; color: #fff; }
 </style>
 </head>
 <body>
+<div class="container">
 
-<!-- SAHNE 1 -->
-<div class="scene">
-    <img src="imges/rei.png" alt="Rei">
-    <div class="bubble">"Bugün, her şeyin başladığı gün... Red Lock’ta adımı altın harflerle yazdırmak için sahaya çıkıyorum. Bu sadece bir maç değil, hayatımın en büyük sınavı."</div>
-</div>
+<div class="speech"><span class="name">Rei:</span>Bu sabah uyandığımda içimde tuhaf bir his vardı. Gökyüzü kapalıydı, rüzgar hafifçe esiyor ama her şey sanki büyük bir fırtınanın öncesindeki o sessiz bekleyişe benziyordu. Antrenman sahasına doğru yürürken ayak seslerim boş sokaklarda yankılanıyordu. Sanki tüm şehir nefesini tutmuş beni izliyordu. Bu turnuva benim için sadece bir yarışma değil, kendimi kanıtlayacağım, adımı tarihe yazdıracağım tek şanstı.</div>
 
-<!-- SAHNE 2 -->
-<div class="scene">
-    <img src="imges/stadium.png" alt="Stadyum">
-    <div class="bubble">Tribünlerden yükselen uğultu, bir fırtına gibi sahayı sarıyordu. On binlerce insan, gözlerini bu mücadeleye dikmişti. Atmosfer, nefes almayı bile zorlaştırıyordu.</div>
-</div>
+<div class="speech"><span class="name">Isagi:</span>Rei, yüzünden anlıyorum ki sen de farkındasın... Bugün sahada olacak şeyler sıradan olmayacak. Hepimiz bugüne kadar antrenman yaptık, ter döktük, defalarca yenildik ve tekrar ayağa kalktık. Ama bugün, bütün o çalışmanın sonucu belirlenecek. Gözlerinde gördüğüm kararlılık bana güven veriyor. Yanımda olduğun sürece hiçbir şeyden korkmuyorum.</div>
 
-<!-- SAHNE 3 -->
-<div class="scene">
-    <img src="imges/isagi.png" alt="Isagi">
-    <div class="bubble">"Rei, seni uzun zamandır izliyorum. Ayağındaki top bir silah gibi, ama unutma... Ben de buraya şaka olsun diye gelmedim."</div>
-</div>
+<div class="speech"><span class="name">Rei:</span>Isagi, seninle ilk tanıştığımız günü hatırlıyor musun? O zamanlar seni sadece hızlı ve inatçı bir forvet sanmıştım. Ama zamanla anladım ki, senin asıl gücün oyun zekanda. Sahada rakiplerin aklını okuyorsun, en ufak fırsatı bile gole çeviriyorsun. Bugün seninle omuz omuza mücadele etmek benim için onur olacak. Ama şunu bil... Karşı takıma acımak yok, dostluk sahadan çıkar çıkmaz başlar.</div>
 
-<!-- SAHNE 4 -->
-<div class="scene">
-    <img src="imges/rei.png" alt="Rei">
-    <div class="bubble">"Isagi... Bana meydan okuduğun için pişman olacaksın. Sahada acımasız olurum, affetmem."</div>
-</div>
-
-<!-- SAHNE 5 -->
-<div class="scene">
-    <img src="imges/whistle.png" alt="Düdük">
-    <div class="bubble">Hakemin düdüğüyle maç başladı. Top orta sahadan Rei’ye doğru geldi, Rei tek dokunuşla topu kontrol etti ve hızla ileri fırladı.</div>
-</div>
-
-<!-- SAHNE 6 -->
-<div class="scene">
-    <img src="imges/rei_action.png" alt="Rei Hareket">
-    <div class="bubble">Rei’nin gözleri odaklanmıştı. "Bu hızda beni yakalayabilecek kimse yok," diye düşündü. Rakip savunma panik içinde geri çekiliyordu.</div>
-</div>
-
-<!-- SAHNE 7 -->
-<div class="scene">
-    <img src="imges/isagi_action.png" alt="Isagi Hareket">
-    <div class="bubble">Isagi bir anda önüne çıktı. "O kadar kolay olmayacak!" diyerek Rei’nin yolunu kapadı. İki futbolcu arasındaki gerginlik tavan yapmıştı.</div>
-</div>
-
-<!-- SAHNE 8 -->
-<div class="scene">
-    <img src="imges/rei_focus.png" alt="Rei Odak">
-    <div class="bubble">"Beni durdurabileceğini mi sandın?" Rei, sağa doğru ani bir çalım attı, ardından sola dönüş yaparak Isagi’yi ekarte etti. Tribünler ayağa kalktı.</div>
-</div>
-
-<!-- SAHNE 9 -->
-<div class="scene">
-    <img src="imges/crowd.png" alt="Kalabalık">
-    <div class="bubble">Kalabalığın sesi, bir patlama gibi yükseldi. Herkes bu birebir mücadelenin sonucunu görmek istiyordu.</div>
-</div>
-
-<!-- SAHNE 10 -->
-<div class="scene">
-    <img src="imges/goal_chance.png" alt="Gol Pozisyonu">
-    <div class="bubble">Rei ceza sahasına girdi. Kaleciyle göz göze geldi. Zaman adeta yavaşlamıştı, topun her dönüşü saniyeler gibi uzuyordu.</div>
-</div>
-
-<!-- SAHNE 11 -->
-<div class="scene">
-    <img src="imges/rei_shot.png" alt="Rei Şut">
-    <div class="bubble">Rei tüm gücüyle şut çekti. Top havada süzüldü, kaleci son anda uzandı... Ama top ağlarla buluştu! Gol!</div>
-</div>
-
-<!-- SAHNE 12 -->
-<div class="scene">
-    <img src="imges/team_celebrate.png" alt="Takım Kutlama">
-    <div class="bubble">Takım arkadaşları Rei’ye koştu. "İşte bu! Böyle devam edersek, bu maçı alırız!" diye bağırıyorlardı.</div>
-</div>
-
-<!-- SAHNE 13 -->
-<div class="scene">
-    <img src="imges/isagi_angry.png" alt="Isagi Sinirli">
-    <div class="bubble">Isagi dişlerini sıktı. "Bu daha başlangıç, Rei. Sadece tek bir golle kazanamazsın."</div>
-</div>
-
-<!-- SAHNE 14 -->
-<div class="scene">
-    <img src="imges/rei_serious.png" alt="Rei Ciddi">
-    <div class="bubble">"O zaman gel ve göster bana... Bakalım kimin adı Red Lock’ta kalacak."</div>
-</div>
-
-<!-- SAHNE 15 -->
-<div class="scene">
-    <img src="imges/stadium_night.png" alt="Gece Stadyumu">
-    <div class="bubble">Güneş batarken, ışıklar sahayı aydınlatıyordu. Mücadele daha yeni başlıyordu...</div>
-</div>
+<div class="speech"><span class="name">Isagi:</span>İşte bu sözleri duymak istediğim buydu Rei. Sahaya çıktığımızda biz sadece oyuncu değil, avcı olacağız. Top bizim silahımız, kale ise avımız. Rakip kim olursa olsun, karşımızda duramayacak. Bugün Red Lock'un adını herkese duyuracağız. Sadece gol atmakla yetinmeyeceğiz, onların umudunu da yok edeceğiz.</div>
 
 <div class="buttons">
-    <button onclick="window.location.href='index.html'">Ana Sayfaya Dön</button>
-    <button onclick="window.location.href='bolum2.html'">Diğer Bölüme Geç</button>
+<button class="home" onclick="window.location.href='index.html'">Ana Sayfaya Dön</button>
+<button class="next" onclick="window.location.href='bolum2.html'">Diğer Bölüme Geç</button>
 </div>
 
+</div>
 </body>
 </html>
