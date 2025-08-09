@@ -1,267 +1,159 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Red Lock — Bölüm 1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Lock - 1. Bölüm</title>
 <style>
-  :root{--accent1:#ff4b2b; --accent2:#ff416c; --muted:#9fb0d0}
-  *{box-sizing:border-box}
-  html,body{margin:0;height:100%;background:#07080a;color:#fff;font-family:Inter,Arial,sans-serif}
-  a{color:inherit;text-decoration:none}
-
-  /* kompakt sahne (içerik kadar yer kaplar) */
-  .scene{position:relative;padding:46px 6vw;display:grid;gap:14px;align-items:start;overflow:visible}
-  .bg{position:absolute;inset:0;z-index:-4;pointer-events:none;transition:transform .25s linear}
-  .vignette{position:absolute;inset:0;z-index:-3;background:linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.62));pointer-events:none}
-
-  /* içerik kartı */
-  .card{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:14px 16px;border-radius:12px;
-        background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));
-        border:1px solid rgba(255,255,255,0.03);box-shadow:0 18px 48px rgba(0,0,0,0.6);animation:fadeUp .7s ease both}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-  .meta{display:flex;gap:12px;align-items:center;margin-bottom:8px}
-  .thumb{width:64px;height:64px;border-radius:8px;overflow:hidden;border:2px solid rgba(255,255,255,0.04);flex:0 0 64px;display:flex;align-items:center;justify-content:center;background:#0b0d10}
-  .who{font-weight:800}
-  .role{font-size:0.9rem;color:var(--muted)}
-
-  /* konuşma balonu */
-  .bubble{display:inline-block;background:#fff;color:#07101a;padding:12px 16px;border-radius:18px;max-width:92%;line-height:1.5;box-shadow:0 10px 28px rgba(0,0,0,0.36);white-space:pre-wrap}
-  .bubble::after{content:"";position:absolute;left:36px;bottom:-16px;border-width:16px 10px 0 0;border-style:solid;border-color:#fff transparent transparent transparent;transform:rotate(8deg)}
-
-  .thought{font-style:italic;color:#26384a}
-
-  /* nav */
-  .nav{display:flex;gap:12px;justify-content:center;padding:26px 6vw}
-  .btn{padding:12px 20px;border-radius:999px;font-weight:800;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#061018;text-decoration:none}
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
-
-  /* responsive tweaks */
-  @media (max-width:720px){
-    .card{padding:12px}
-    .thumb{width:52px;height:52px}
-    .bubble{font-size:0.98rem}
-    .scene{padding:28px 4vw}
-  }
-
-  .label{position:fixed;right:14px;top:14px;z-index:120;background:rgba(0,0,0,0.45);padding:8px 12px;border-radius:10px;font-size:0.9rem;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    animation: fadeIn 1.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.scene {
+    position: relative;
+    max-width: 900px;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+.scene img {
+    width: 100%;
+    display: block;
+}
+.bubble {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(255,255,255,0.88);
+    border-radius: 15px;
+    padding: 15px 20px;
+    max-width: 75%;
+    font-size: 1.05em;
+    line-height: 1.5em;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+.buttons {
+    text-align: center;
+    margin: 40px 0;
+}
+button {
+    padding: 12px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+button:hover {
+    background: #ccc;
+}
 </style>
 </head>
 <body>
 
-<div class="label">Bölüm 1 — Red Lock</div>
+<!-- SAHNE 1 -->
+<div class="scene">
+    <img src="imges/rei.png" alt="Rei">
+    <div class="bubble">"Bugün, her şeyin başladığı gün... Red Lock’ta adımı altın harflerle yazdırmak için sahaya çıkıyorum. Bu sadece bir maç değil, hayatımın en büyük sınavı."</div>
+</div>
 
-<!-- ---------- SAHNE: Rei (açık/küllü saç, kahverengi göz, kırmızı forma) ---------- -->
-<section class="scene" data-speaker="Rei">
-  <div class="bg" aria-hidden="true">
-    <!-- Gömülü SVG portre: açık/küllü saçlı, kahverengi gözlü, kırmızı forma (RED LOCK yazılı) -->
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-      <rect width="100%" height="100%" fill="#0b0c0f"/>
-      <!-- dot texture -->
-      <defs>
-        <pattern id="p1" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1.2" fill="#11151a"/></pattern>
-      </defs>
-      <rect width="100%" height="100%" fill="url(#p1)" opacity="0.24"/>
+<!-- SAHNE 2 -->
+<div class="scene">
+    <img src="imges/stadium.png" alt="Stadyum">
+    <div class="bubble">Tribünlerden yükselen uğultu, bir fırtına gibi sahayı sarıyordu. On binlerce insan, gözlerini bu mücadeleye dikmişti. Atmosfer, nefes almayı bile zorlaştırıyordu.</div>
+</div>
 
-      <!-- torso & jersey -->
-      <g transform="translate(260,140) scale(1.1)">
-        <path d="M120 330 C140 260 360 260 380 330 L380 420 L120 420 Z" fill="#b31f1f"/> <!-- jersey red -->
-        <text x="165" y="360" fill="#fff" font-size="28" font-weight="700" font-family="sans-serif">RED LOCK</text>
-      </g>
+<!-- SAHNE 3 -->
+<div class="scene">
+    <img src="imges/isagi.png" alt="Isagi">
+    <div class="bubble">"Rei, seni uzun zamandır izliyorum. Ayağındaki top bir silah gibi, ama unutma... Ben de buraya şaka olsun diye gelmedim."</div>
+</div>
 
-      <!-- head / hair (küllü açık ton) -->
-      <g transform="translate(320,40) scale(1.05)">
-        <ellipse cx="420" cy="220" rx="170" ry="200" fill="#0f1216"/>
-        <!-- hair block -->
-        <path d="M300 130 C360 60 520 60 580 130 C600 170 560 210 520 210 C480 210 430 200 390 210 C350 220 310 180 300 130Z" fill="#d6c9a6"/> <!-- light ash hair -->
-        <!-- face shadow -->
-        <ellipse cx="420" cy="260" rx="120" ry="140" fill="#0b0e11"/>
-        <!-- eyes brown -->
-        <ellipse cx="380" cy="240" rx="16" ry="9" fill="#5b3a26"/>
-        <ellipse cx="460" cy="240" rx="16" ry="9" fill="#5b3a26"/>
-        <!-- highlights -->
-        <circle cx="376" cy="235" r="3" fill="#fff" opacity="0.95"/>
-        <circle cx="456" cy="235" r="3" fill="#fff" opacity="0.95"/>
-      </g>
+<!-- SAHNE 4 -->
+<div class="scene">
+    <img src="imges/rei.png" alt="Rei">
+    <div class="bubble">"Isagi... Bana meydan okuduğun için pişman olacaksın. Sahada acımasız olurum, affetmem."</div>
+</div>
 
-      <!-- subtle border -->
-      <rect x="8" y="8" width="1184" height="584" fill="none" stroke="#05060a" stroke-width="12" opacity="0.12"/>
-    </svg>
-  </div>
+<!-- SAHNE 5 -->
+<div class="scene">
+    <img src="imges/whistle.png" alt="Düdük">
+    <div class="bubble">Hakemin düdüğüyle maç başladı. Top orta sahadan Rei’ye doğru geldi, Rei tek dokunuşla topu kontrol etti ve hızla ileri fırladı.</div>
+</div>
 
-  <div class="vignette"></div>
+<!-- SAHNE 6 -->
+<div class="scene">
+    <img src="imges/rei_action.png" alt="Rei Hareket">
+    <div class="bubble">Rei’nin gözleri odaklanmıştı. "Bu hızda beni yakalayabilecek kimse yok," diye düşündü. Rakip savunma panik içinde geri çekiliyordu.</div>
+</div>
 
-  <article class="card" aria-label="Rei konuşma">
-    <div class="meta">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="thumb" aria-hidden="true">
-          <!-- mini thumb (same style) -->
-          <svg viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%">
-            <rect x="10" y="10" width="100" height="100" rx="10" fill="#0f1216"/>
-            <path d="M20 50 C36 26 84 26 100 50 C96 68 76 78 60 78 C44 78 24 70 20 50Z" fill="#d6c9a6"/>
-            <circle cx="42" cy="56" r="4" fill="#5b3a26"/>
-            <circle cx="78" cy="56" r="4" fill="#5b3a26"/>
-          </svg>
-        </div>
+<!-- SAHNE 7 -->
+<div class="scene">
+    <img src="imges/isagi_action.png" alt="Isagi Hareket">
+    <div class="bubble">Isagi bir anda önüne çıktı. "O kadar kolay olmayacak!" diyerek Rei’nin yolunu kapadı. İki futbolcu arasındaki gerginlik tavan yapmıştı.</div>
+</div>
 
-        <div>
-          <div class="who">Rei</div>
-          <div class="role">Saldırgan — hırslı, direkt</div>
-        </div>
-      </div>
+<!-- SAHNE 8 -->
+<div class="scene">
+    <img src="imges/rei_focus.png" alt="Rei Odak">
+    <div class="bubble">"Beni durdurabileceğini mi sandın?" Rei, sağa doğru ani bir çalım attı, ardından sola dönüş yaparak Isagi’yi ekarte etti. Tribünler ayağa kalktı.</div>
+</div>
 
-      <div style="margin-top:10px; position:relative">
-        <div class="bubble">
-          “Kapılar kapandığında arkanızda kalan tek şey kararınızdır. 
-          Tereddüt eden kaybeder; ben tereddüt etmiyorum. Her vuruşum bir seçimdi — bugün o seçimleri göstereceğim.”
-        </div>
-      </div>
-    </div>
-  </article>
-</section>
+<!-- SAHNE 9 -->
+<div class="scene">
+    <img src="imges/crowd.png" alt="Kalabalık">
+    <div class="bubble">Kalabalığın sesi, bir patlama gibi yükseldi. Herkes bu birebir mücadelenin sonucunu görmek istiyordu.</div>
+</div>
 
-<!-- ---------- SAHNE: Isagi (sahayı OKUYAN) ---------- -->
-<section class="scene" data-speaker="Isagi">
-  <div class="bg" aria-hidden="true">
-    <!-- Isagi stilize SVG (daha koyu arka plan, düşünceli yüz) -->
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;">
-      <rect width="100%" height="100%" fill="#0b0d10"/>
-      <defs><pattern id="p2" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r="1" fill="#0f151a"/></pattern></defs>
-      <rect width="100%" height="100%" fill="url(#p2)" opacity="0.26"/>
-      <g transform="translate(260,120) scale(1.08)">
-        <path d="M130 320 C160 240 360 240 390 320 L390 410 L130 410 Z" fill="#223142"/>
-      </g>
-      <g transform="translate(320,50) scale(1.04)">
-        <ellipse cx="420" cy="240" rx="180" ry="210" fill="#0d1115"/>
-        <path d="M320 140 C360 80 480 72 520 132 C540 180 500 208 480 206 C460 204 420 198 380 204 C340 210 320 170 320 140Z" fill="#cfcfbf" opacity="0.95"/>
-        <ellipse cx="380" cy="230" rx="14" ry="8" fill="#4b3626"/>
-        <ellipse cx="460" cy="230" rx="14" ry="8" fill="#4b3626"/>
-      </g>
-    </svg>
-  </div>
+<!-- SAHNE 10 -->
+<div class="scene">
+    <img src="imges/goal_chance.png" alt="Gol Pozisyonu">
+    <div class="bubble">Rei ceza sahasına girdi. Kaleciyle göz göze geldi. Zaman adeta yavaşlamıştı, topun her dönüşü saniyeler gibi uzuyordu.</div>
+</div>
 
-  <div class="vignette"></div>
+<!-- SAHNE 11 -->
+<div class="scene">
+    <img src="imges/rei_shot.png" alt="Rei Şut">
+    <div class="bubble">Rei tüm gücüyle şut çekti. Top havada süzüldü, kaleci son anda uzandı... Ama top ağlarla buluştu! Gol!</div>
+</div>
 
-  <article class="card" aria-label="Isagi konuşma">
-    <div class="meta">
-      <div style="display:flex;align-items:center;gap:12px">
-        <div class="thumb" aria-hidden="true">
-          <svg viewBox="0 0 120 120"><rect x="10" y="10" width="100" height="100" rx="10" fill="#0d1114"/><circle cx="60" cy="56" r="26" fill="#ced3c9"/></svg>
-        </div>
+<!-- SAHNE 12 -->
+<div class="scene">
+    <img src="imges/team_celebrate.png" alt="Takım Kutlama">
+    <div class="bubble">Takım arkadaşları Rei’ye koştu. "İşte bu! Böyle devam edersek, bu maçı alırız!" diye bağırıyorlardı.</div>
+</div>
 
-        <div>
-          <div class="who">Isagi</div>
-          <div class="role">Stratejist — sahayı okuyan</div>
-        </div>
-      </div>
+<!-- SAHNE 13 -->
+<div class="scene">
+    <img src="imges/isagi_angry.png" alt="Isagi Sinirli">
+    <div class="bubble">Isagi dişlerini sıktı. "Bu daha başlangıç, Rei. Sadece tek bir golle kazanamazsın."</div>
+</div>
 
-      <div style="margin-top:10px">
-        <div class="bubble">
-          <strong>Isagi:</strong> “Hız tek başına hiçbir şeyi çözmez. Boşluğu yaratan tarafın sabrı ve zekâsı, 
-          kazananı belirler. Bugün acele etmeyeceğim; önce pozisyonu yaratacağım, sonra bitireceğim.”
-        </div>
-      </div>
-    </div>
-  </article>
-</section>
+<!-- SAHNE 14 -->
+<div class="scene">
+    <img src="imges/rei_serious.png" alt="Rei Ciddi">
+    <div class="bubble">"O zaman gel ve göster bana... Bakalım kimin adı Red Lock’ta kalacak."</div>
+</div>
 
-<!-- Daha fazla sahne gerekiyorsa aynı pattern ile ekleyebilirsin (Bachira, Nagi, Antrenör, vs.) -->
-<!-- Örnek: üç sahne daha (kısa form) -->
+<!-- SAHNE 15 -->
+<div class="scene">
+    <img src="imges/stadium_night.png" alt="Gece Stadyumu">
+    <div class="bubble">Güneş batarken, ışıklar sahayı aydınlatıyordu. Mücadele daha yeni başlıyordu...</div>
+</div>
 
-<section class="scene" data-speaker="Bachira">
-  <div class="bg" aria-hidden="true">
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%"><rect width="100%" height="100%" fill="#081018"/><defs><pattern id="p3" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#111826"/></pattern></defs><rect width="100%" height="100%" fill="url(#p3)" opacity="0.18"/><g transform="translate(140,30) scale(1.06)"><ellipse cx="420" cy="240" rx="200" ry="240" fill="#0b0f13"/></g></svg>
-  </div>
-  <div class="vignette"></div>
-  <article class="card">
-    <div class="meta">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="thumb" aria-hidden="true"><svg viewBox="0 0 120 120"><rect x="10" y="10" width="100" height="100" rx="10" fill="#081016"/><circle cx="60" cy="56" r="27" fill="#0d1116"/></svg></div>
-        <div><div class="who">Bachira</div><div class="role">Yaratıcı • Beklenmedik</div></div>
-      </div>
-      <div style="margin-top:10px"><div class="bubble">“Kuralları bozmak bazen en etkili taktiktir. Sürpriz, en büyük silahtır.”</div></div>
-    </div>
-  </article>
-</section>
-
-<section class="scene" data-speaker="Nagi">
-  <div class="bg" aria-hidden="true">
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%"><rect width="100%" height="100%" fill="#0b0d10"/><defs><pattern id="p4" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.1" fill="#12171c"/></pattern></defs><rect width="100%" height="100%" fill="url(#p4)" opacity="0.2"/></svg>
-  </div>
-  <div class="vignette"></div>
-  <article class="card">
-    <div class="meta">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="thumb" aria-hidden="true"><svg viewBox="0 0 120 120"><rect x="10" y="10" width="100" height="100" rx="10" fill="#0d1014"/><circle cx="60" cy="56" r="26" fill="#0f1316"/></svg></div>
-        <div><div class="who">Nagi</div><div class="role">Soğukkanlı • Bitirici</div></div>
-      </div>
-      <div style="margin-top:10px"><div class="bubble">“Soğukkanlı vuruş, her şeyi bitirir. Acele etme; doğru anı bekle.”</div></div>
-    </div>
-  </article>
-</section>
-
-<!-- Kapanış sahnesi örneği -->
-<section class="scene" data-speaker="Rei">
-  <div class="bg" aria-hidden="true">
-    <!-- tekrar Rei variant -->
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%"><rect width="100%" height="100%" fill="#0c0d10"/><defs><pattern id="p5" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1.6" cy="1.6" r="1.1" fill="#14202a"/></pattern></defs><rect width="100%" height="100%" fill="url(#p5)" opacity="0.22"/></svg>
-  </div>
-  <div class="vignette"></div>
-
-  <article class="card">
-    <div class="meta">
-      <div style="display:flex;gap:12px;align-items:center">
-        <div class="thumb" aria-hidden="true"><svg viewBox="0 0 120 120"><rect x="10" y="10" width="100" height="100" rx="10" fill="#0c0f12"/><circle cx="60" cy="56" r="28" fill="#111418"/></svg></div>
-        <div><div class="who">Rei</div><div class="role">Kapanış</div></div>
-      </div>
-
-      <div style="margin-top:10px">
-        <div class="bubble">“Bu sadece başlangıç. Red Lock’ta kimse kolay kazanmaz; kazanmak isteyen çalışır, öğrenir, tekrar eder.
-        Hazır ol — daha büyük sınavlar yolda.”</div>
-
-        <div style="margin-top:14px">
-          <a class="btn" href="bolum2.html">Diğer Bölüme Geç</a>
-          <a class="btn ghost" href="index.html">Ana Sayfaya Dön</a>
-        </div>
-      </div>
-    </div>
-  </article>
-</section>
-
-<script>
-/* ufak parallax + inview logic (boşluk yok, akıcı kaydırma) */
-(function(){
-  const scenes = Array.from(document.querySelectorAll('.scene'));
-  const bgs = scenes.map(s => s.querySelector('.bg'));
-
-  // IntersectionObserver: kartlara fade anim ekle
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting){
-        en.target.querySelector('.card')?.classList.add('inview');
-      }
-    });
-  }, {threshold:0.15});
-  scenes.forEach(s=> io.observe(s));
-
-  function onScroll(){
-    const winH = window.innerHeight || document.documentElement.clientHeight;
-    bgs.forEach((bg)=>{
-      if(!bg) return;
-      const rect = bg.parentElement.getBoundingClientRect();
-      const mid = rect.top + rect.height/2 - winH/2;
-      const max = winH + rect.height;
-      const v = Math.max(-1, Math.min(1, -mid / (max/2)));
-      const ty = v * 22;
-      bg.style.transform = `translateY(${ty}px) scale(1.02)`;
-    });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll);
-  setTimeout(onScroll,120);
-})();
-</script>
+<div class="buttons">
+    <button onclick="window.location.href='index.html'">Ana Sayfaya Dön</button>
+    <button onclick="window.location.href='bolum2.html'">Diğer Bölüme Geç</button>
+</div>
 
 </body>
-  </html>
+</html>
