@@ -1,281 +1,67 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Red Lock — Kayıt Ol</title>
-<meta name="description" content="Red Lock - Yerel demo kayıt sayfası. Aynı kullanıcı adı alınmaz.">
-<style>
-  :root{
-    --bg1:#07101a; --card:#071726; --accent1:#ff4b2b; --accent2:#ff416c; --muted:#9fb0d0;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    min-height:100vh;
-    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg, var(--bg1), #021017);
-    color: #e9f4ff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-  }
-  .card{
-    width:100%;
-    max-width:520px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.18));
-    border-radius:14px;
-    padding:20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
-    border:1px solid rgba(255,255,255,0.03);
-  }
-  h1{margin:0 0 8px 0;font-size:1.4rem;letter-spacing:0.6px}
-  p.lead{margin:0 0 18px 0;color:var(--muted);font-size:0.95rem}
-  label{display:block;margin-top:10px;font-size:0.92rem;color:#dbeeff}
-  input[type="text"],input[type="email"],input[type="password"]{
-    width:100%;
-    padding:12px 14px;
-    margin-top:6px;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,0.06);
-    background: rgba(255,255,255,0.02);
-    color: #eaf6ff;
-    font-size:1rem;
-    outline:none;
-  }
-  input:focus{ box-shadow: 0 8px 24px rgba(0,0,0,0.6); transform: translateY(-1px); }
-
-  .row{display:flex;gap:8px}
-  .row .col{flex:1}
-
-  .note{margin-top:10px;color:var(--muted);font-size:0.9rem}
-
-  .error{
-    margin-top:12px;
-    padding:10px 12px;
-    background: rgba(255,70,70,0.06);
-    color:#ffd3d3;
-    border-radius:8px;
-    border:1px solid rgba(255,70,70,0.08);
-    display:none;
-  }
-
-  .success{
-    margin-top:12px;
-    padding:10px 12px;
-    background: rgba(120,255,170,0.06);
-    color:#dfffe8;
-    border-radius:8px;
-    border:1px solid rgba(120,255,170,0.08);
-    display:none;
-  }
-
-  .actions{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap}
-  .btn{
-    padding:12px 18px;border-radius:10px;border:none;cursor:pointer;font-weight:800;
-    background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:#07101a;
-  }
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#e6f7ff}
-  .help{font-size:0.9rem;color:var(--muted)}
-
-  .small{font-size:0.9rem;color:var(--muted);margin-top:8px}
-
-  @media (max-width:520px){
-    .card{padding:14px}
-    .row{flex-direction:column}
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol - Red Lock</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            color: red;
+        }
+        input {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            margin-top: 20px;
+            width: 250px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-top: 20px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+    </style>
 </head>
 <body>
-  <main class="card" role="main" aria-labelledby="title">
-    <h1 id="title">Red Lock — Kayıt Ol</h1>
-    <p class="lead">Yeni bir hesap oluştur. Aynı kullanıcı adı alınamaz — benzersiz bir nick seç.</p>
 
-    <form id="regForm" autocomplete="off" novalidate>
-      <label for="nick">Kullanıcı Adı (nick)</label>
-      <input id="nick" name="nick" type="text" placeholder="Rei23" required maxlength="30" />
+    <h1>Kayıt Ol</h1>
+    <p>Red Lock'a katılmak için adını yaz:</p>
+    <input type="text" id="kullaniciAdi" placeholder="Kullanıcı adını gir">
+    <br>
+    <button onclick="kayitOl()">Kayıt Ol</button>
 
-      <label for="email">E-posta</label>
-      <input id="email" name="email" type="email" placeholder="ornek@eposta.com" required />
+    <script>
+        function kayitOl() {
+            let ad = document.getElementById("kullaniciAdi").value.trim();
 
-      <div class="row">
-        <div class="col">
-          <label for="pass">Parola</label>
-          <input id="pass" name="pass" type="password" placeholder="En az 6 karakter" required minlength="6" />
-        </div>
-        <div class="col">
-          <label for="pass2">Parola (Tekrar)</label>
-          <input id="pass2" name="pass2" type="password" placeholder="Tekrar" required minlength="6" />
-        </div>
-      </div>
+            if (ad === "") {
+                alert("Lütfen bir kullanıcı adı girin!");
+                return;
+            }
 
-      <div style="margin-top:10px">
-        <label style="font-size:0.92rem">
-          <input id="agree" type="checkbox" required /> &nbsp; Kuralları okudum ve kabul ediyorum
-        </label>
-      </div>
+            localStorage.setItem("kullaniciAdi", ad);
+            window.location.href = "index.html";
+        }
+    </script>
 
-      <div id="error" class="error" role="alert" aria-live="assertive"></div>
-      <div id="success" class="success" role="status" aria-live="polite"></div>
-
-      <div class="actions">
-        <button id="submitBtn" type="submit" class="btn">Kayıt Ol</button>
-        <a class="btn ghost" href="index.html" id="cancelBtn">Geri</a>
-        <div class="help small">Zaten hesabın varsa <a href="giris.html" style="color:#cfe6ff">giriş yap</a>.</div>
-      </div>
-
-      <div class="note small">Not: Bu demo örneği **yerelde** (tarayıcı) saklama yapar. Gerçek projede sunucu doğrulaması gerekir.</div>
-    </form>
-  </main>
-
-<script>
-/*
-  Kayıt sayfası - localStorage tabanlı.
-  - Tüm kullanıcılar 'redlock_users' anahtarı altında dizi olarak saklanır.
-  - Aktif kullanıcı 'redlock_user' olarak saklanır (giriş yapılmış user).
-  - Aynı kullanıcı adı (nick) büyük/küçük harf duyarsız check edilir.
-*/
-
-// DOM refs
-const form = document.getElementById('regForm');
-const nickEl = document.getElementById('nick');
-const emailEl = document.getElementById('email');
-const passEl = document.getElementById('pass');
-const pass2El = document.getElementById('pass2');
-const agreeEl = document.getElementById('agree');
-const errorEl = document.getElementById('error');
-const successEl = document.getElementById('success');
-const submitBtn = document.getElementById('submitBtn');
-
-// Helpers
-function loadUsers(){
-  try{
-    const raw = localStorage.getItem('redlock_users');
-    return raw ? JSON.parse(raw) : [];
-  }catch(e){
-    return [];
-  }
-}
-function saveUsers(arr){
-  try{
-    localStorage.setItem('redlock_users', JSON.stringify(arr));
-    return true;
-  }catch(e){
-    return false;
-  }
-}
-function isNickTaken(nick){
-  if(!nick) return false;
-  const list = loadUsers();
-  const lower = nick.trim().toLowerCase();
-  return list.some(u => (u.nick || '').toLowerCase() === lower);
-}
-function isEmailTaken(email){
-  if(!email) return false;
-  const list = loadUsers();
-  const lower = email.trim().toLowerCase();
-  return list.some(u => (u.email || '').toLowerCase() === lower);
-}
-function showError(msg){
-  errorEl.style.display = 'block';
-  errorEl.textContent = msg;
-  successEl.style.display = 'none';
-}
-function showSuccess(msg){
-  successEl.style.display = 'block';
-  successEl.textContent = msg;
-  errorEl.style.display = 'none';
-}
-
-// Basic email regex
-function validEmail(e){
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(e);
-}
-
-// Password storage: demo only. In production use server + hashing.
-function storeUser(nick, email, pass){
-  const users = loadUsers();
-  const user = {
-    nick: nick.trim(),
-    email: email.trim(),
-    // basic obfuscation for demo: use btoa (NOT secure), real app -> server hash
-    password: btoa(pass),
-    createdAt: new Date().toISOString()
-  };
-  users.push(user);
-  return saveUsers(users);
-}
-
-// Form submit
-form.addEventListener('submit', function(e){
-  e.preventDefault();
-  const nick = nickEl.value.trim();
-  const email = emailEl.value.trim();
-  const pass = passEl.value;
-  const pass2 = pass2El.value;
-  const agree = agreeEl.checked;
-
-  // client-side validations
-  if(!nick){ showError('Lütfen bir kullanıcı adı girin.'); nickEl.focus(); return; }
-  if(nick.length < 2){ showError('Kullanıcı adı en az 2 karakter olmalı.'); nickEl.focus(); return; }
-  if(!email || !validEmail(email)){ showError('Lütfen geçerli bir e-posta girin.'); emailEl.focus(); return; }
-  if(!pass || pass.length < 6){ showError('Parola en az 6 karakter olmalı.'); passEl.focus(); return; }
-  if(pass !== pass2){ showError('Parolalar eşleşmiyor.'); pass2El.focus(); return; }
-  if(!agree){ showError('Site kurallarını kabul etmelisiniz.'); agreeEl.focus(); return; }
-
-  // uniqueness checks
-  if(isNickTaken(nick)){
-    showError('Bu kullanıcı adı zaten alınmış. Lütfen başka bir kullanıcı adı seçin.');
-    nickEl.focus();
-    return;
-  }
-  if(isEmailTaken(email)){
-    showError('Bu e-posta ile zaten kayıt yapılmış. Farklı bir e-posta veya giriş yapın.');
-    emailEl.focus();
-    return;
-  }
-
-  // store user
-  const ok = storeUser(nick, email, pass);
-  if(!ok){
-    showError('Kayıt yapılamadı — tarayıcıda depolama hatası oluştu.');
-    return;
-  }
-
-  // set active user (auto login)
-  try{
-    const rawUsers = loadUsers();
-    const added = rawUsers.find(u => (u.nick || '').toLowerCase() === nick.toLowerCase());
-    if(added){
-      localStorage.setItem('redlock_user', JSON.stringify(added));
-    }
-  }catch(e){ /* ignore */ }
-
-  showSuccess('Kayıt başarılı! Yönlendiriliyorsunuz...');
-  // small delay for UX, then redirect to index
-  submitBtn.disabled = true;
-  setTimeout(()=>{
-    window.location.href = 'index.html';
-  }, 900);
-});
-
-// UX: hide messages on input
-[nickEl, emailEl, passEl, pass2El].forEach(inp=>{
-  inp.addEventListener('input', ()=> { errorEl.style.display='none'; successEl.style.display='none'; });
-});
-
-// Accessibility: Enter on inputs triggers submit, already handled by form
-
-// Optional: prefill if query param ?nick=... provided
-(function prefillFromQuery(){
-  try{
-    const params = new URLSearchParams(window.location.search);
-    const q = params.get('nick');
-    if(q) nickEl.value = q;
-  }catch(e){}
-})();
-</script>
 </body>
 </html>
