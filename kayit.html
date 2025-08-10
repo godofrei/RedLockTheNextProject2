@@ -4,26 +4,53 @@
     <meta charset="UTF-8">
     <title>Kayıt Ol</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; background-color: #111; color: white; }
-        input { padding: 8px; margin: 5px; }
-        button { padding: 8px 15px; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: white;
+            padding-top: 50px;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: crimson;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: darkred;
+        }
     </style>
 </head>
 <body>
+
     <h1>Kayıt Ol</h1>
-    <input type="text" id="ad" placeholder="Kullanıcı adını gir">
-    <button onclick="kayitOl()">Kaydol</button>
+    <input type="text" id="username" placeholder="Kullanıcı Adı">
+    <br>
+    <button onclick="register()">Kayıt Ol</button>
 
     <script>
-        function kayitOl() {
-            const ad = document.getElementById("ad").value.trim();
-            if (ad) {
-                localStorage.setItem("kullaniciAdi", ad);
-                window.location.href = "index.html";
-            } else {
-                alert("Lütfen kullanıcı adını girin!");
+        function register() {
+            const name = document.getElementById("username").value.trim();
+            if (name === "") {
+                alert("Lütfen bir kullanıcı adı giriniz.");
+                return;
             }
+            localStorage.setItem("username", name);
+            alert("Kayıt başarılı! Ana sayfaya yönlendiriliyorsunuz.");
+            window.location.href = "index.html";
         }
     </script>
+
 </body>
 </html>
