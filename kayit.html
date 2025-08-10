@@ -4,41 +4,24 @@
     <meta charset="UTF-8">
     <title>Kayıt Ol</title>
     <style>
-        body {
-            background-color: black;
-            color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        input, button {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px;
-        }
-        button {
-            background-color: red;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: darkred;
-        }
+        body { text-align: center; font-family: Arial, sans-serif; background-color: #111; color: white; }
+        input { padding: 8px; margin: 5px; }
+        button { padding: 8px 15px; }
     </style>
 </head>
 <body>
     <h1>Kayıt Ol</h1>
-    <input type="text" id="kullaniciAdi" placeholder="Kullanıcı adınız">
-    <button onclick="kayitOl()">Kaydet</button>
+    <input type="text" id="ad" placeholder="Kullanıcı adını gir">
+    <button onclick="kayitOl()">Kaydol</button>
 
     <script>
         function kayitOl() {
-            const ad = document.getElementById("kullaniciAdi").value.trim();
+            const ad = document.getElementById("ad").value.trim();
             if (ad) {
                 localStorage.setItem("kullaniciAdi", ad);
-                window.location.href = "index.html"; // Kayıttan sonra ana sayfaya dön
+                window.location.href = "index.html";
             } else {
-                alert("Lütfen bir kullanıcı adı girin.");
+                alert("Lütfen kullanıcı adını girin!");
             }
         }
     </script>
