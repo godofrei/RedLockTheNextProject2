@@ -2,38 +2,23 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kayıt Ol - Red Lock</title>
+    <title>Kayıt Ol</title>
     <style>
         body {
             background-color: black;
             color: white;
+            text-align: center;
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
         }
-        h1 {
-            margin-top: 50px;
-            color: red;
-        }
-        input {
+        input, button {
             padding: 10px;
-            font-size: 18px;
-            border-radius: 8px;
-            border: none;
-            margin-top: 20px;
-            width: 250px;
-            text-align: center;
+            font-size: 16px;
+            margin: 10px;
         }
         button {
-            padding: 10px 20px;
-            font-size: 18px;
-            margin-top: 20px;
             background-color: red;
             color: white;
             border: none;
-            border-radius: 8px;
             cursor: pointer;
         }
         button:hover {
@@ -42,26 +27,20 @@
     </style>
 </head>
 <body>
-
     <h1>Kayıt Ol</h1>
-    <p>Red Lock'a katılmak için adını yaz:</p>
-    <input type="text" id="kullaniciAdi" placeholder="Kullanıcı adını gir">
-    <br>
-    <button onclick="kayitOl()">Kayıt Ol</button>
+    <input type="text" id="kullaniciAdi" placeholder="Kullanıcı adınız">
+    <button onclick="kayitOl()">Kaydet</button>
 
     <script>
         function kayitOl() {
-            let ad = document.getElementById("kullaniciAdi").value.trim();
-
-            if (ad === "") {
-                alert("Lütfen bir kullanıcı adı girin!");
-                return;
+            const ad = document.getElementById("kullaniciAdi").value.trim();
+            if (ad) {
+                localStorage.setItem("kullaniciAdi", ad);
+                window.location.href = "index.html"; // Kayıttan sonra ana sayfaya dön
+            } else {
+                alert("Lütfen bir kullanıcı adı girin.");
             }
-
-            localStorage.setItem("kullaniciAdi", ad);
-            window.location.href = "index.html";
         }
     </script>
-
 </body>
 </html>
