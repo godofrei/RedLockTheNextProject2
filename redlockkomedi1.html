@@ -2,20 +2,27 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Lock Komedisi 1</title>
+    <title>Red Lock Komedi 1</title>
+    <style>
+        body { background-color: #111; color: white; font-family: Arial, sans-serif; text-align: center; }
+        .buton { padding: 10px 20px; background: red; color: white; text-decoration: none; border-radius: 5px; margin: 10px; display: inline-block; }
+    </style>
 </head>
-<body style="background-color: black; color: white; font-family: Arial; padding: 20px;">
-    <h1>Red Lock Komedisi 1</h1>
-    <p>Rei markete girdi, kasada Isagi çalışıyordu.<br>
-    Rei: "Şu çikolatayı alabilir miyim?"<br>
-    Isagi: "Tabii ki… toplam 10 ego puanı."<br>
-    Rei: "Para yerine ego puanı mı?"<br>
-    Isagi: "Burası Red Lock market abi, burda para geçmez."<br>
-    Rei: "O zaman bana 5 tane çikolata ver."<br>
-    Isagi: "O kadar egon yok ki… zaten sen pas veriyorsun hep!" 🤣</p>
-    <br><br>
-    <button onclick="window.location.href='redlockkomedi2.html'">Diğer Komediyi Oku</button>
-    <button onclick="window.location.href='index.html'">Ana Sayfaya Dön</button>
+<body>
+    <h1>Blue Lock Komedisi - Kasiyer Olayı</h1>
+    <p>
+        Isagi markette alışveriş yapıyordu. Kasiyer "Poşet ister misiniz?" dedi.<br>
+        Isagi: "Yok, ben top sektirerek taşırım."
+    </p>
+
+    <a href="redlockkomedi2.html" class="buton">Diğer Komediye Geç</a>
+    <a href="index.html" class="buton">Ana Sayfaya Dön</a>
+
+    <script>
+        const kullaniciAdi = localStorage.getItem("kullaniciAdi");
+        if (kullaniciAdi) {
+            document.body.insertAdjacentHTML("afterbegin", "<p>Hoş geldin " + kullaniciAdi + "</p>");
+        }
+    </script>
 </body>
 </html>
