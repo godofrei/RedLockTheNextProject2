@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Red Lock Komedi 2</title>
+    <style>
+        body { background-color: #111; color: white; font-family: Arial, sans-serif; text-align: center; }
+        .buton { padding: 10px 20px; background: red; color: white; text-decoration: none; border-radius: 5px; margin: 10px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1>Blue Lock Komedisi - Antrenman Şakası</h1>
+    <p>
+        Bachira antrenmanda Isagi’ye bağırdı: “Topu bana at!”<br>
+        Isagi: “Senin topun var mı?”<br>
+        Bachira: “Var ama bu daha güzel!”
+    </p>
+
+    <a href="index.html" class="buton">Ana Sayfaya Dön</a>
+
+    <script>
+        const kullaniciAdi = localStorage.getItem("kullaniciAdi");
+        if (kullaniciAdi) {
+            document.body.insertAdjacentHTML("afterbegin", "<p>Hoş geldin " + kullaniciAdi + "</p>");
+        }
+    </script>
+</body>
+</html>
