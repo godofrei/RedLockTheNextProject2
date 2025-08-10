@@ -2,74 +2,45 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Red Lock</title>
     <style>
         body {
             background-color: black;
             color: white;
-            font-family: Arial, sans-serif;
             text-align: center;
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
         }
-        h1 {
-            margin-top: 50px;
-            font-size: 48px;
-            color: red;
-        }
-        p {
-            font-size: 18px;
-            margin-bottom: 50px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            margin: 10px;
-            font-size: 18px;
-            color: white;
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
             background-color: red;
+            color: white;
             border: none;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: background-color 0.3s ease;
+            cursor: pointer;
+            font-size: 16px;
         }
-        .btn:hover {
+        button:hover {
             background-color: darkred;
-        }
-        #hosgeldin {
-            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
+    <h1>RED LOCK</h1>
+    <h3 id="hosgeldin"></h3>
 
-    <h1>RED LOCK'A HOŞGELDİN</h1>
-    <p><i>EGOİST OLMAK SADECE KENDİNİ BEĞENMEK DEĞİLDİR</i></p>
-
-    <div id="hosgeldin"></div>
-
-    <a href="bolum1.html" class="btn">Okumaya Başla</a>
-    <a href="kayit.html" class="btn" id="kayitBtn">Kayıt Ol</a>
-    <a href="minioyun.html" class="btn">Mini Oyun Oyna</a>
-    <a href="redlockkomedi.html" class="btn">Blue Lock Komedileri</a>
+    <button id="okumaBtn" onclick="window.location.href='bolum1.html'">Okumaya Başla</button>
+    <button id="miniOyunBtn" onclick="window.location.href='minioyun.html'">Mini Oyun Oyna</button>
+    <button id="komediBtn" onclick="window.location.href='redlockkomedi.html'">Blue Lock Komedileri</button>
+    <button id="kayitBtn" onclick="window.location.href='kayit.html'">Kayıt Ol</button>
 
     <script>
-        let kullaniciAdi = localStorage.getItem("kullaniciAdi");
-
+        // Kullanıcı adı localStorage'da varsa ekrana yaz
+        const kullaniciAdi = localStorage.getItem("kullaniciAdi");
         if (kullaniciAdi) {
-            document.getElementById("hosgeldin").innerHTML = `
-                <h2>Hoş Geldiniz, ${kullaniciAdi}</h2>
-                <button class="btn" onclick="cikisYap()">Çıkış Yap</button>
-            `;
-            document.getElementById("kayitBtn").style.display = "none";
-        }
-
-        function cikisYap() {
-            localStorage.removeItem("kullaniciAdi");
-            window.location.reload();
+            document.getElementById("hosgeldin").textContent = `Hoş geldin ${kullaniciAdi}`;
+            document.getElementById("kayitBtn").style.display = "none"; // Kayıt ol butonunu gizle
         }
     </script>
-
 </body>
 </html>
