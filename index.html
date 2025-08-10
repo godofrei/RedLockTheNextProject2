@@ -4,42 +4,32 @@
     <meta charset="UTF-8">
     <title>Red Lock</title>
     <style>
-        body {
-            background-color: black;
-            color: white;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        button {
-            display: block;
-            margin: 10px auto;
+        body { text-align: center; font-family: Arial, sans-serif; background-color: #111; color: white; }
+        .buton {
+            display: inline-block;
             padding: 10px 20px;
+            margin: 10px;
             background-color: red;
             color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: darkred;
+            text-decoration: none;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
     <h1>RED LOCK</h1>
-    <h3 id="hosgeldin"></h3>
+    <p id="hosgeldin"></p>
 
-    <button id="okumaBtn" onclick="window.location.href='bolum1.html'">Okumaya Başla</button>
-    <button id="miniOyunBtn" onclick="window.location.href='minioyun.html'">Mini Oyun Oyna</button>
-    <button id="komediBtn" onclick="window.location.href='redlockkomedi.html'">Blue Lock Komedileri</button>
-    <button id="kayitBtn" onclick="window.location.href='kayit.html'">Kayıt Ol</button>
+    <a href="bolum1.html" class="buton">Okumaya Başla</a>
+    <a href="minioyun.html" class="buton">Mini Oyun Oyna</a>
+    <a href="redlockkomedi1.html" class="buton">Blue Lock Komedileri</a>
+    <a href="kayit.html" id="kayitBtn" class="buton">Kayıt Ol</a>
 
     <script>
-        // Kullanıcı adı localStorage'da varsa ekrana yaz
         const kullaniciAdi = localStorage.getItem("kullaniciAdi");
         if (kullaniciAdi) {
-            document.getElementById("hosgeldin").textContent = `Hoş geldin ${kullaniciAdi}`;
-            document.getElementById("kayitBtn").style.display = "none"; // Kayıt ol butonunu gizle
+            document.getElementById("hosgeldin").textContent = "Hoş geldin " + kullaniciAdi;
+            document.getElementById("kayitBtn").style.display = "none";
         }
     </script>
 </body>
