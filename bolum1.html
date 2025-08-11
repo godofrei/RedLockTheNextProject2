@@ -1,37 +1,94 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Red Lock - Bölüm 1</title>
-<style>
-body { background-color: #f2f2f2; font-family: Arial, sans-serif; margin: 0; padding: 0; }
-.container { max-width: 800px; margin: auto; padding: 20px; }
-.speech { background: #fff; border-radius: 20px; padding: 15px; margin-bottom: 10px; position: relative; }
-.speech::after { content: ""; position: absolute; bottom: -20px; left: 30px; border-width: 10px; border-style: solid; border-color: #fff transparent transparent transparent; }
-.name { font-weight: bold; color: #c00; display: block; margin-bottom: 5px; }
-.buttons { margin-top: 20px; text-align: center; }
-button { padding: 10px 20px; margin: 5px; font-size: 16px; cursor: pointer; border: none; border-radius: 8px; }
-.home { background-color: #ccc; }
-.next { background-color: #4CAF50; color: #fff; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Lock - Bölüm 1</title>
+    <style>
+        body {
+            background-color: #e8e8e8;
+            font-family: Arial, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #b30000;
+        }
+        .dialogue {
+            margin-bottom: 15px;
+        }
+        .name {
+            font-weight: bold;
+            color: #333;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .buttons a {
+            text-decoration: none;
+            background: #b30000;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .buttons a:hover {
+            background: #800000;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
+    <div class="container">
+        <h1>Red Lock - Bölüm 1</h1>
 
-<div class="speech"><span class="name">Rei:</span>Bu sabah uyandığımda içimde tuhaf bir his vardı. Gökyüzü kapalıydı, rüzgar hafifçe esiyor ama her şey sanki büyük bir fırtınanın öncesindeki o sessiz bekleyişe benziyordu. Antrenman sahasına doğru yürürken ayak seslerim boş sokaklarda yankılanıyordu. Sanki tüm şehir nefesini tutmuş beni izliyordu. Bu turnuva benim için sadece bir yarışma değil, kendimi kanıtlayacağım, adımı tarihe yazdıracağım tek şanstı.</div>
+        <div class="dialogue"><span class="name">Rei:</span> Bu sabah uyandığımda içimde açıklayamadığım bir ağırlık vardı. Gökyüzü kapalı, rüzgar hafif ama sanki şehir, büyük bir fırtınadan önceki sessizliğe gömülmüştü. Adımlarım boş sokaklarda yankılanırken kalbim, yaklaşan kader anını hissediyordu.</div>
 
-<div class="speech"><span class="name">Isagi:</span>Rei, yüzünden anlıyorum ki sen de farkındasın... Bugün sahada olacak şeyler sıradan olmayacak. Hepimiz bugüne kadar antrenman yaptık, ter döktük, defalarca yenildik ve tekrar ayağa kalktık. Ama bugün, bütün o çalışmanın sonucu belirlenecek. Gözlerinde gördüğüm kararlılık bana güven veriyor. Yanımda olduğun sürece hiçbir şeyden korkmuyorum.</div>
+        <div class="dialogue"><span class="name">Isagi:</span> Rei, gözlerin her şeyi söylüyor. Bugün sıradan bir gün olmayacak. Bugüne kadar ter döktük, düştük, kalktık. Şimdi ise tüm o çabanın karşılığı alınacak. Yanında olduğum sürece hiçbir şeyden korkmuyorum.</div>
 
-<div class="speech"><span class="name">Rei:</span>Isagi, seninle ilk tanıştığımız günü hatırlıyor musun? O zamanlar seni sadece hızlı ve inatçı bir forvet sanmıştım. Ama zamanla anladım ki, senin asıl gücün oyun zekanda. Sahada rakiplerin aklını okuyorsun, en ufak fırsatı bile gole çeviriyorsun. Bugün seninle omuz omuza mücadele etmek benim için onur olacak. Ama şunu bil... Karşı takıma acımak yok, dostluk sahadan çıkar çıkmaz başlar.</div>
+        <div class="dialogue"><span class="name">Rei:</span> İlk tanıştığımız günü hatırlıyor musun? Seni sadece hızlı ve inatçı sanmıştım. Ama asıl gücün, sahadaki zekanda. Bugün seninle omuz omuza olmak benim için onur. Fakat sahada kimseye acımayacağız.</div>
 
-<div class="speech"><span class="name">Isagi:</span>İşte bu sözleri duymak istediğim buydu Rei. Sahaya çıktığımızda biz sadece oyuncu değil, avcı olacağız. Top bizim silahımız, kale ise avımız. Rakip kim olursa olsun, karşımızda duramayacak. Bugün Red Lock'un adını herkese duyuracağız. Sadece gol atmakla yetinmeyeceğiz, onların umudunu da yok edeceğiz.</div>
+        <div class="dialogue"><span class="name">Isagi:</span> İşte bu! Sahada oyuncu değil avcı olacağız. Top silahımız, kale avımız. Bugün Red Lock’un adını herkese duyuracağız.</div>
 
-<div class="buttons">
-<button class="home" onclick="window.location.href='index.html'">Ana Sayfaya Dön</button>
-<button class="next" onclick="window.location.href='bolum2.html'">Diğer Bölüme Geç</button>
-</div>
+        <div class="dialogue">Stadın kapısından girerken tribünlerin uğultusu yavaşça artıyordu. Binlerce göz, bizi izlemek için buradaydı. Her adımda, kalbimin atışı top sesine karışıyordu.</div>
 
-</div>
+        <div class="dialogue">Isınma hareketleri sırasında gözüm rakip takımın forvetine takıldı. Gözlerinde tehdit vardı ama ben sadece kendi hedefime odaklandım.</div>
+
+        <div class="dialogue"><span class="name">Rei:</span> Isagi, hazır mısın? Bu maçta hata yapma şansımız yok.</div>
+
+        <div class="dialogue"><span class="name">Isagi:</span> Hazırım. Onların savunması ne kadar güçlü olursa olsun, biz daha hızlı ve akıllıyız.</div>
+
+        <div class="dialogue">Hakem düdüğü çaldı ve oyun başladı. Top ayağıma geldiği an, zaman yavaşladı. Bir pas, iki pas… rakipler arkamda kaldı.</div>
+
+        <div class="dialogue">Tribünler nefesini tutmuştu. Ayağımın ucundan çıkan top ağlarla buluştuğunda bütün stadyum patladı. İlk gol bizdendi.</div>
+
+        <div class="dialogue">Rakip takım daha sert oynamaya başladı. Dirsekler, omuz darbeleri… Ama hiçbir şey bizi durduramadı.</div>
+
+        <div class="dialogue"><span class="name">Rei:</span> Onlar saldırdıkça daha çok güçleniyoruz. Devam et!</div>
+
+        <div class="dialogue">İlk yarı bittiğinde skor tabelasında Red Lock 3 - 1 yazıyordu. Tribünlerden gelen tezahüratlar kulaklarımda çınlıyordu.</div>
+
+        <div class="dialogue">İkinci yarıda rakipler taktik değiştirdi. Savunmayı daha sıkı tuttular ama biz yılmadık. Son dakikalarda bir kontra atakla farkı açtık.</div>
+
+        <div class="dialogue"><span class="name">Isagi:</span> Maç bittiğinde sadece galibiyet değil, tarih yazmış olacağız!</div>
+
+        <div class="dialogue">Hakemin son düdüğüyle birlikte tribünler ayağa kalktı. Biz, Red Lock, o gün sahada sadece kazanan değil, efsane olmuştuk.</div>
+
+        <div class="buttons">
+            <a href="bolum2.html">Bölüm 2’ye Geç</a>
+            <a href="index.html">Ana Sayfaya Dön</a>
+        </div>
+    </div>
 </body>
 </html>
