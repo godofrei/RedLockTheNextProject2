@@ -2,19 +2,53 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Lock Komedileri</title>
+    <title>Red Lock Komedi</title>
     <style>
-        body { background-color: #111; color: white; font-family: Arial, sans-serif; text-align: center; }
-        .btn { display: inline-block; padding: 15px 30px; margin: 10px; background: blue; color: white; text-decoration: none; border-radius: 10px; font-size: 20px; }
-        .btn:hover { background: darkblue; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: crimson;
+            margin-bottom: 40px;
+        }
+        a {
+            display: inline-block;
+            margin: 15px;
+            padding: 12px 24px;
+            background-color: crimson;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        a:hover {
+            background-color: darkred;
+        }
+        .welcome {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
-    <h1>Blue Lock Komedileri</h1>
-    <a href="redlockkomedi1.html" class="btn">Kasiyer Komedisi</a>
-    <a href="redlockkomedi2.html" class="btn">Diğer Komedi</a>
-    <br><br>
-    <a href="index.html" class="btn">Ana Sayfaya Dön</a>
+
+    <h1>Red Lock Komedi</h1>
+    <div id="welcomeMessage" class="welcome"></div>
+
+    <a href="redlockkomedi1.html">Komediyi Oku</a>
+    <a href="index.html">Ana Sayfaya Dön</a>
+
+    <script>
+        // Kullanıcı adı varsa göster
+        const username = localStorage.getItem("username");
+        if (username) {
+            document.getElementById("welcomeMessage").textContent = "Hoşgeldiniz " + username;
+        }
+    </script>
+
 </body>
 </html>
