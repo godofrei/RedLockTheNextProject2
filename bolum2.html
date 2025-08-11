@@ -1,231 +1,103 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Red Lock — Bölüm 2</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Lock - Bölüm 2</title>
 <style>
-  :root{ --accent1:#ff4b2b; --accent2:#ff416c; --muted:#9fb0d0; }
-  *{box-sizing:border-box}
-  html,body{height:100%;margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:#000;color:#fff;}
-  .scene{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:6vh 6vw;text-align:left;overflow:hidden}
-  .panel-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:-3;filter:grayscale(30%) contrast(1.02) brightness(0.85);transform-origin:center;transition:transform .18s linear}
-  .vignette{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.18),rgba(0,0,0,0.72));z-index:-2;pointer-events:none}
-  .content{position:relative;z-index:2;max-width:980px;padding:22px;background:linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.04));border-radius:12px;animation:fadeUp .9s ease both;}
-  .lead{display:block;margin-bottom:12px;background:#fff;color:#111;padding:10px 14px;border-radius:10px;font-weight:800;max-width:fit-content}
-  .para{margin-top:12px;line-height:1.7;font-size:1rem;background:rgba(0,0,0,0.45);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)}
-  .actions{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
-  .btn{padding:12px 20px;border-radius:999px;border:none;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#04101a;font-weight:800;text-decoration:none;display:inline-block}
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:#dbeeff}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-  @media(max-width:720px){ .content{padding:14px} .para{font-size:0.95rem} }
-  .scene.inview .content{animation:fadeUp .9s ease both}
+    body {
+        background-color: #1a1a1a;
+        color: white;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+    }
+    .container {
+        max-width: 900px;
+        margin: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+    }
+    button {
+        background-color: #ff4444;
+        color: white;
+        padding: 12px 20px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    button:hover {
+        background-color: #ff2222;
+    }
 </style>
 </head>
 <body>
 
-<!-- NOTE: replace bg16.jpg..bg30.jpg with your images -->
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg16.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <span class="lead">İkinci Bölüm — Gölgenin Sınırı</span>
-    <div class="para">
-      Yeni sabah, yeni bir meydan okuma demektir. Saha hâlâ ıslak ve parlaktı; oyuncuların adımları keskin,
-      nefesleri ritimli. Bu bölümde herkesin iç sesi daha yüksekti, çünkü oyun dışındaki yaşanmışlıklar da sahada
-      etki yapıyordu.
-    </div>
-  </article>
-</section>
+<div class="container">
+    <h1>Red Lock - Bölüm 2</h1>
+    <p>
+        Güneş henüz doğmamıştı. Red Lock tesisinin uzun koridorlarında yankılanan ayak sesleri, sessizliğin içinde bile
+        baskın bir şekilde hissediliyordu. Rei, uykusuz gözlerle yürürken zihninde sadece bir şey vardı: Dün yaşanan maç
+        ve Isagi’nin attığı o beklenmedik gol. O an sahada yaşanan sessizlik hâlâ kulaklarındaydı.
+    </p>
+    <p>
+        Kahvaltı salonuna girdiğinde, tüm oyuncuların yüzünde farklı ifadeler vardı. Kimi gergin, kimi sakin görünüyordu.
+        Rei’nin gözleri hemen Isagi’yi aradı. Masanın köşesinde, başını öne eğmiş bir şekilde oturuyordu. Yanına gidip
+        sessizce oturdu. “Dünkü golün hâlâ aklımda,” dedi. Isagi hafifçe gülümsedi. “O gol sadece başlangıç.”
+    </p>
+    <p>
+        Antrenman sahasına çıktıklarında hava soğuktu. Çimenler kırağı tutmuş, nefesler buhar gibi havaya karışıyordu.
+        Antrenör, bugünkü çalışmanın sert geçeceğini söyledi. Koşular, pas çalışmaları, dar alan oyunları… Her biri,
+        oyuncuların dayanıklılığını ve zihinsel gücünü test ediyordu.
+    </p>
+    <p>
+        Rei, pas sırasında topu kontrol ederken, karşısında Nagi belirdi. Nagi’nin sakin ama keskin bakışları, Rei’nin
+        hamlelerini okumaya çalışıyordu. İki oyuncu arasında kısa bir düello başladı. Top bir sağa bir sola kayıyor,
+        çimenler ayağın altında eziliyordu. Nagi hafif bir dokunuşla topu kaptığında, Rei hırsla tekrar üzerine gitti.
+    </p>
+    <p>
+        Gün boyu süren antrenman, akşam saatlerine kadar devam etti. Oyuncular soyunma odasına döndüğünde yorgunluktan
+        nefesleri kesilmişti. Rei, duş aldıktan sonra odasına çekildi. Yatağına uzandığında tavanı izledi. Yarının maç
+        kadrosu açıklanacaktı. İçindeki heyecan ve endişe birbirine karışıyordu.
+    </p>
+    <p>
+        Gece yarısına doğru, tesisin koridorlarında sessiz adımlar yankılandı. Rei, pencereye yaklaşarak dışarı baktı.
+        Bahçede Isagi’yi gördü; tek başına top sektiriyordu. Bu görüntü, Rei’nin içinde hem bir huzur hem de bir rekabet
+        ateşi yaktı.
+    </p>
+    <p>
+        Sabah olduğunda tüm oyuncular toplantı salonuna çağrıldı. Antrenör, elindeki kağıdı açarak isimleri okumaya
+        başladı. Rei, nefesini tuttu. Sonunda kendi ismini duyduğunda kalbi hızla atmaya başladı. Bu, onun için büyük bir
+        fırsattı.
+    </p>
+    <p>
+        Maç günü geldiğinde tribünler dolmuştu. Taraftarların bağırışları, davulların sesi ve saha kenarındaki heyecan
+        tüm atmosferi dolduruyordu. Rei ve Isagi, sahada yan yana durdu. Göz göze geldiler ve sessizce başlarını salladılar.
+    </p>
+    <p>
+        İlk düdük çaldığında oyun hızlı başladı. Top sürekli el değiştiriyor, rakip takım sert pres yapıyordu. Rei, orta
+        sahadan aldığı topla ceza sahasına doğru hızla ilerledi. Önünde iki savunma oyuncusu vardı ama gözünü kırpmadan
+        driplingle geçti.
+    </p>
+    <p>
+        Ceza sahasına girdiğinde topu Isagi’ye çıkardı. Isagi beklenmedik bir şekilde topu geri bıraktı. Rei, topu kontrol
+        edip sağ ayağıyla köşeye sert bir şut gönderdi. Tribünler ayağa kalktı, top filelerle buluştu. Skor tabelası
+        değiştiğinde Rei’nin yüzünde ilk kez bu kadar geniş bir gülümseme vardı.
+    </p>
+    <p>
+        Maçın kalan dakikaları da büyük mücadeleyle geçti. Son düdük çaldığında Red Lock galip gelmişti. Oyuncular
+        birbirine sarılırken Rei, bu başarının daha büyük bir hikayenin başlangıcı olduğunu biliyordu.
+    </p>
+    <p>
+        Tesislere döndüklerinde herkes yorgun ama mutluydu. Rei, soyunma odasında sessizce oturdu. Isagi yanına gelip
+        omzuna dokundu. “Güzel oynadın,” dedi. Rei gülümsedi, “Daha yeni başlıyoruz.”
+    </p>
 
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg17.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Koridorlarda dolaşan dedikodular, taktiklere gölgeler düşürüyordu. Kimisi için bu moral bozucu, kimisi içinse
-      bir motivasyon kaynağıydı. Rei, kendi ritmini kaybetmemek için zihnini temizlemeye çalıştı.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg18.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Antrenör farklı bir diziliş denedi; oyuncular yeni rolleri üstlenirken ilk denemeler hantal geçti. Ama bir tane
-      hareket vardı ki doğru zamanda yapılırsa tüm dengeleri değiştirebilirdi — herkes o anı bekliyordu.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg19.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Isagi'nın soğukkanlılığı herkesin dikkatini çekiyordu. Sanki sahayı üç boyutlu okuyordu; her pasın veya boşluğun
-      hesabını yapıyordu. Rakipler onun planlarını çözmeye çalışıyordu ama o hep bir adım öndeydi.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg20.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Bir an geldiğinde Bachira beklenmedik bir çalımla bir fırsat yarattı. Rei topu aldı, kaleye bakarken zaman kısa
-      bir an için durdu. "Şimdi ya da hiç," dedi kendi kendine. O an kararları tüm takımı etkiledi.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg21.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Şut, kalenin üst köşesine doğru bir yay çizdi. Kaleci uzandı ama yetmedi. Gol! Saha bir anda coşkuyla doldu.
-      Ancak zaferin tadı kısa sürdü çünkü herkes biliyordu: hedef sadece bir adımdı.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg22.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Soyunma odasındaki tartışmalar daha uzundu; hatalar konuşuldu, eksikler not edildi. Isagi sessizce kendi notlarını
-      yazıyordu; o notlar sonraki maçın temelini oluşturacaktı.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg23.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Akşam antrenmanı yağmura tutuldu; zemin kayganlaştı ama bu, bazı oyuncuların yeteneğini parlatıyordu. Karanlıkta
-      parlayan ayakkabı tabanlarında bir hikâye var gibiydi — kimse pes etmeyecekti.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg24.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Bir oyuncu sakatlanma riski aldı; ama takım onun için plan değiştirdi, destek verdi. Bu dayanışma anı, Red Lock'un
-      sert yüzünün arkasında yumuşak bir çekirdeğin olduğunu hatırlattı.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg25.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Gece ilerledikçe, oyuncular kişisel mücadelelerini tekrar etti; bazıları teknik çalıştı, bazıları koşu yaptı. Rei,
-      tek başına ekstra pas çalıştı — her hareketini daha net hale getirmek için.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg26.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Sabah güneşinin ilk ışıklarıyla birlikte küçük bir rütbe hissi oluştu — insanlar uykularından yeni uyanmış gibi
-      taze bir enerjiyle sahadaydı. Bu enerji, küçük hataların düzeltilmesi için kullanıldı.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg27.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Bir antrenör gençlerden birini kenara çekti ve fısıldadı: "Gözlerini açık tut. Hareketleri hisset, sadece görme."
-      Bu söz, ileriki maçlarda bir açılım sağlayacaktı.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg28.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Son bölümde, takımın birliği, dünün hata kayıtlarını başarıya çevirmek için sahaya yayılıyordu. Herkes
-      öğrendiklerini uygulamaya koydu; küçük paslar ahenkli bir melodiye dönüştü.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg29.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Güneş batarken, herkes sahadan ayrıldı ama gözlerinde bir azim ışığı kaldı. Rei, ufka baktı ve gülümsedi —
-      daha zor bir mücadeleye hazır olduğunu hissediyordu.
-    </div>
-  </article>
-</section>
-
-<section class="scene">
-  <div class="panel-bg" style="background-image:url('bg30.jpg')"></div>
-  <div class="vignette"></div>
-  <article class="content">
-    <div class="para">
-      Gece sona erdi; ama bu sadece bir dönemeçti. Her küçük adım, ilerideki büyük hamlelerin altyapısını oluşturuyordu.
-      Takım birbirine daha sıkı bağlanmıştı—bundan sonra her adım daha anlamlı olacaktı.
-    </div>
-
-    <div class="actions">
-      <a class="btn" href="bolum3.html">Diğer Bölüme Geç</a>
-      <a class="btn ghost" href="index.html">Ana Sayfaya Dön</a>
-    </div>
-  </article>
-</section>
-
-<script>
-/* Parallax + inview (aynı script her iki dosyada da çalışır) */
-(function(){
-  const scenes = Array.from(document.querySelectorAll('.scene'));
-  const bgs = scenes.map(s => s.querySelector('.panel-bg'));
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting) en.target.classList.add('inview');
-    });
-  }, {threshold:0.18});
-  scenes.forEach(s=> io.observe(s));
-
-  function onScroll(){
-    const winH = window.innerHeight || document.documentElement.clientHeight;
-    bgs.forEach((bg)=>{
-      if(!bg) return;
-      const rect = bg.parentElement.getBoundingClientRect();
-      const mid = rect.top + rect.height/2 - winH/2;
-      const max = winH + rect.height;
-      const v = Math.max(-1, Math.min(1, -mid / (max/2)));
-      const ty = v * 26;
-      bg.style.transform = `translateY(${ty}px) scale(1.03)`;
-    });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll);
-  setTimeout(onScroll,120);
-})();
-</script>
+    <button onclick="window.location.href='bolum3.html'">Diğer Bölüme Geç</button>
+</div>
 
 </body>
-    </html>
+</html>
