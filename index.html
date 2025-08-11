@@ -2,48 +2,43 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Red Lock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Lock - Ana Sayfa</title>
     <style>
         body {
+            background-color: #111;
+            color: white;
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #222;
-            color: white;
-            padding-top: 50px;
+            margin: 0;
+            padding: 0;
         }
-        button {
-            display: block;
-            margin: 10px auto;
+        h1 {
+            margin-top: 50px;
+        }
+        .btn {
+            display: inline-block;
+            margin: 20px;
             padding: 15px 30px;
             font-size: 18px;
             background-color: crimson;
-            border: none;
             color: white;
-            cursor: pointer;
-            border-radius: 5px;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background 0.3s;
         }
-        button:hover {
+        .btn:hover {
             background-color: darkred;
         }
     </style>
 </head>
 <body>
 
-    <h1 id="welcomeText">Red Lock'a Hoşgeldiniz</h1>
+    <h1>Red Lock</h1>
 
-    <button onclick="window.location.href='bolum1.html'">Okumaya Başla</button>
-    <button id="registerBtn" onclick="window.location.href='kayit.html'">Kayıt Ol</button>
-    <button onclick="window.location.href='minioyun.html'">Mini Oyun Oyna</button>
-    <button onclick="window.location.href='redlockkomedi.html'">Blue Lock Komedileri</button>
-
-    <script>
-        // Daha önce kayıt olmuş mu kontrol et
-        const username = localStorage.getItem("username");
-        if (username) {
-            document.getElementById("welcomeText").textContent = "Hoşgeldiniz " + username;
-            document.getElementById("registerBtn").style.display = "none";
-        }
-    </script>
+    <a href="bolum1.html" class="btn">📖 Okumaya Başla</a>
+    <a href="redlockkomedi.html" class="btn">😂 Komedileri Oku</a>
+    <a href="minioyun.html" class="btn">🎮 Mini Oyun Oyna</a>
 
 </body>
 </html>
