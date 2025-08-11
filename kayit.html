@@ -2,52 +2,55 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kayıt Ol</title>
     <style>
         body {
+            background-color: #111;
+            color: white;
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #222;
-            color: white;
-            padding-top: 50px;
+            margin-top: 100px;
         }
         input {
             padding: 10px;
-            margin: 5px;
+            margin: 10px;
             font-size: 16px;
-            border-radius: 5px;
-            border: none;
         }
         button {
             padding: 10px 20px;
             font-size: 16px;
             background-color: crimson;
-            border: none;
             color: white;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 5px;
         }
-        button:hover {
-            background-color: darkred;
-        }
+        button:hover { background-color: darkred; }
     </style>
 </head>
 <body>
 
     <h1>Kayıt Ol</h1>
-    <input type="text" id="username" placeholder="Kullanıcı Adı">
+    <input type="text" id="username" placeholder="Kullanıcı adınızı girin">
     <br>
     <button onclick="register()">Kayıt Ol</button>
 
     <script>
         function register() {
             const name = document.getElementById("username").value.trim();
-            if (name === "") {
-                alert("Lütfen bir kullanıcı adı giriniz.");
+            if (!name) {
+                alert("Lütfen bir kullanıcı adı girin.");
                 return;
             }
+            const allUsers = JSON.parse(localStorage.getItem("allUsers") || "[]");
+            if (allUsers.includes(name)) {
+                alert("Bu kullanıcı adı zaten alınmış!");
+                return;
+            }
+            allUsers.push(name);
+            localStorage.setItem("allUsers", JSON.stringify(allUsers));
             localStorage.setItem("username", name);
-            alert("Kayıt başarılı! Ana sayfaya yönlendiriliyorsunuz.");
             window.location.href = "index.html";
         }
     </script>
